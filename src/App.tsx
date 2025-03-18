@@ -4,7 +4,7 @@ import './App.css';
 import { useCost } from './formulas/starforce';
 
 function App() {
-  const cost = useCost(0, 160)
+  const cost = useCost(0, 160);
   return (
     <div className="App">
       <header className="App-header">
