@@ -1,10 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import { useCost } from './formulas/starforce';
+import StarForce from './components/starforce';
+
 
 function App() {
-  const cost = useCost(0, 160);
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -20,7 +21,7 @@ function App() {
         >
           Learn React
         </a> */}
-        {cost}
+      <StarForce />
       </header>
     </div>
   );

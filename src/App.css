@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .App {
   text-align: center;
 }
@@ -13,12 +17,20 @@
   }
 }
 
+.border {
+  border: 1px solid white; /* Add a solid white border */
+  padding: 10px; /* Add some padding for spacing */
+  margin: 10px; /* Add some margin for spacing */
+  border-radius: 8px; /* Add rounded corners */
+}
+
 .App-header {
-  background-color: #282c34;
+  background-color: black;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: full;
+  /* flex-direction: column; */
+  align-items: stretch;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
@@ -26,6 +38,55 @@
 
 .App-link {
   color: #61dafb;
+}
+
+/* Additional styles for the StarForce component */
+.input-group {
+  margin-bottom: 15px; /* Add spacing between input groups */
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+}
+
+.input-group input::placeholder {
+  color: #aaa;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #61dafb;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #21a1f1;
+}
+
+.results {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.results div {
+  margin-bottom: 10px;
 }
 
 @keyframes App-logo-spin {
