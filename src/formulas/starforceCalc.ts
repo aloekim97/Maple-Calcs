@@ -1,5 +1,5 @@
-import { getChance } from './chance';
-import { getCost, getNewCost } from './cost';
+import { getChance } from './sf/chance';
+import { getCost, getNewCost } from './sf/cost';
 
 export function calculateStarforceStats(
   startStar: number,
@@ -25,7 +25,7 @@ export function calculateStarforceStats(
 
     const varianceAttempts = (1 - pSuccess) / (pSuccess * pSuccess);
 
-    totalExpectedCost += expectedAttempts * cost;
+    totalExpectedCost += (expectedAttempts * cost);
     totalExpectedBooms += pBoom * expectedAttempts;
 
     totalVarianceCost +=

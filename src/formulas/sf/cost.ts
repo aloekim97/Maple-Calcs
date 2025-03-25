@@ -19,8 +19,6 @@ export function getCost(star: number, equip: number): string {
     inner = (adjustLvl ** 3 * (star + 1) ** 2.7) / 20000 + 10;
   }
 
-  totalCost = 100 * inner;
-
   totalCost = Math.round(totalCost / 100) * 100;
 
   return totalCost.toLocaleString();

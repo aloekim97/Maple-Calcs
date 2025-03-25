@@ -3,12 +3,18 @@
 @tailwind utilities;
 
 .App {
-  text-align: center;
+  text-align: left; /* Change this */
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -18,22 +24,19 @@
 }
 
 .border {
-  border: 1px solid white; /* Add a solid white border */
-  padding: 10px; /* Add some padding for spacing */
-  margin: 10px; /* Add some margin for spacing */
-  border-radius: 8px; /* Add rounded corners */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
 }
 
 .App-header {
   background-color: black;
   min-height: 100vh;
+  min-width: 100vw;
   display: flex;
-  width: full;
-  /* flex-direction: column; */
-  align-items: stretch;
-  justify-content: center;
+  justify-content: flex-start;
   font-size: calc(10px + 2vmin);
   color: white;
+  overflow: hidden;
 }
 
 .App-link {
@@ -52,11 +55,6 @@
 }
 
 .input-group input {
-  width: 100%;
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
   background-color: #333;
   color: white;
 }
@@ -80,15 +78,6 @@
   background-color: #21a1f1;
 }
 
-.results {
-  margin-top: 20px;
-  text-align: left;
-}
-
-.results div {
-  margin-bottom: 10px;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -96,4 +85,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.flex > * {
+  min-width: 0;
 }
