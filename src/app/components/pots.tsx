@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState } from 'react';
 import { potCalc } from '../formulas/potentialcalc';
 import { PotCalcResult } from '../formulas/cube/cubeprob';
@@ -14,7 +14,9 @@ export default function Cube() {
 
   const [results, setResults] = useState<PotCalcResult>();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setInputs((prev) => ({ ...prev, [name]: value }));
   };
@@ -71,7 +73,9 @@ export default function Cube() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">Potential Type</label>
+          <label className="block text-sm font-medium mb-1">
+            Potential Type
+          </label>
           <select
             name="potentialType"
             value={inputs.potentialType}
@@ -121,15 +125,21 @@ export default function Cube() {
             <h3 className="font-medium text-lg">Potential Results</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p><strong>Average Cost:</strong></p>
+                <p>
+                  <strong>Average Cost:</strong>
+                </p>
                 <p>{results.averageCost} mesos</p>
               </div>
               <div>
-                <p><strong>Success Chance:</strong></p>
+                <p>
+                  <strong>Success Chance:</strong>
+                </p>
                 <p>{(results.totalProbability * 100).toFixed(6)}%</p>
               </div>
               <div>
-                <p><strong>Average Attempts:</strong></p>
+                <p>
+                  <strong>Average Attempts:</strong>
+                </p>
                 <p>{results.averageTry.toFixed(1)}</p>
               </div>
             </div>
@@ -139,7 +149,8 @@ export default function Cube() {
               <div className="max-h-60 overflow-y-auto mt-2 border rounded p-2">
                 {results.combinations.map((combo, i) => (
                   <div key={i} className="py-1 border-b last:border-b-0">
-                    Line 1: {combo.line1}, Line 2: {combo.line2}, Line 3: {combo.line3}
+                    Line 1: {combo.line1}, Line 2: {combo.line2}, Line 3:{' '}
+                    {combo.line3}
                   </div>
                 ))}
               </div>
