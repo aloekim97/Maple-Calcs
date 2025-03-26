@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import itemStats from '../formulas/sf/itemstats';
 import { calculateKMS } from '../formulas/starforceCalc';
+import { Input } from "@/components/ui/input"
+import { Button } from '@/components/ui/button';
 
 export default function StarForce() {
   const [inputs, setInputs] = useState({
@@ -56,7 +58,7 @@ export default function StarForce() {
         {/* Input fields */}
         <div>
           <label className="block text-sm font-medium mb-1">Item Level</label>
-          <input
+          <Input
             type="number"
             name="itemLevel"
             value={inputs.itemLevel}
@@ -68,7 +70,7 @@ export default function StarForce() {
 
         <div>
           <label className="block text-sm font-medium mb-1">Start Star</label>
-          <input
+          <Input
             type="number"
             name="startStar"
             value={inputs.startStar}
@@ -80,7 +82,7 @@ export default function StarForce() {
 
         <div>
           <label className="block text-sm font-medium mb-1">End Star</label>
-          <input
+          <Input
             type="number"
             name="endStar"
             value={inputs.endStar}
@@ -90,12 +92,12 @@ export default function StarForce() {
           />
         </div>
 
-        <button
+        <Button
           onClick={calculate}
-          className="mt-2 p-3 bg-blue-600 text-white rounded hover:bg-blue-700 w-full"
+          className="mt-2 p-3 text-white rounded w-full"
         >
           Calculate Star Force
-        </button>
+        </Button>
 
         {results && (
           <div className="mt-6 space-y-4">
