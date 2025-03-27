@@ -1,4 +1,5 @@
 import { Combination } from './cubecombo';
+import { ITEM_PROBABILITIES } from './potlines';
 
 export interface CubeProbabilities {
   line1: number;
@@ -9,95 +10,6 @@ export interface CubeProbabilities {
 export const CUBE_PROBABILITIES: { [key: string]: CubeProbabilities } = {
   black: { line1: 1.0, line2: 0.2, line3: 0.05 },
   red: { line1: 1.0, line2: 0.1, line3: 0.01 },
-};
-
-export interface ProbabilityTiers {
-  statPrime: number;
-  allPrime: number;
-  statNonPrime: number;
-  allNonPrime: number;
-}
-
-export interface ItemProbabilities {
-  stat: ProbabilityTiers;
-  cooldown?: {
-    1: number;
-    2: number;
-  };
-  critdamage?: {
-    1: number;
-  };
-}
-
-export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
-  hat: {
-    stat: {
-      statPrime: 0.585 / 6,
-      allPrime: 0.366 / 5,
-      statNonPrime: 9.61,
-      allNonPrime: 7.69,
-    },
-    cooldown: {
-      1: 1,
-      2: 2,
-    },
-  },
-  top: {
-    stat: {
-      statPrime: 0,
-      allPrime: 0,
-      statNonPrime: 0,
-      allNonPrime: 0,
-    },
-  },
-  pants: {
-    stat: {
-      statPrime: 0,
-      allPrime: 0,
-      statNonPrime: 0,
-      allNonPrime: 0,
-    },
-  },
-  shoes: {
-    stat: {
-      statPrime: 0,
-      allPrime: 0,
-      statNonPrime: 0,
-      allNonPrime: 0,
-    },
-  },
-  cape: {
-    stat: {
-      statPrime: 0,
-      allPrime: 0,
-      statNonPrime: 0,
-      allNonPrime: 0,
-    },
-  },
-  accessory: {
-    stat: {
-      statPrime: 0,
-      allPrime: 0,
-      statNonPrime: 0,
-      allNonPrime: 0,
-    },
-  },
-  shoulder: {
-    stat: {
-      statPrime: 0,
-      allPrime: 0,
-      statNonPrime: 0,
-      allNonPrime: 0,
-    },
-  },
-  heart: {
-    stat: {
-      statPrime: 0,
-      allPrime: 0,
-      statNonPrime: 0,
-      allNonPrime: 0,
-    },
-  },
 };
 
 export interface PotCalcResult {
