@@ -12,16 +12,16 @@ const ItemButton = ({ item, onClick }: ItemButtonProps) => {
   return (
     <button
       onClick={onClick}
-      className="p-1 hover:scale-105 transition-transform duration-200"
-      title={item['Item Name'].replace(/_/g, ' ')}
+      className="p-1 hover:cursor-pointer transition-transform duration-200"
+      title={item["Item Name"].replace(/_/g, ' ')}
     >
-      <div className="relative size-[40px] p-[4px]">
+      <div className="relative size-[40px] p-[4px] border rounded-[8px]">
         <Image
           src={imagePath}
           alt={item['Item Name'].replace(/_/g, ' ')}
           fill
           objectFit="contain"
-          className="rounded-md"
+          className="p-[4px]"
         />
       </div>
     </button>

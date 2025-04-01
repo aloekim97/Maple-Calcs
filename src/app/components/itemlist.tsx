@@ -18,7 +18,7 @@ const ItemsPage = ({ setSelectedGear }: ItemsPageProps) => {
 
   return (
     <div>
-      <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 overflow-auto h-full w-full">
+      <div className="grid grid-cols-14 overflow-y-auto h-full w-full">
         {itemList.map((item) => (
           <ItemButton
             key={item["Item Name"]}
