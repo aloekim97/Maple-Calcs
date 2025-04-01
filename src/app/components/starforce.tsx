@@ -2,8 +2,20 @@
 import { useState } from 'react';
 import itemStats from '../formulas/sf/itemstats';
 import { calculateKMS } from '../formulas/starforceCalc';
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input";
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import Image from 'next/image';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function StarForce() {
   const [inputs, setInputs] = useState({
@@ -52,52 +64,92 @@ export default function StarForce() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow border h-full w-full                                              ">
-      <h2 className="text-xl font-semibold mb-4">Star Force Calculator</h2>
-      <div className="space-y-4">
-        {/* Input fields */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Item Level</label>
-          <Input
-            type="number"
-            name="itemLevel"
-            value={inputs.itemLevel}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded"
-            placeholder="e.g. 150"
+    <div className="flex flex-col grow bg-white p-[16px] rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] h-full w-full justify-between">
+      <div className='flex flex-col gap-[16px]'>
+        {/* HEADER */}
+        <div className='flex w-full justify-between'>
+          <div className='flex gap-[8px]'>
+            <Image
+              src="image/Star_Icon.svg"
+              width={16}
+              height={16}
+              alt='star'
+            />
+            <h4>Potential Calculator</h4>
+          </div>
+          <Switch
+            defaultChecked
           />
         </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Start Star</label>
-          <Input
-            type="number"
-            name="startStar"
-            value={inputs.startStar}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded"
-            placeholder="e.g. 0"
-          />
+        {/* Input Fields */}
+        <div className="flex flex-col gap-[16px]">
+          <div className='flex gap-[16px] w-full'>
+            <div className="w-full">
+             <p className='p3'>MVP Discount</p>
+             <Select
+            //  onValueChange={field.onChange}             
+             >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="e.g. Silver" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>MVP Discount</SelectLabel>
+                  <SelectItem value="none">None</SelectItem>
+                  <SelectItem value="silver">Silver</SelectItem>
+                  <SelectItem value="gold">Gold</SelectItem>
+                  <SelectItem value="diamond">Diamond</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            </div>
+          </div>
+          <div className='flex gap-[16px] w-full'>
+            <div>
+              <p className='p3'>Start Star</p>
+              <Input
+                type="number"
+                name="startStar"
+                value={inputs.startStar}
+                onChange={handleInputChange}
+                placeholder="e.g. 0"
+              />
+            </div>
+            <div>
+              <p className='p3'>End Star</p>
+              <Input
+                type="number"
+                name="endStar"
+                value={inputs.endStar}
+                onChange={handleInputChange}
+                placeholder="e.g. 15"
+              />
+            </div>
+          </div>
         </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">End Star</label>
-          <Input
-            type="number"
-            name="endStar"
-            value={inputs.endStar}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded"
-            placeholder="e.g. 15"
-          />
+      </div>
+      <div className='w-full h-[1px] rounded-full bg-black opacity-20'/>
+      
+      <div className="flex flex-col gap-[16px]">
+        <div className='flex flex-col gap-[16px]'>
+        <Label htmlFor="airplane-mode">Events</Label>
+          <div className='flex gap-[8px]'>
+            <Switch id="airplane-mode" />
+            <Label htmlFor="airplane-mode">Star Catching</Label>
+          </div>
+          <div className='flex gap-[8px]'>
+            <Switch id="airplane-mode" />
+            <Label htmlFor="airplane-mode">Safeguarding</Label>
+          </div>
+          <div className='flex gap-[8px]'>
+            <Switch id="airplane-mode" />
+            <Label htmlFor="airplane-mode">30% off</Label>
+          </div>
+          <div className='flex gap-[8px]'>
+            <Switch id="airplane-mode" />
+            <Label htmlFor="airplane-mode">-30% booms &lt;21</Label>
+          </div>
         </div>
-
-        <Button
-          onClick={calculate}
-          className="mt-2 p-3 text-white rounded w-full"
-        >
-          Calculate Star Force
-        </Button>
 
         {results && (
           <div className="mt-6 space-y-4">

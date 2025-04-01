@@ -120,3 +120,66 @@
     @apply bg-background text-foreground;
   }
 }
+
+.h0 {
+  @apply text-[32px] font-bold leading-[72px] text-[black]  
+      sm:text-[64px] sm:leading-[72px]; /* Mobile size */
+}
+
+h1 {
+  @apply text-[32px] font-bold leading-[48px] text-[black]  
+      sm:text-[48px] sm:leading-[64px]; /* Mobile size */
+}
+
+h2 {
+  @apply text-[24px] font-bold leading-[32px] text-[black]  
+      sm:text-[32px] sm:leading-[40px]; /* Mobile size */
+}
+
+h3 {
+  @apply text-[16px] font-bold leading-[24px] text-[black]  
+      sm:text-[24px] sm:leading-[32px]; /* Mobile size */
+}
+
+h4 {
+  @apply text-[16px] font-bold leading-[24px] text-[black]  
+      sm:text-[16px] sm:leading-[24px]; /* Mobile size */
+}
+
+h5 {
+  @apply text-[16px] font-semibold leading-[24px] text-[black]  
+      sm:text-[16px] sm:leading-[24px]; /* Mobile size */
+}
+
+h6 {
+  @apply text-[12px] font-semibold leading-[16px] text-[black]  
+      sm:text-[12px] sm:leading-[16px]; /* Mobile size */
+}
+
+p {
+  @apply text-[16px] font-medium leading-[24px] text-[black]  tracking-[.05rem]
+}
+
+.p1 {
+  @apply text-[16px] font-[600] leading-[24px] text-[black]  
+}
+
+.p2 {
+  @apply text-[16px] font-[600] leading-[24px] text-[black] 
+}
+
+.p3 {
+  @apply text-[12px] leading-[24px] text-[black]  
+}
+
+li {
+  @apply text-[16px] font-medium leading-[24px] text-[black]  tracking-[.05rem] ml-[24px] pl-[8px]
+}
+
+ul {
+  @apply flex flex-col gap-[16px] list-disc ml-[24px] pl-[8px]
+}
+
+ol {
+  @apply flex flex-col gap-[16px] list-decimal
+}
