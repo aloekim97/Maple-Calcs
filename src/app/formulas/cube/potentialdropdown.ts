@@ -2,13 +2,13 @@ const STAT_TIERS = {
   low: [24, 27, 30, 33],
   high: [30, 33, 36, 39],
 };
-const SINGLE_STAT = {
-  low: [6, 9, 12],
-  high: [7, 10, 13],
+const FIRST_LINE = {
+  low: [12, 9],
+  high: [13, 10],
 };
-const DOUBLE_STAT = {
-  low: [12, 15, 18, 21],
-  high: [14, 17, 20, 23],
+const OTHER_LINE = {
+  low: [12, 9, 6],
+  high: [13, 10, 7],
 };
 
 export type WSEItemType = 'weapon' | 'secondary' | 'emblem';
@@ -71,11 +71,15 @@ export const WSE: { low: WSETier; high: WSETier } = {
   },
 };
 
-export const getGoalOptions = (itemType: string, itemLevel: number) => {
+export const getGoalOptions = (
+  itemType: string,
+  itemLevel: number,
+  lineNumber: number = 1
+) => {
   const tier = itemLevel > 150 ? 'high' : 'low';
   const currentStatTier = STAT_TIERS[tier];
-  const currentSingleStat = SINGLE_STAT[tier];
-  const currentDoubleStat = DOUBLE_STAT[tier];
+  const firstLine = FIRST_LINE[tier];
+  const otherLines = OTHER_LINE[tier];
 
   // Handle WSE items (weapon, secondary, emblem)
   if (['weapon', 'secondary', 'emblem'].includes(itemType)) {
@@ -91,49 +95,46 @@ export const getGoalOptions = (itemType: string, itemLevel: number) => {
     );
   }
 
-  // Handle regular items
   switch (itemType) {
-    case 'hat':
+    case 'HAT': {
+      const hatStatOptions =
+        lineNumber === 1
+          ? firstLine.map((stat) => [`${stat}% Stat`, { stat }])
+          : otherLines.map((stat) => [`${stat}% Stat`, { stat }]);
+
+      const hatCdrOptions = [1, 2].map((cdr) => [
+        `-${cdr} second cooldown`,
+        { cdr },
+      ]);
+
       return {
-        // Stat options
-        ...Object.fromEntries(
-          currentStatTier.map((stat) => [`${stat}% Stat`, { stat }])
-        ),
-
-        // Cooldown options
-        ...Object.fromEntries(
-          [2, 3, 4, 5, 6].map((cdr) => [`-${cdr} second cooldown`, { cdr }])
-        ),
-
-        // Combined CDR + Stat
-        ...Object.fromEntries(
-          [4].flatMap((cdr) =>
-            currentSingleStat.map((stat) => [
-              `-${cdr} second + ${stat}% Stat`,
-              { cdr, stat },
-            ])
-          )
-        ),
-
-        // Double stat
-        ...Object.fromEntries(
-          currentDoubleStat.map((stat) => [`${stat}% Double Stat`, { stat }])
-        ),
+        ...Object.fromEntries(hatCdrOptions),
+        ...Object.fromEntries(hatStatOptions),
       };
+    }
 
-    case 'glove':
+    case 'GLOVES': {
+      const gloveStatOptions =
+        lineNumber === 1
+          ? firstLine.map((stat) => [`${stat}% Stat`, { stat }])
+          : otherLines.map((stat) => [`${stat}% Stat`, { stat }]);
+
+      const gloveCdOptions = [
+        ['8% Crit Damage', { cd: 8 }],
+      ];
+
       return {
-        ...Object.fromEntries(
-          currentStatTier.map((stat) => [`${stat}% Stat`, { stat }])
-        ),
-        '8% Crit Damage': { crit: 8 },
-        '16% Crit Damage': { crit: 16 },
+        ...Object.fromEntries(gloveCdOptions),
+        ...Object.fromEntries(gloveStatOptions),
       };
+    }
 
-    default:
+    default: {
+      const statValues = lineNumber === 1 ? firstLine : otherLines;
       return Object.fromEntries(
-        currentStatTier.map((stat) => [`${stat}% Stat`, { stat }])
+        statValues.map((stat) => [`${stat}% Stat`, { stat }])
       );
+    }
   }
 };
 

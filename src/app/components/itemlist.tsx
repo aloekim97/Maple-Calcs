@@ -1,14 +1,19 @@
-import items from '../../../public/data.json'; // adjust path to your JSON file
+'use client';
+import items from '../../../public/data.json';
 import ItemButton from '@/components/ui/itembuttons';
 import { Item } from '../../../types/item';
+import { Dispatch, SetStateAction } from 'react';
 
-// Cast the imported JSON to Item array
+interface ItemsPageProps {
+  setSelectedGear: Dispatch<SetStateAction<Item | null>>;
+}
+
 const itemList = items as Item[];
 
-const ItemsPage = () => {
-  const handleItemClick = (itemName: string) => {
-    console.log('Selected item:', itemName);
-    // Add your click handler logic here
+const ItemsPage = ({ setSelectedGear }: ItemsPageProps) => {
+  const handleItemClick = (item: Item) => {
+    console.log('Selected item:', item);
+    setSelectedGear(item);
   };
 
   return (
@@ -18,7 +23,7 @@ const ItemsPage = () => {
           <ItemButton
             key={item["Item Name"]}
             item={item}
-            onClick={() => handleItemClick(item["Item Name"])}
+            onClick={() => handleItemClick(item)}
           />
         ))}
       </div>

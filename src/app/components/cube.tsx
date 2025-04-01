@@ -1,14 +1,8 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { potCalc } from '../formulas/potentialcalc';
 import { PotCalcResult } from '../formulas/cube/comboprobability';
-import {
-  ITEM_PROBABILITIES,
-  WSE_PROBABILITIES,
-} from '../formulas/cube/potentialprobability';
 import { getGoalOptions } from '../formulas/cube/potentialdropdown';
-import { Input } from "@/components/ui/input";
-import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
@@ -17,81 +11,113 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import Image from 'next/image';
+import { Item } from '../../../types/item';
 
-export default function Cube() {
-  const allItemTypes = { ...ITEM_PROBABILITIES, ...WSE_PROBABILITIES };
+interface CubeProps {
+  selectedGear: Item | null;
+}
+
+export default function Cube({ selectedGear }: CubeProps) {
   const [inputs, setInputs] = useState({
-    itemType: 'hat',
-    goal: '',
+    itemType: selectedGear?.Type || '',
+    startingTier: 'rare',
+    desiredTier: 'legendary',
     cubeType: 'black',
-    itemLevel: '150',
+    itemLevel: selectedGear?.Level || 0,
   });
 
-  const handleGoalChange = (e: any) => {
-    const selectedValue = JSON.parse(e.target.value);
-    setSelectedGoal(selectedValue);
-  };
+  const [lines, setLines] = useState({
+    line1: '',
+    line2: '',
+    line3: '',
+  });
 
   const [results, setResults] = useState<PotCalcResult>();
-  const goalOptions = getGoalOptions(inputs.itemType, Number(inputs.itemLevel));
-  const [selectedGoal, setSelectedGoal] = useState(
-    goalOptions ? Object.values(goalOptions)[0] : null
-  );
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setInputs((prev) => ({ ...prev, [name]: value }));
+  const lineOptions = useMemo(() => {
+    if (!inputs.itemType || !inputs.itemLevel)
+      return { line1: {}, line2: {}, line3: {} };
+
+    return {
+      line1: getGoalOptions(inputs.itemType, inputs.itemLevel, 1),
+      line2: getGoalOptions(inputs.itemType, inputs.itemLevel, 2),
+      line3: getGoalOptions(inputs.itemType, inputs.itemLevel, 3),
+    };
+  }, [inputs.itemType, inputs.itemLevel]);
+
+  useEffect(() => {
+    if (selectedGear) {
+      setInputs((prev) => ({
+        ...prev,
+        itemType: selectedGear.Type,
+        itemLevel: selectedGear.Level,
+      }));
+      setLines({ line1: '', line2: '', line3: '' });
+    }
+  }, [selectedGear]);
+
+  const handleLineChange = (line: keyof typeof lines, value: string) => {
+    setLines((prev) => ({ ...prev, [line]: value }));
   };
 
   const calculate = () => {
-    const itemLevelNum = Number(inputs.itemLevel);
+    try {
+      const potentialResult = potCalc(
+        inputs.itemLevel,
+        inputs.cubeType,
+        inputs.startingTier,
+        inputs.desiredTier,
+        {
+          first: lines.line1 || '',
+          second: lines.line2 || '',
+          third: lines.line3 || '',
+        }
+      );
 
-    const potentialResult = potCalc(
-      itemLevelNum,
-      selectedGoal,
-      inputs.cubeType
-    );
-
-    setResults(potentialResult);
+      setResults(potentialResult);
+    } catch (error) {
+      console.error('Calculation error:', error);
+      // Handle error (show toast, etc.)
+    }
   };
 
   return (
     <div className="flex flex-col bg-white p-[16px] rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] w-full gap-[16px]">
       {/* Header */}
-      <div className='flex w-full justify-between'>
-        <div className='flex gap-[8px]'>
+      <div className="flex w-full justify-between">
+        <div className="flex gap-[8px]">
           <Image
-            src="image/Cube_Icon.svg"
+            src="/image/Cube_Icon.svg"
             width={14}
             height={16}
-            alt='star'
+            alt="Cube icon"
           />
           <h4>Potential Calculator</h4>
         </div>
-        <Switch
-          defaultChecked
-        />
+        <Switch defaultChecked />
       </div>
+
       {/* Input fields */}
       <div className="flex flex-col gap-[16px]">
-        <div className='flex w-full gap-[16px]'>
+        {/* Tier and cube type selects... */}
+        <div className="flex w-full gap-[16px]">
           <div className="w-full">
-            <p className='p3'>Starting Tier</p>
-            <Select 
-              value={inputs.cubeType} 
-              onValueChange={(value) => setInputs(prev => ({ ...prev, cubeType: value }))}
+            <p className="p3">Starting Tier</p>
+            <Select
+              value={inputs.cubeType}
+              onValueChange={(value) =>
+                setInputs((prev) => ({ ...prev, cubeType: value }))
+              }
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Starting Tier" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                <SelectLabel>Cube Type</SelectLabel>
+                  <SelectLabel>Cube Type</SelectLabel>
                   <SelectItem value="rare">Rare</SelectItem>
                   <SelectItem value="epic">Epic</SelectItem>
                   <SelectItem value="unique">Unique</SelectItem>
@@ -101,17 +127,19 @@ export default function Cube() {
             </Select>
           </div>
           <div className="w-full">
-            <p className='p3'>Desired Tier</p>
-            <Select 
-              value={inputs.cubeType} 
-              onValueChange={(value) => setInputs(prev => ({ ...prev, cubeType: value }))}
+            <p className="p3">Desired Tier</p>
+            <Select
+              value={inputs.cubeType}
+              onValueChange={(value) =>
+                setInputs((prev) => ({ ...prev, cubeType: value }))
+              }
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Desired Tier" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                <SelectLabel>Cube Type</SelectLabel>
+                  <SelectLabel>Cube Type</SelectLabel>
                   <SelectItem value="rare">Rare</SelectItem>
                   <SelectItem value="epic">Epic</SelectItem>
                   <SelectItem value="unique">Unique</SelectItem>
@@ -119,20 +147,22 @@ export default function Cube() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-          </div> 
+          </div>
         </div>
         <div>
-          <p className='p3'>Cube Type</p>
-          <Select 
-            value={inputs.cubeType} 
-            onValueChange={(value) => setInputs(prev => ({ ...prev, cubeType: value }))}
+          <p className="p3">Cube Type</p>
+          <Select
+            value={inputs.cubeType}
+            onValueChange={(value) =>
+              setInputs((prev) => ({ ...prev, cubeType: value }))
+            }
           >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select cube type..." />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-               <SelectLabel>Cube Type</SelectLabel>
+                <SelectLabel>Cube Type</SelectLabel>
                 <SelectItem value="black">Black Cube</SelectItem>
                 <SelectItem value="red">Red Cube</SelectItem>
               </SelectGroup>
@@ -140,60 +170,80 @@ export default function Cube() {
           </Select>
         </div>
         <div>
-          <p className='p3'>Line 1</p>
-          <Select 
-            value={inputs.cubeType} 
-            onValueChange={(value) => setInputs(prev => ({ ...prev, cubeType: value }))}
+          <p className="p3">Line 1 (Primary)</p>
+          <Select
+            value={lines.line1}
+            onValueChange={(value) => handleLineChange('line1', value)}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select cube type..." />
+              <SelectValue placeholder="Select Line 1..." />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-               <SelectLabel>Cube Type</SelectLabel>
-                <SelectItem value="black">Black Cube</SelectItem>
-                <SelectItem value="red">Red Cube</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <p className='p3'>Line 2</p>
-          <Select 
-            value={inputs.cubeType} 
-            onValueChange={(value) => setInputs(prev => ({ ...prev, cubeType: value }))}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select cube type..." />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-               <SelectLabel>Cube Type</SelectLabel>
-                <SelectItem value="black">Black Cube</SelectItem>
-                <SelectItem value="red">Red Cube</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <p className='p3'>Line 3</p>
-          <Select 
-            value={inputs.cubeType} 
-            onValueChange={(value) => setInputs(prev => ({ ...prev, cubeType: value }))}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select cube type..." />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-               <SelectLabel>Line 3</SelectLabel>
-                <SelectItem value="black">Black Cube</SelectItem>
-                <SelectItem value="red">Red Cube</SelectItem>
+                <SelectLabel>Primary Line Options</SelectLabel>
+                {Object.entries(lineOptions.line1).map(([label, value]) => (
+                  <SelectItem key={label} value={JSON.stringify(value)}>
+                    {label}
+                  </SelectItem>
+                ))}
               </SelectGroup>
             </SelectContent>
           </Select>
         </div>
 
+        <div>
+          <p className="p3">Line 2 (Secondary)</p>
+          <Select
+            value={lines.line2}
+            onValueChange={(value) => handleLineChange('line2', value)}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select Line 2..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Secondary Line Options</SelectLabel>
+                {Object.entries(lineOptions.line2).map(([label, value]) => (
+                  <SelectItem key={label} value={JSON.stringify(value)}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Line 3 (Secondary) */}
+        <div>
+          <p className="p3">Line 3 (Secondary)</p>
+          <Select
+            value={lines.line3}
+            onValueChange={(value) => handleLineChange('line3', value)}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select Line 3..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Secondary Line Options</SelectLabel>
+                {Object.entries(lineOptions.line3).map(([label, value]) => (
+                  <SelectItem key={label} value={JSON.stringify(value)}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <button
+          onClick={calculate}
+          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+        >
+          Calculate
+        </button>
+
+        {/* Results display */}
         {results && (
           <div className="mt-6 space-y-4">
             <h3 className="font-medium text-lg">Potential Results</h3>

@@ -1,9 +1,8 @@
 'use client';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import itemStats from '../formulas/sf/itemstats';
 import { calculateKMS } from '../formulas/starforceCalc';
 import { Input } from "@/components/ui/input";
-import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import Image from 'next/image';
@@ -16,10 +15,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Item } from '../../../types/item';
 
-export default function StarForce() {
+interface StarForceProps {
+  selectedGear: Item | null;
+}
+
+export default function StarForce({ selectedGear }: StarForceProps) {
   const [inputs, setInputs] = useState({
-    itemLevel: '',
+    itemLevel: selectedGear?.Level || null,
     startStar: '',
     endStar: '',
   });
@@ -75,7 +79,7 @@ export default function StarForce() {
               height={16}
               alt='star'
             />
-            <h4>Potential Calculator</h4>
+            <h4>Star Force Calculator</h4>
           </div>
           <Switch
             defaultChecked
