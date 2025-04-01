@@ -4,14 +4,25 @@ export interface Combination {
   line3: string;
 }
 
+
+const VALID_TARGETS_BY_POTENTIAL_TYPE: { [key: string]: number[] } = {
+  lowStat: [12, 15, 18, 21, 24, 27, 30, 33, 36],
+  highStat: [14, 17, 20, 23, 26, 27, 30, 33, 36, 39],
+  cdr: [1, 2, 3, 4, 5, 6],
+  cdrStat: [[2,3,4], lprime, uprime],
+  cd: [8, 16, 24],
+  cdStat: [[8, 16], lprime, uprime],
+};
+
 export default function cubeCombo(
-  goal: number,
+  goal: any,
   lPrime: number[],
   uPrime: number[]
 ): Combination[] {
+  console.log(goal, lPrime, uPrime);
   const combinations: Combination[] = [];
-  const taggedLPrime = lPrime.map((value) => `${value} (lPrime)`);
-  const taggedUPrime = uPrime.map((value) => `${value} (uPrime)`);
+  const taggedLPrime = lPrime.map((value) => `${value} (L)`);
+  const taggedUPrime = uPrime.map((value) => `${value} (U)`);
   const firstValues = taggedLPrime;
   const validValues = [...taggedLPrime, ...taggedUPrime];
 

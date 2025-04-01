@@ -137,12 +137,4 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
       allNonPrime: 33.33,
     },
   },
-  weapon: {
-    stat: {
-      statPrime: 14.81,
-      allPrime: 11.11,
-      statNonPrime: 12.48,
-      allNonPrime: 33.33,
-    },
-  },
 };

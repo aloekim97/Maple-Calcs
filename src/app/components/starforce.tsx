@@ -65,6 +65,11 @@ export default function StarForce() {
             onChange={handleInputChange}
             className="w-full p-2 border rounded"
             placeholder="e.g. 150"
+            style={{
+              WebkitAppearance: 'none',
+              MozAppearance: 'textfield',
+              margin: 0
+            }}
           />
         </div>
 
@@ -77,6 +82,11 @@ export default function StarForce() {
             onChange={handleInputChange}
             className="w-full p-2 border rounded"
             placeholder="e.g. 0"
+            style={{
+              WebkitAppearance: 'none',
+              MozAppearance: 'textfield',
+              margin: 0
+            }}
           />
         </div>
 
@@ -89,6 +99,11 @@ export default function StarForce() {
             onChange={handleInputChange}
             className="w-full p-2 border rounded"
             placeholder="e.g. 15"
+            style={{
+              WebkitAppearance: 'none',
+              MozAppearance: 'textfield',
+              margin: 0
+            }}
           />
         </div>
 

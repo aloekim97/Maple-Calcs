@@ -1,6 +1,6 @@
 'use client';
 import StarForce from './starforce';
-import Cube from './pots';
+import Cube from './cube';
 
 export default function GearCalculator() {
   return (

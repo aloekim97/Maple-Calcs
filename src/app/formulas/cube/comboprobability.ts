@@ -1,5 +1,5 @@
 import { Combination } from './cubecombo';
-import { ITEM_PROBABILITIES } from './potlines';
+import { ITEM_PROBABILITIES } from './potentialprobability';
 
 export interface CubeProbabilities {
   line1: number;
@@ -18,6 +18,11 @@ export interface PotCalcResult {
   averageTry: number; // Average number of tries needed
   combinations: Combination[]; // All valid combinations
 }
+const VALID_TARGETS_BY_POTENTIAL_TYPE: { [key: string]: number[] } = {
+  stat: [24, 27, 30, 33, 36],
+  cooldown: [1, 2, 3, 4, 5, 6].concat([0, 6, 7, 9, 10, 12, 13]),
+  critDamage: [8, 16, 24].concat([0, 6, 7, 9, 10, 12, 13]),
+};
 
 export default function findComboProb(
   combinations: Combination[],

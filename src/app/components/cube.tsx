@@ -1,18 +1,32 @@
 'use client';
 import { useState } from 'react';
 import { potCalc } from '../formulas/potentialcalc';
-import { PotCalcResult } from '../formulas/cube/cubeprob';
+import { PotCalcResult } from '../formulas/cube/comboprobability';
+import {
+  ITEM_PROBABILITIES,
+  WSE_PROBABILITIES,
+} from '../formulas/cube/potentialprobability';
+import { getGoalOptions } from '../formulas/cube/potentialdropdown';
 
 export default function Cube() {
+  const allItemTypes = { ...ITEM_PROBABILITIES, ...WSE_PROBABILITIES };
   const [inputs, setInputs] = useState({
     itemType: 'hat',
-    potentialType: 'stat',
-    goal: '30',
+    goal: '',
     cubeType: 'black',
-    itemLevel: '',
+    itemLevel: '150',
   });
 
+  const handleGoalChange = (e: any) => {
+    const selectedValue = JSON.parse(e.target.value);
+    setSelectedGoal(selectedValue);
+  };
+
   const [results, setResults] = useState<PotCalcResult>();
+  const goalOptions = getGoalOptions(inputs.itemType, Number(inputs.itemLevel));
+  const [selectedGoal, setSelectedGoal] = useState(
+    goalOptions ? Object.values(goalOptions)[0] : null
+  );
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -23,19 +37,11 @@ export default function Cube() {
 
   const calculate = () => {
     const itemLevelNum = Number(inputs.itemLevel);
-    const goalNum = Number(inputs.goal);
-
-    if (!itemLevelNum || isNaN(goalNum)) {
-      alert('Please fill all fields');
-      return;
-    }
 
     const potentialResult = potCalc(
-      inputs.itemType as 'hat',
       itemLevelNum,
-      inputs.potentialType as 'stat',
-      goalNum,
-      inputs.cubeType as 'black'
+      selectedGoal,
+      inputs.cubeType
     );
 
     setResults(potentialResult);
@@ -55,6 +61,11 @@ export default function Cube() {
             onChange={handleInputChange}
             className="w-full p-2 border rounded"
             placeholder="e.g. 150"
+            style={{
+              WebkitAppearance: 'none',
+              MozAppearance: 'textfield',
+              margin: 0,
+            }}
           />
         </div>
 
@@ -66,38 +77,28 @@ export default function Cube() {
             onChange={handleInputChange}
             className="w-full p-2 border rounded"
           >
-            <option value="hat">Hat</option>
-            <option value="top">Top</option>
-            <option value="bottom">Bottom</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            Potential Type
-          </label>
-          <select
-            name="potentialType"
-            value={inputs.potentialType}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded"
-          >
-            <option value="stat">Stat%</option>
-            <option value="cooldown">Cooldown Reduction</option>
-            <option value="critDamage">Critical Damage</option>
+            {Object.keys(allItemTypes).map((itemType) => (
+              <option key={itemType} value={itemType}>
+                {itemType.charAt(0).toUpperCase() + itemType.slice(1)}
+              </option>
+            ))}
           </select>
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-1">Goal Value</label>
-          <input
-            type="number"
+          <select
             name="goal"
-            value={inputs.goal}
-            onChange={handleInputChange}
+            value={JSON.stringify(selectedGoal)} // Ensure controlled input
+            onChange={handleGoalChange}
             className="w-full p-2 border rounded"
-            placeholder="e.g. 30"
-          />
+          >
+            {Object.entries(goalOptions).map(([label, value]) => (
+              <option key={label} value={JSON.stringify(value)}>
+                {label}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>

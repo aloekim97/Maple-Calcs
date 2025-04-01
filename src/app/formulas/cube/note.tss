@@ -1,0 +1,104 @@
+import findComboProb, { CubeProbabilities, PotCalcResult } from "./comboprobability";
+import cubeCombo, { Combination } from "./cubecombo";
+import { WSE, WSEItemType } from "./potentialdropdown";
+
+const CUBE_PROBABILITIES: { [key: string]: CubeProbabilities } = {
+  black: { line1: 1.0, line2: 0.2, line3: 0.05 },
+  red: { line1: 1.0, line2: 0.1, line3: 0.01 },
+};
+
+const CUBE_COST: { [key: string]: number } = {
+  black: 22000000,
+  red: 12000000,
+};
+
+const VALID_TARGETS_BY_POTENTIAL_TYPE: { [key: string]: number[] } = {
+  stat: [24, 27, 30, 33, 36, 39],
+  cooldown: [1, 2, 3, 4, 5, 6],
+  critDamage: [8, 16, 24],
+};
+
+// Main function
+export function potCalc(
+  itemType: string,
+  itemLevel: number,
+  goal: any,
+  cubeType: string
+): PotCalcResult | undefined {
+  console.log(goal)
+  const tier = itemLevel > 150 ? 'high' : 'low';
+  
+  // Determine potential type and numeric goal
+  let potentialType: string;
+  let numericGoal: number;
+
+  if (typeof goal === 'number') {
+    // Simple numeric goal
+    potentialType = 
+      itemType === 'hat' ? (Math.random() < 0.5 ? 'stat' : 'cooldown') :
+      itemType === 'glove' ? (Math.random() < 0.5 ? 'stat' : 'critDamage') :
+      'stat';
+    numericGoal = goal;
+  } 
+  else if ('att' in goal) {
+    // WSE potential handling
+    if (!['weapon', 'secondary', 'emblem'].includes(itemType)) {
+      console.log('WSE potentials only available for weapon/secondary/emblem');
+      return;
+    }
+    
+    const wseItemType = itemType as WSEItemType;
+    potentialType = 'wse';
+    numericGoal = goal.att;
+    
+    const wseTargets = WSE[tier][wseItemType].att;
+    if (!wseTargets.includes(numericGoal)) {
+      console.log(`Invalid WSE goal. Valid ATT targets: ${wseTargets.join(', ')}`);
+      return;
+    }
+  } 
+  else {
+    // Complex potential handling
+    potentialType = goal.type;
+    numericGoal = goal.value;
+  }
+
+  // Get cube cost and prime values
+  const cost = CUBE_COST[cubeType];
+  const { lPrime, uPrime } = itemLevel <= 150
+    ? { lPrime: [12, 9], uPrime: [9, 6] }
+    : { lPrime: [13, 10], uPrime: [10, 7] };
+
+  // Get valid targets based on potential type
+  const validTargets = potentialType === 'wse'
+    ? WSE[tier][itemType as WSEItemType].att
+    : VALID_TARGETS_BY_POTENTIAL_TYPE[potentialType] || [];
+
+  if (!validTargets.includes(numericGoal)) {
+    console.log(`Invalid goal. Valid targets: ${validTargets.join(', ')}`);
+    return;
+  }
+
+  // Calculate combinations
+  const goalIndex = validTargets.indexOf(numericGoal);
+  const targetsFromGoal = validTargets.slice(goalIndex);
+  const validCombinations: Combination[] = [];
+
+  for (const target of targetsFromGoal) {
+    validCombinations.push(...cubeCombo(target, lPrime, uPrime));
+  }
+
+  const averageTry = findComboProb(
+    validCombinations,
+    cubeType,
+    itemType,
+    potentialType
+  );
+
+  return {
+    averageCost: (averageTry * cost).toLocaleString(),
+    totalProbability: 1 / averageTry,
+    averageTry,
+    combinations: validCombinations,
+  };
+}
