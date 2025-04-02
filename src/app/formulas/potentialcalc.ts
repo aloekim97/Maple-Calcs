@@ -31,13 +31,15 @@ export function potCalc(
   cubeType: string,
   startingTier: string,
   desiredTier: string,
-  lines: { first: string; second: string; third: string }
+  lines: { first: string; second: string; third: string },
+  itemType: string
 ): PotCalcResult {
   const tier = itemLevel > 150 ? 'high' : 'low';
   const cost = CUBE_COST[cubeType];
   const addedUpLines = aggregateLines(lines);
 
-  const getComboProbability = cubeCombo(addedUpLines, tier);
+  const potCombo = cubeCombo(addedUpLines, tier);
+  const potProb = findComboProb(potCombo, cubeType, itemType);
   // return {
   //   averageCost,
   //   totalProbability,

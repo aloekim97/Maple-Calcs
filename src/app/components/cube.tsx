@@ -74,7 +74,8 @@ export default function Cube({ selectedGear }: CubeProps) {
           first: lines.line1 || '',
           second: lines.line2 || '',
           third: lines.line3 || '',
-        }
+        },
+        inputs.itemType
       );
 
       setResults(potentialResult);
@@ -273,7 +274,7 @@ export default function Cube({ selectedGear }: CubeProps) {
               <div className="max-h-60 overflow-y-auto mt-2 border rounded p-2">
                 {results.combinations.map((combo, i) => (
                   <div key={i} className="py-1 border-b last:border-b-0">
-                    Line 1: {combo.line1}, Line 2: {combo.line2}, Line 3:{' '}
+                    Line 1: {combo.lines}, Line 2: {combo.line2}, Line 3:{' '}
                     {combo.line3}
                   </div>
                 ))}
