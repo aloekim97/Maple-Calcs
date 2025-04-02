@@ -27,11 +27,11 @@ const VALID_TARGETS_BY_POTENTIAL_TYPE: { [key: string]: number[] } = {
 export default function findComboProb(
   combinations: Combination[],
   cubeType: string,
-  itemType: string,
+  itemType: string
 ): number {
   const cubeProb = CUBE_PROBABILITIES[cubeType];
   const itemProb = ITEM_PROBABILITIES[itemType];
-  console.log(itemProb)
+  console.log(itemProb);
 
   let totalProbability = 0;
 
