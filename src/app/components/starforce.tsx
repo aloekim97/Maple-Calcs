@@ -136,22 +136,22 @@ export default function StarForce({ selectedGear }: StarForceProps) {
       
       <div className="flex flex-col gap-[16px]">
         <div className='flex flex-col gap-[16px]'>
-        <Label htmlFor="airplane-mode">Events</Label>
+        <Label htmlFor="Events">Events</Label>
           <div className='flex gap-[8px]'>
-            <Switch id="airplane-mode" />
-            <Label htmlFor="airplane-mode">Star Catching</Label>
+            <Switch id="Star-Catching" />
+            <Label htmlFor="Star-Catching">Star Catching</Label>
           </div>
           <div className='flex gap-[8px]'>
-            <Switch id="airplane-mode" />
-            <Label htmlFor="airplane-mode">Safeguarding</Label>
+            <Switch id="Safeguarding" />
+            <Label htmlFor="Safeguarding">Safeguarding</Label>
           </div>
           <div className='flex gap-[8px]'>
-            <Switch id="airplane-mode" />
-            <Label htmlFor="airplane-mode">30% off</Label>
+            <Switch id="30%-off" />
+            <Label htmlFor="30%-off">30% off</Label>
           </div>
           <div className='flex gap-[8px]'>
-            <Switch id="airplane-mode" />
-            <Label htmlFor="airplane-mode">-30% booms &lt;21</Label>
+            <Switch id="-30%-booms" />
+            <Label htmlFor="-30%-booms">-30% booms &lt;21</Label>
           </div>
         </div>
 
