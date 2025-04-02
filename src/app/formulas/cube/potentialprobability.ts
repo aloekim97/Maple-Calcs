@@ -117,7 +117,7 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
       allNonPrime: 8.33,
     },
   },
-  ACCESSORY: {
+  accessory: {
     stat: {
       statPrime: 10.25,
       allPrime: 7.69,
