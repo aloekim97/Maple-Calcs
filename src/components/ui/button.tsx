@@ -50,7 +50,7 @@ function Button({
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }), "w-full bg-black rounded-full text-white h-[32px]")}
+      className={cn(buttonVariants({ variant, size, className }), "w-full bg-black rounded-full text-white h-[40px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)]")}
       {...props}
     />
   )

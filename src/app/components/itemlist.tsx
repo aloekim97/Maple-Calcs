@@ -4,7 +4,7 @@ import items from '../../../public/data.json';
 import ItemButton from '@/components/ui/itembuttons';
 import { Item } from '../../../types/item';
 import { Dispatch, SetStateAction } from 'react';
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/search";
 import {
   Select,
   SelectContent,
@@ -13,7 +13,8 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/filter"
+import { Label } from '@radix-ui/react-label';
 
 interface ItemsPageProps {
   setSelectedGear: Dispatch<SetStateAction<Item | null>>;
@@ -23,9 +24,9 @@ const itemList = items as Item[];
 
 const ItemsPage = ({ setSelectedGear }: ItemsPageProps) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [itemType, setItemType] = useState('');
-  const [itemSet, setItemSet] = useState('');
-  const [jobFilter, setJobFilter] = useState('');
+  const [itemType, setItemType] = useState<string | null>(null);
+  const [itemSet, setItemSet] = useState<string | null>(null);
+  const [jobFilter, setJobFilter] = useState<string | null>(null);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value.toLowerCase());
@@ -41,70 +42,104 @@ const ItemsPage = ({ setSelectedGear }: ItemsPageProps) => {
   });
 
   return (
-    <div className="p-4">
-      <div className="grid mb-4 space-y-4 grid-cols-4 gap-[8px]">
-        <Input
-          type="text"
-          placeholder="Search items..."
-          value={searchTerm}
-          onChange={handleSearch}
-        />
-
-        <Select
-          value={itemType}
-          onValueChange={setItemType}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="All Item Types" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Item Type</SelectLabel>
-              {['Weapon', 'Emblem', 'Hat', 'Top', 'Bottom', 'Shoes', 'Gloves', 
-                'Cape/Belt/Shoulder', 'Accessory', 'Pocket', 'Badge', 'Heart'].map(type => (
-                <SelectItem key={type} value={type}>{type}</SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-
-        <Select
-          value={itemSet}
-          onValueChange={setItemSet}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="All Sets" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Item Set</SelectLabel>
-              {['CRA', 'Arcane', 'Eternal', 'Genesis', 'Boss', 'Dawn', 
-                'Reinforced', 'Superior', 'Pitch'].map(set => (
-                <SelectItem key={set} value={set}>{set}</SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-
-        <Select
-          value={jobFilter}
-          onValueChange={setJobFilter}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="All Jobs" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Job</SelectLabel>
-              {['Warrior', 'Mage', 'Bowman', 'Thief', 'Pirate'].map(job => (
-                <SelectItem key={job} value={job}>{job}</SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+    <div className="p-4 flex flex-col gap-[8px]">
+      <div className="grid grid-cols-4 gap-[8px]">
+        <div className='flex flex-col gap-[4px]'>
+          <p className='p3 opacity-60'>
+            Search by Name
+          </p>
+          <Input
+            type="text"
+            placeholder="Search items..."
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </div>
+        <div className='flex flex-col gap-[4px]'>
+          <p className='p3 opacity-60'>
+            Filter by Type
+          </p>
+          <Select
+            value={itemType || "all"}
+            onValueChange={(val) => setItemType(val === "all" ? null : val)}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Filter by Type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Type</SelectLabel>
+                <SelectItem value="all">All</SelectItem>
+                {[
+                  'Weapon', 'Emblem', 'Hat', 'Top', 'Bottom', 'Shoes', 'Gloves', 
+                  'Cape/Belt/Shoulder', 'Accessory', 'Pocket', 'Badge', 'Heart'
+                ].map((type) => (
+                  <SelectItem key={type} value={type}>{type}</SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className='flex flex-col gap-[4px]'>
+          <p className='p3 opacity-60'>
+            Filter by Set
+          </p>
+          <Select
+            value={itemSet || "all"}
+            onValueChange={(val) => setItemSet(val === "all" ? null : val)}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Filter by Set" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Set</SelectLabel>
+                <SelectItem value="all">All</SelectItem>
+              </SelectGroup>
+              <SelectGroup>
+                <SelectLabel>Accessory</SelectLabel>
+                {[
+                  'Boss', 'Dawn', 'Reinforced', 'Superior', 'Pitch'
+                ].map((set) => (
+                  <SelectItem key={set} value={set}>{set}</SelectItem>
+                ))}
+              </SelectGroup>
+              <SelectGroup>
+                <SelectLabel>Class</SelectLabel>
+                {[
+                  'CRA', 'Arcane', 'Eternal', 'Genesis'
+                ].map((set) => (
+                  <SelectItem key={set} value={set}>{set}</SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className='flex flex-col gap-[4px]'>
+          <p className='p3 opacity-60'>
+            Filter by Job
+          </p>
+          <Select
+            value={jobFilter || "all"}
+            onValueChange={(val) => setJobFilter(val === "all" ? null : val)}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Filter by Job" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Job</SelectLabel>
+                <SelectItem value="all">All</SelectItem>
+                {['Warrior', 'Mage', 'Bowman', 'Thief', 'Pirate'].map((job) => (
+                  <SelectItem key={job} value={job}>{job}</SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
-      <div className="grid grid-cols-14 overflow-y-auto h-full w-full">
+      <div className="grid grid-cols-14 overflow-y-auto w-full justify-start items-start">
         {filteredItems.map((item) => (
           <ItemButton
             key={item["Item Name"]}

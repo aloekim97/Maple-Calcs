@@ -8,18 +8,12 @@ interface ItemButtonProps {
 
 const getJobColor = (job: string | null): string => {
   switch (job) {
-    case 'warrior':
-      return '#DD242399';
-    case 'mage':
-      return '#0085F199';
-    case 'bowman':
-      return '#05980099';
-    case 'thief':
-      return '#DD911999';
-    case 'pirate':
-      return '#591AD499';
-    default:
-      return '#00000099';
+    case 'Warrior': return '#DD242399';
+    case 'Mage': return '#0085F199';
+    case 'Bowman': return '#05980099';
+    case 'Thief': return '#DD911999';
+    case 'Pirate': return '#591AD499';
+    default: return '#00000099';
   }
 };
 
@@ -34,7 +28,7 @@ const ItemButton = ({ item, onClick }: ItemButtonProps) => {
       title={item['Item Name'].replace(/_/g, ' ')}
     >
       <div
-        className="relative size-[40px] p-[4px] border rounded-[8px] border-opacity-20 hover:border-[2px] transition-opacity duration-200"
+        className="relative size-[40px] p-[4px] border-[1px] rounded-[8px] border-opacity-20 hover:border-[3px] transition-opacity duration-200"
         style={{ borderColor }}
       >
         <Image
