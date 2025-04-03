@@ -85,7 +85,7 @@
     "Damage": ""
   },
   {
-    "Item Name": "Will_o'_The_Wisp_Earrings",
+    "Item Name": "Will_o_The_Wisp_Earrings",
     "Job": "",
     "Set": "Boss",
     "Type": "Accessory",
@@ -125,8 +125,8 @@
     "Type": "Accessory",
     "Sub-Type": "Ring",
     "Level": 120,
-    "Main Stat": "",
-    "Sub Stat": "",
+    "Main Stat": 5,
+    "Sub Stat": 5,
     "HP": "",
     "MP": "",
     "ATK": "",

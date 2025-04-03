@@ -5,9 +5,9 @@ export interface Item {
   Type: string;
   "Sub-Type": string;
   Level: number;
-  "MAIN STAT": number;
-  "SUB STAT": number;
-  HP: number | string;
+  "Main Stat": number;
+  "Sub Stat": number;
+  "HP": number | string;
   MP: number | string;
   ATK: number | string;
   "M.ATK": string;

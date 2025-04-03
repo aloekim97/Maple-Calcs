@@ -16,17 +16,26 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Item } from '../../../types/item';
+import { useEffect } from 'react';
 
 interface StarForceProps {
   selectedGear: Item | null;
+  endStar: string;
+  setEndStar: Dispatch<SetStateAction<string>>;
 }
 
-export default function StarForce({ selectedGear }: StarForceProps) {
+export default function StarForce({ selectedGear, endStar, setEndStar }: StarForceProps) {
   const [inputs, setInputs] = useState({
     itemLevel: selectedGear?.Level || null,
     startStar: '',
-    endStar: '',
   });
+
+  useEffect(() => {
+    setInputs(prev => ({
+      ...prev,
+      itemLevel: selectedGear?.Level || null,
+    }));
+  }, [selectedGear]);
 
   const [results, setResults] = useState<{
     averageCost: string;
@@ -47,7 +56,7 @@ export default function StarForce({ selectedGear }: StarForceProps) {
   const calculate = () => {
     const itemLevelNum = Number(inputs.itemLevel);
     const startStarNum = Number(inputs.startStar);
-    const endStarNum = Number(inputs.endStar);
+    const endStarNum = Number(endStar);
 
     if (!itemLevelNum || isNaN(startStarNum) || isNaN(endStarNum)) {
       alert('Please fill all fields');
@@ -124,8 +133,8 @@ export default function StarForce({ selectedGear }: StarForceProps) {
               <Input
                 type="number"
                 name="endStar"
-                value={inputs.endStar}
-                onChange={handleInputChange}
+                value={endStar}
+                onChange={(e) => setEndStar(e.target.value)}
                 placeholder="e.g. 15"
               />
             </div>
