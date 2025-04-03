@@ -1,10 +1,5 @@
 export interface Combination {
-  lines: [string, string, string];
-  stats: {
-    totalStat: number;
-    totalCD?: number;
-    totalCDR?: number;
-  };
+  lines: [string, string, string]; // Strict 3-element tuple
 }
 
 export default function cubeCombo(
@@ -23,22 +18,14 @@ export default function cubeCombo(
     return lPrime.includes(val) ? `${val}% L` : `${val}% U`;
   };
 
-  const createCombo = (
-    line1: string,
-    line2: string,
-    line3: string,
-    stats: Omit<Combination['stats'], 'lines'>
-  ): Combination => ({
-    lines: [line1, line2, line3],
-    stats,
-  });
-
   // Generate all position permutations
-  function* generate() {
+  function* generate(): Generator<Combination> {
+    // CDR cases
     if (cdr) {
       const cdrCount = cdr / 2;
       const statCount = 3 - cdrCount;
 
+      // Case 1: Line 1 is CDR
       if (cdrCount > 0) {
         const positions = getPositions([1, 2], cdrCount - 1);
         for (const statCombo of getValidStatCombos(statCount, true)) {
@@ -46,14 +33,12 @@ export default function cubeCombo(
             const lines: [string, string, string] = [cdrLine, '', ''];
             pos.forEach((p) => (lines[p + 1] = cdrLine));
             fillRemainingLines(lines, statCombo);
-            yield createCombo(lines[0], lines[1], lines[2], {
-              totalStat: sumStats(statCombo),
-              totalCDR: cdr,
-            });
+            yield { lines };
           }
         }
       }
 
+      // Case 2: Line 1 is LPrime stat
       for (const lPrimeVal of lPrime) {
         const positions = getPositions([1, 2], cdrCount);
         for (const statCombo of getValidStatCombos(statCount - 1, false)) {
@@ -61,23 +46,17 @@ export default function cubeCombo(
           if (stat && totalStat < stat) continue;
 
           for (const pos of positions) {
-            const lines: [string, string, string] = [
-              getStatLine(lPrimeVal),
-              '',
-              '',
-            ];
+            const lines: [string, string, string] = [getStatLine(lPrimeVal), '', ''];
             pos.forEach((p) => (lines[p + 1] = cdrLine));
             fillRemainingLines(lines, statCombo);
-            yield createCombo(lines[0], lines[1], lines[2], {
-              totalStat,
-              totalCDR: cdr,
-            });
+            yield { lines };
           }
         }
       }
       return;
     }
 
+    // CD cases
     if (cd) {
       const cdCount = cd / 8;
       const statCount = 3 - cdCount;
@@ -100,10 +79,7 @@ export default function cubeCombo(
           const totalStat = sumStats(statCombo);
           if (stat && totalStat < stat) continue;
 
-          yield createCombo(lines[0], lines[1], lines[2], {
-            totalStat,
-            totalCD: cd,
-          });
+          yield { lines };
         }
       }
       return;
@@ -111,27 +87,22 @@ export default function cubeCombo(
 
     // Stat-only case (Line 1 must be LPrime)
     for (const lPrimeVal of lPrime) {
-      for (const [stat2, stat3] of getCombinationsWithReplacement(
-        statValues,
-        2
-      )) {
+      for (const [stat2, stat3] of getCombinationsWithReplacement(statValues, 2)) {
         const totalStat = lPrimeVal + stat2 + stat3;
         if (stat && totalStat < stat) continue;
-        yield createCombo(
-          getStatLine(lPrimeVal),
-          getStatLine(stat2),
-          getStatLine(stat3),
-          { totalStat }
-        );
+        yield {
+          lines: [
+            getStatLine(lPrimeVal),
+            getStatLine(stat2),
+            getStatLine(stat3)
+          ] as [string, string, string]
+        };
       }
     }
   }
 
-  // Helper functions
-  function getPositions(
-    availablePositions: number[],
-    count: number
-  ): number[][] {
+  // Helper functions remain the same
+  function getPositions(availablePositions: number[], count: number): number[][] {
     if (count === 0) return [[]];
     return availablePositions.flatMap((pos, i) =>
       getPositions(availablePositions.slice(i + 1), count - 1).map((rest) => [
@@ -141,19 +112,13 @@ export default function cubeCombo(
     );
   }
 
-  function* getValidStatCombos(
-    count: number,
-    allowUPrime: boolean
-  ): Generator<number[]> {
+  function* getValidStatCombos(count: number, allowUPrime: boolean): Generator<number[]> {
     const validStats = allowUPrime ? statValues : lPrime;
     if (count <= 0) yield [];
     else yield* getCombinationsWithReplacement(validStats, count);
   }
 
-  function fillRemainingLines(
-    lines: [string, string, string],
-    stats: number[]
-  ) {
+  function fillRemainingLines(lines: [string, string, string], stats: number[]) {
     let statIdx = 0;
     for (let i = 0; i < 3; i++) {
       if (lines[i] === '' && statIdx < stats.length) {
@@ -168,10 +133,7 @@ export default function cubeCombo(
     return stats.reduce((a, b) => a + b, 0);
   }
 
-  function* getCombinationsWithReplacement(
-    values: number[],
-    length: number
-  ): Generator<number[]> {
+  function* getCombinationsWithReplacement(values: number[], length: number): Generator<number[]> {
     if (length === 1) {
       for (const v of values) yield [v];
     } else {

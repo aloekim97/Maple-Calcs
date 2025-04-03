@@ -289,3 +289,118 @@ return (
     </div>
   );
 }
+
+
+export default function findComboProb(
+  combinations: Combination[],
+  cubeType: string,
+  itemType: string
+): number {
+  console.log('[findComboProb] Starting calculation - Showing first combination only');
+  
+  const cubeProb = CUBE_PROBABILITIES[cubeType];
+  const itemProb = ITEM_PROBABILITIES[itemType];
+
+  if (!itemProb) {
+    console.error(`No probability data found for item type: ${itemType}`);
+    return Infinity;
+  }
+
+  function classifyLine(line: string): { type: string; value: number } {
+    const match = line.match(/(\d+)% ([LU])/);
+    if (!match) {
+      return { type: 'unknown', value: 0 };
+    }
+    const value = parseInt(match[1]);
+    const lineType = match[2];
+
+    if (lineType === 'L') {
+      if (statValues.statPrime.includes(value)) return { type: 'statPrime', value };
+      if (statValues.allPrime.includes(value)) return { type: 'allPrime', value };
+    } else {
+      if (statValues.statNonPrime.includes(value)) return { type: 'statNonPrime', value };
+      if (statValues.allNonPrime.includes(value)) return { type: 'allNonPrime', value };
+    }
+
+    // Handle special cases
+    if (line.includes('Cooldown')) return { type: 'cooldown', value };
+    if (line.includes('Critical Damage')) return { type: 'critdamage', value };
+    if (line.includes('Meso')) return { type: 'dropmeso', value };
+
+    return { type: 'unknown', value };
+  }
+
+  function getLineProbability(lineInfo: { type: string; value: number }, lineNumber: number): number {
+    const cubeLineProb = cubeProb[`line${lineNumber}` as keyof CubeProbabilities];
+    
+    // Handle special numeric cases
+    if (lineInfo.type === 'cooldown' || lineInfo.type === 'critdamage' || lineInfo.type === 'dropmeso') {
+      const probTable = itemProb[lineInfo.type as keyof typeof itemProb];
+      if (probTable && typeof probTable === 'object') {
+        const numericTable = probTable as { [key: number]: number };
+        if (lineInfo.value in numericTable) {
+          return cubeLineProb * (numericTable[lineInfo.value] / 100);
+        }
+      }
+      return 0;
+    }
+    
+    // Handle stat probability cases
+    if (itemProb.stat) {
+      const statKey = lineInfo.type as keyof ProbabilityTiers;
+      if (statKey in itemProb.stat) {
+        return cubeLineProb * (itemProb.stat[statKey] / 100);
+      }
+    }
+
+    return 0;
+  }
+
+  // Only process the first combination
+  for (let i = 0; i < Math.min(2, combinations.length); i++) {
+    const combo = combinations[i];
+    console.log(`\n===== COMBINATION ${i+1} ANALYSIS =====`);
+    console.log('Original Lines:', combo.lines);
+    
+    const line1Info = classifyLine(combo.lines[0]);
+    const line2Info = classifyLine(combo.lines[1]);
+    const line3Info = classifyLine(combo.lines[2]);
+    
+    console.log('\nClassified Lines:');
+    console.log('Line 1:', line1Info);
+    console.log('Line 2:', line2Info);
+    console.log('Line 3:', line3Info);
+
+    const line1Prob = getLineProbability(line1Info, 1);
+    const line2Prob = getLineProbability(line2Info, 2);
+    const line3Prob = getLineProbability(line3Info, 3);
+
+    console.log('\nLine Probabilities:');
+    console.log('Line 1:', `${(line1Prob * 100).toFixed(2)}%`);
+    console.log('Line 2:', `${(line2Prob * 100).toFixed(2)}%`);
+    console.log('Line 3:', `${(line3Prob * 100).toFixed(2)}%`);
+
+    const comboProb = line1Prob * line2Prob * line3Prob;
+    console.log('\nCombination Probability:', `${(comboProb * 100).toFixed(6)}%`);
+    console.log('Cube Cost:', CUBE_COST[cubeType].toLocaleString());
+  }
+
+  if (combinations.length === 0) {
+    console.log('No combinations available to analyze');
+  } else if (combinations.length === 1) {
+    console.log('\n(Only 1 combination available)');
+  }
+
+  // Still return the full calculation (but we only logged the first combo)
+  let totalProbability = 0;
+  combinations.forEach(combo => {
+    const line1Info = classifyLine(combo.lines[0]);
+    const line2Info = classifyLine(combo.lines[1]);
+    const line3Info = classifyLine(combo.lines[2]);
+    totalProbability += getLineProbability(line1Info, 1) * 
+                       getLineProbability(line2Info, 2) * 
+                       getLineProbability(line3Info, 3);
+  });
+
+  return totalProbability > 0 ? 1 / totalProbability : Infinity;
+}

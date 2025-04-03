@@ -7,16 +7,9 @@ export interface ProbabilityTiers {
 
 export interface ItemProbabilities {
   stat: ProbabilityTiers;
-  cooldown?: {
-    1: number;
-    2: number;
-  };
-  critdamage?: {
-    1: number;
-  };
-  dropmeso?: {
-    1: number;
-  };
+  cooldown?: { [key: number]: number };
+  critdamage?: { [key: number]: number };
+  dropmeso?: { [key: number]: number };
 }
 
 export interface WSE {
@@ -61,7 +54,7 @@ export const WSE_PROBABILITIES: { [key: string]: WSE } = {
 };
 
 export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
-  hat: {
+  Hat: {
     stat: {
       statPrime: 9.76,
       allPrime: 7.32,
@@ -73,7 +66,7 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
       2: 4.88,
     },
   },
-  top: {
+  Top: {
     stat: {
       statPrime: 10.3,
       allPrime: 7.69,
@@ -81,7 +74,7 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
       allNonPrime: 6.45,
     },
   },
-  pants: {
+  Bottom: {
     stat: {
       statPrime: 12.1,
       allPrime: 9.09,
@@ -89,7 +82,7 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
       allNonPrime: 7.69,
     },
   },
-  glove: {
+  Gloves: {
     stat: {
       statPrime: 10,
       allPrime: 7.5,
@@ -100,7 +93,7 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
       1: 10,
     },
   },
-  shoes: {
+  Shoes: {
     stat: {
       statPrime: 11.11,
       allPrime: 8.33,
@@ -109,7 +102,7 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
     },
   },
   //Cape, belt, shoulder
-  cape: {
+  Cape: {
     stat: {
       statPrime: 12.12,
       allPrime: 9.09,
@@ -117,7 +110,7 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
       allNonPrime: 8.33,
     },
   },
-  accessory: {
+  Accessory: {
     stat: {
       statPrime: 10.25,
       allPrime: 7.69,
@@ -129,7 +122,7 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
     },
   },
   //heart and badge
-  heart: {
+  Heart: {
     stat: {
       statPrime: 14.81,
       allPrime: 11.11,

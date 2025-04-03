@@ -96,7 +96,7 @@ export const getGoalOptions = (
   }
 
   switch (itemType) {
-    case 'HAT': {
+    case 'Hat': {
       const hatStatOptions =
         lineNumber === 1
           ? firstLine.map((stat) => [`${stat}% Stat`, { stat }])
@@ -113,15 +113,13 @@ export const getGoalOptions = (
       };
     }
 
-    case 'GLOVES': {
+    case 'Gloves': {
       const gloveStatOptions =
         lineNumber === 1
           ? firstLine.map((stat) => [`${stat}% Stat`, { stat }])
           : otherLines.map((stat) => [`${stat}% Stat`, { stat }]);
 
-      const gloveCdOptions = [
-        ['8% Crit Damage', { cd: 8 }],
-      ];
+      const gloveCdOptions = [['8% Crit Damage', { cd: 8 }]];
 
       return {
         ...Object.fromEntries(gloveCdOptions),
