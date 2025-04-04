@@ -58,7 +58,12 @@ export default function GearCalculator() {
         <div className="flex flex-col w-full h-full bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] p-[16px] gap-[16px]">
           <div className="flex w-full h-full gap-[16px] rounded-[8px] border grow">
             {selectedGear ? (
-              <GearRes selectedGear={selectedGear} endStar={endStar} potLines={potLines}/>
+              <GearRes
+                selectedGear={selectedGear}
+                endStar={endStar}
+                potLines={potLines}
+              />
+            ) : (
               // <>
               //   <div className="flex flex-col justify-between items-center w-full p-[12px]">
               //     <div className="grid grid-cols-3 w-full gap-[8px]">
@@ -177,7 +182,6 @@ export default function GearCalculator() {
               //     </div>
               //   </div>
               // </>
-            ) : (
               <div className="flex items-center justify-center w-full h-full">
                 <p>Select an item to view details</p>
               </div>
