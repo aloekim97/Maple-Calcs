@@ -27,7 +27,6 @@ export default function aggregateLines(lines: {
         }
       });
     } catch (e) {
-      console.warn('Failed to parse line:', line);
     }
   }
 

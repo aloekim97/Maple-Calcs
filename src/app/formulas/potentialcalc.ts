@@ -1,75 +1,56 @@
-import findComboProb, {
-  CubeProbabilities,
-  PotCalcResult,
-} from './cube/comboprobability';
-import cubeCombo from './cube/cubecombo';
-import { WSE, WSEItemType } from './cube/potentialdropdown';
-import aggregateLines from './cube/addpotlines';
+import { findComboProb, PotCalcResult } from './cube/potentialprobability';
+import potentialPermutations from './cube/potentialpermutations';
+import aggregateLines from './cube/simplifypotential';
+import { CUBE_COST } from './cube/cubeInfo';
+import { CubeType } from '../components/cubeInputs';
 
-export const CUBE_COST: { [key: string]: number } = {
-  black: 22000000,
-  red: 12000000,
-};
-
-export const lPrime: { [key: string]: number[] } = {
-  low: [12, 9],
-  high: [13, 10],
-};
-
-export const uPrime: { [key: string]: number[] } = {
-  low: [9, 6],
-  high: [10, 7],
-};
-
+interface PotCalculationInput {
+  itemLevel: number;
+  cubeType: string;
+  startingTier: string;
+  desiredTier: string;
+  lines: { first: string; second: string; third: string };
+  itemType: string;
+}
 export function potCalc(
   itemLevel: number,
-  cubeType: string,
+  cubeType: CubeType,
   startingTier: string,
   desiredTier: string,
   lines: { first: string; second: string; third: string },
-  itemType: WSEItemType,
+  itemType: string
 ): PotCalcResult {
   const tier = itemLevel > 150 ? 'high' : 'low';
   const cost = CUBE_COST[cubeType];
 
+  // Aggregate and validate lines
   const addedUpLines = aggregateLines(lines);
-  console.log('Aggregated lines:', addedUpLines);
+  if (!addedUpLines) {
+    throw new Error('Invalid potential lines provided');
+  }
 
-  const potCombo = cubeCombo(addedUpLines, tier);
-  console.log('Generated combinations:', potCombo);
+  // Generate all valid combinations with permutations
+  const potCombo = potentialPermutations(addedUpLines, tier);
+  if (!potCombo || potCombo.length === 0) {
+    throw new Error('No valid combinations found for the given parameters');
+  }
 
+  // Calculate probabilities
   const potProb = findComboProb(potCombo, cubeType, itemType);
-  console.log('Probability result:', potProb);
+  if (!potProb || potProb.averageTry === Infinity) {
+    throw new Error('Failed to calculate probabilities for combinations');
+  }
 
-  // Calculate average tries and cost
-  const averageTry = potProb;
-  const averageCost = (averageTry * cost).toLocaleString();
+  // Calculate final results
+  const averageTry = potProb.averageTry;
+  const averageCost = Math.round(averageTry * cost).toLocaleString();
+  const totalProbability = potProb.totalProbability;
 
   console.groupEnd();
 
   return {
     averageCost,
-    totalProbability: 1/potProb,
+    totalProbability,
     averageTry,
-    combinations: potCombo
   };
 }
-
-// Test function
-// export function testPotCalc() {
-//   console.group('[testPotCalc] Running test');
-//   const result = potCalc(
-//     160,
-//     'black',
-//     'rare',
-//     'legendary',
-//     { first: "12% L", second: "9% U", third: "6% U" },
-//     'Gloves'
-//   );
-//   console.log('Test result:', result);
-//   console.groupEnd();
-//   return result;
-// }
-
-// Uncomment to run test automatically
-// testPotCalc();

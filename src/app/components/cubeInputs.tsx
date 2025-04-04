@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useMemo } from 'react';
 import { potCalc } from '../formulas/potentialcalc';
-import { PotCalcResult } from '../formulas/cube/comboprobability';
+import { Lines, PotCalcResult } from '../formulas/cube/potentialprobability';
 import { getGoalOptions } from '../formulas/cube/potentialdropdown';
 import {
   Select,
@@ -16,11 +16,15 @@ import { Switch } from '@/components/ui/switch';
 import Image from 'next/image';
 import { Item } from '../../../types/item';
 
+export type CubeType = 'black' | 'red';
+
 interface CubeProps {
   selectedGear: Item | null;
+  setCubeResults: React.Dispatch<React.SetStateAction<PotCalcResult | null>>;
+  setPotLines: React.Dispatch<React.SetStateAction<Lines | null>>;
 }
 
-export default function Cube({ selectedGear }: CubeProps) {
+export default function Cube({ selectedGear, setCubeResults, setPotLines }: CubeProps) {
   const [inputs, setInputs] = useState({
     itemType: selectedGear?.Type || '',
     startingTier: 'rare',
@@ -67,18 +71,23 @@ export default function Cube({ selectedGear }: CubeProps) {
     try {
       const potentialResult = potCalc(
         inputs.itemLevel,
-        inputs.cubeType,
+        inputs.cubeType as 'black' | 'red',
         inputs.startingTier,
         inputs.desiredTier,
         {
-          first: lines.line1 || '',
-          second: lines.line2 || '',
-          third: lines.line3 || '',
+          first: lines.line1,
+          second: lines.line2,
+          third: lines.line3,
         },
         inputs.itemType
       );
-
-      setResults(potentialResult);
+      setPotLines({
+        first: lines.line1,
+        second: lines.line2,
+        third: lines.line3
+      });
+  
+      setCubeResults(potentialResult);
     } catch (error) {
       console.error('Calculation error:', error);
       // Handle error (show toast, etc.)
