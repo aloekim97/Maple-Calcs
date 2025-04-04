@@ -7,6 +7,15 @@ import ItemsPage from './itemlist';
 import { useState } from 'react';
 import { Item } from '../../../types/item';
 
+const getMaxStars = (level: number): number => {
+  if (level >= 138) return 30;
+  else if (level >= 128) return 20;
+  else if (level >= 118) return 15;
+  else if (level >= 108) return 10;
+  else if (level >= 95) return 8;
+  else return 5;
+};
+
 export default function GearCalculator() {
   const [selectedGear, setSelectedGear] = useState<Item | null>(null);
   const [endStar, setEndStar] = useState('');
@@ -38,30 +47,45 @@ export default function GearCalculator() {
             Calculate
           </Button>
         </div>
-<div className="flex flex-col w-full h-full bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] p-[16px] gap-[16px]">
-  <div className='flex w-full h-full gap-[16px] rounded-[8px] border grow'>
-    {selectedGear ? (
-      <>
-        <div className="flex flex-col justify-between items-center w-full p-[12px]">
-            <div className='grid grid-cols-3 w-full gap-[8px]'>
-              {Array.from({ length: 6 }).map((_, row) => (
-                <div key={row} className="grid grid-cols-5 justify-between">
-                  {Array.from({ length: 5 }).map((_, col) => {
-                    const starIndex = row * 5 + col;
-                    const isFilled = starIndex < Number(endStar);
-                    return (
-                      <Image
-                        key={starIndex}
-                        src={isFilled ? '/image/Star_Icon.svg' : '/image/No_Star_Icon.svg'}
-                        width={16}
-                        height={16}
-                        alt='star'
-                      />
-                    );
-                  })}
+        <div className="flex flex-col w-full h-full bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] p-[16px] gap-[16px]">
+        <div className='flex w-full h-full gap-[16px] rounded-[8px] border grow'>
+          {selectedGear ? (
+            <>
+              <div className="flex flex-col justify-between items-center w-full p-[12px]">
+                <div className='grid grid-flow-row-dense grid-cols-3 w-full gap-[8px]'>
+                  {(() => {
+                    const maxStars = getMaxStars(selectedGear.Level);
+                    const rows = Math.ceil(maxStars / 5);
+                    
+                    return Array.from({ length: rows }).map((_, row) => {
+                      const isLastRow = row === rows - 1;
+                      const starsInRow = isLastRow 
+                        ? maxStars % 5 === 0 
+                          ? 5 
+                          : maxStars % 5 
+                        : 5;
+
+                      return (
+                        <div key={row} className="grid grid-cols-5 justify-between">
+                          {Array.from({ length: starsInRow }).map((_, col) => {
+                            const starIndex = row * 5 + col;
+                            const isFilled = starIndex < Number(endStar);
+                            
+                            return (
+                              <Image
+                                key={starIndex}
+                                src={isFilled ? '/image/Star_Icon.svg' : '/image/No_Star_Icon.svg'}
+                                width={16}
+                                height={16}
+                                alt='star'
+                              />
+                            );
+                          })}
+                        </div>
+                      );
+                    });
+                  })()}
                 </div>
-              ))}
-            </div>
             <Image
               src={`/image/items/${selectedGear["Item Name"]}.png`}
               width={184}
@@ -72,15 +96,15 @@ export default function GearCalculator() {
               <div className='flex flex-col gap-[8px] w-full'>
                 <div className='flex justify-between w-full'>
                   <h4 className='text-[#00B188]'>Magic Attack</h4>
-                  <h4 className='text-pot'>+13%</h4>
+                  <h4 className='text-[#00B188]'>+13%</h4>
                 </div>
                 <div className='flex justify-between w-full'>
                   <h4 className='text-[#00B188]'>Magic Attack</h4>
-                  <h4 className='text-pot'>+13%</h4>
+                  <h4 className='text-[#00B188]'>+13%</h4>
                 </div>
                 <div className='flex justify-between w-full'>
                   <h4 className='text-[#00B188]'>Magic Attack</h4>
-                  <h4 className='text-pot'>+13%</h4>
+                  <h4 className='text-[#00B188]'>+13%</h4>
                 </div>
               </div>
             </div>
@@ -91,7 +115,7 @@ export default function GearCalculator() {
           
           <div className="flex justify-between w-full">
             <h4>Type:</h4>
-            <p className="flex justify-end items-end">{selectedGear.Type}</p>
+            <p className="flex justify-end items-end">{selectedGear['Sub-Type']}</p>
           </div>
           
           <div className="flex justify-between w-full">
@@ -151,7 +175,7 @@ export default function GearCalculator() {
         </div>
       </>
     ) : (
-      <div className="flex items-center justify-center w-full h-full">
+      <div className="flex items-center justify-center w-full h-full grow py-[160px]">
         <p>Select an item to view details</p>
       </div>
     )}

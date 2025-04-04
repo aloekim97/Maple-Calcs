@@ -1,0 +1,402 @@
+[
+  {
+    "": "CRA",
+    "Set Count": 2,
+    "Stat": 20,
+    "Att": "",
+    "HP&MP": 1000,
+    "Boss Damage": "",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "CRA",
+    "Set Count": 3,
+    "Stat": "",
+    "Att": 50,
+    "HP&MP": "10%",
+    "Boss Damage": "",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "CRA",
+    "Set Count": 4,
+    "Stat": "",
+    "Att": "",
+    "HP&MP": "",
+    "Boss Damage": "30%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Absolab",
+    "Set Count": 2,
+    "Stat": "",
+    "Att": 20,
+    "HP&MP": 1500,
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Absolab",
+    "Set Count": 3,
+    "Stat": 30,
+    "Att": 20,
+    "HP&MP": "",
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Absolab",
+    "Set Count": 4,
+    "Stat": "",
+    "Att": 25,
+    "HP&MP": "",
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Absolab",
+    "Set Count": 5,
+    "Stat": "",
+    "Att": 30,
+    "HP&MP": "",
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Arcane",
+    "Set Count": 2,
+    "Stat": "",
+    "Att": 30,
+    "HP&MP": "",
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Arcane",
+    "Set Count": 3,
+    "Stat": "",
+    "Att": 30,
+    "HP&MP": "",
+    "Boss Damage": "",
+    "IED": "10%",
+    "Crit Damage": ""
+  },
+  {
+    "": "Arcane",
+    "Set Count": 4,
+    "Stat": 50,
+    "Att": 35,
+    "HP&MP": "",
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Arcane",
+    "Set Count": 5,
+    "Stat": "",
+    "Att": 40,
+    "HP&MP": 2000,
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Eternal",
+    "Set Count": 2,
+    "Stat": "",
+    "Att": 40,
+    "HP&MP": 2500,
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Eternal",
+    "Set Count": 3,
+    "Stat": 50,
+    "Att": 40,
+    "HP&MP": "",
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Eternal",
+    "Set Count": 4,
+    "Stat": "",
+    "Att": 40,
+    "HP&MP": "15%",
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Eternal",
+    "Set Count": 5,
+    "Stat": "",
+    "Att": 40,
+    "HP&MP": "",
+    "Boss Damage": "",
+    "IED": "20%",
+    "Crit Damage": ""
+  },
+  {
+    "": "Eternal",
+    "Set Count": 6,
+    "Stat": "",
+    "Att": 40,
+    "HP&MP": "",
+    "Boss Damage": "15%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Eternal",
+    "Set Count": 7,
+    "Stat": 50,
+    "Att": 40,
+    "HP&MP": 2500,
+    "Boss Damage": "15%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Eternal",
+    "Set Count": 8,
+    "Stat": "",
+    "Att": 40,
+    "HP&MP": "",
+    "Boss Damage": "15%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Boss",
+    "Set Count": 3,
+    "Stat": 10,
+    "Att": 5,
+    "HP&MP": "5%",
+    "Boss Damage": "",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Boss",
+    "Set Count": 5,
+    "Stat": 10,
+    "Att": 5,
+    "HP&MP": "5%",
+    "Boss Damage": "",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Boss",
+    "Set Count": 7,
+    "Stat": 10,
+    "Att": 10,
+    "HP&MP": "",
+    "Boss Damage": "",
+    "IED": "10%",
+    "Crit Damage": ""
+  },
+  {
+    "": "Boss",
+    "Set Count": 9,
+    "Stat": 15,
+    "Att": 10,
+    "HP&MP": "",
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Reinforced",
+    "Set Count": 2,
+    "Stat": 15,
+    "Att": "",
+    "HP&MP": 1200,
+    "Boss Damage": "",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Reinforced",
+    "Set Count": 3,
+    "Stat": "",
+    "Att": 30,
+    "HP&MP": "10%",
+    "Boss Damage": "",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Reinforced",
+    "Set Count": 4,
+    "Stat": "",
+    "Att": "",
+    "HP&MP": "",
+    "Boss Damage": "30%",
+    "IED": "15%",
+    "Crit Damage": ""
+  },
+  {
+    "": "Superior",
+    "Set Count": 2,
+    "Stat": 20,
+    "Att": "",
+    "HP&MP": 1500,
+    "Boss Damage": "",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Superior",
+    "Set Count": 3,
+    "Stat": "",
+    "Att": 35,
+    "HP&MP": "13%",
+    "Boss Damage": "",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Superior",
+    "Set Count": 4,
+    "Stat": "",
+    "Att": "",
+    "HP&MP": "",
+    "Boss Damage": "30%",
+    "IED": "30%",
+    "Crit Damage": ""
+  },
+  {
+    "": "Dawn",
+    "Set Count": 2,
+    "Stat": 10,
+    "Att": 10,
+    "HP&MP": 250,
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Dawn",
+    "Set Count": 3,
+    "Stat": 10,
+    "Att": 10,
+    "HP&MP": 250,
+    "Boss Damage": "",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Dawn",
+    "Set Count": 4,
+    "Stat": 10,
+    "Att": 10,
+    "HP&MP": 250,
+    "Boss Damage": "",
+    "IED": "10%",
+    "Crit Damage": ""
+  },
+  {
+    "": "Pitch",
+    "Set Count": 2,
+    "Stat": 10,
+    "Att": 10,
+    "HP&MP": 250,
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Pitch",
+    "Set Count": 3,
+    "Stat": 10,
+    "Att": 10,
+    "HP&MP": 250,
+    "Boss Damage": "",
+    "IED": "10%",
+    "Crit Damage": ""
+  },
+  {
+    "": "Pitch",
+    "Set Count": 4,
+    "Stat": 15,
+    "Att": 15,
+    "HP&MP": 375,
+    "Boss Damage": "",
+    "IED": "",
+    "Crit Damage": "5%"
+  },
+  {
+    "": "Pitch",
+    "Set Count": 5,
+    "Stat": 15,
+    "Att": 15,
+    "HP&MP": 375,
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Pitch",
+    "Set Count": 6,
+    "Stat": 15,
+    "Att": 15,
+    "HP&MP": 375,
+    "Boss Damage": "",
+    "IED": "10%",
+    "Crit Damage": ""
+  },
+  {
+    "": "Pitch",
+    "Set Count": 7,
+    "Stat": 15,
+    "Att": 15,
+    "HP&MP": 375,
+    "Boss Damage": "",
+    "IED": "",
+    "Crit Damage": "5%"
+  },
+  {
+    "": "Pitch",
+    "Set Count": 8,
+    "Stat": 15,
+    "Att": 15,
+    "HP&MP": 375,
+    "Boss Damage": "10%",
+    "IED": "",
+    "Crit Damage": ""
+  },
+  {
+    "": "Pitch",
+    "Set Count": 9,
+    "Stat": 15,
+    "Att": 15,
+    "HP&MP": 375,
+    "Boss Damage": "",
+    "IED": "",
+    "Crit Damage": "5%"
+  },
+  {
+    "": "Pitch",
+    "Set Count": 10,
+    "Stat": 20,
+    "Att": 20,
+    "HP&MP": 500,
+    "Boss Damage": "15%",
+    "IED": "",
+    "Crit Damage": ""
+  }
+]
