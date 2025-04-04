@@ -11,6 +11,15 @@ import CubeCost from './cubeRes';
 import SfCost from './starForceRes';
 import GearRes from './gearRes';
 
+const getMaxStars = (level: number): number => {
+  if (level >= 138) return 30;
+  else if (level >= 128) return 20;
+  else if (level >= 118) return 15;
+  else if (level >= 108) return 10;
+  else if (level >= 95) return 8;
+  else return 5;
+};
+
 export default function GearCalculator() {
   const [selectedGear, setSelectedGear] = useState<Item | null>(null);
   const [cubeResults, setCubeResults] = useState<PotCalcResult | null>(null);
