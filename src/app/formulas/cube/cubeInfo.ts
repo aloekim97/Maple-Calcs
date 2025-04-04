@@ -31,7 +31,7 @@ export interface CubeProbabilities {
 
 export const CUBE_PROBABILITIES = {
   black: {
-    L: { line1: 1, line2: 0.2, line3: 0.05 }, 
+    L: { line1: 1, line2: 0.2, line3: 0.05 },
     U: { line1: 1, line2: 0.8, line3: 0.95 },
   },
   red: {
