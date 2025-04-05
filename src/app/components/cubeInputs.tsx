@@ -24,7 +24,11 @@ interface CubeProps {
   setPotLines: React.Dispatch<React.SetStateAction<Lines | null>>;
 }
 
-export default function Cube({ selectedGear, setCubeResults, setPotLines }: CubeProps) {
+export default function Cube({
+  selectedGear,
+  setCubeResults,
+  setPotLines,
+}: CubeProps) {
   const [inputs, setInputs] = useState({
     itemType: selectedGear?.Type || '',
     startingTier: 'rare',
@@ -84,9 +88,9 @@ export default function Cube({ selectedGear, setCubeResults, setPotLines }: Cube
       setPotLines({
         first: lines.line1,
         second: lines.line2,
-        third: lines.line3
+        third: lines.line3,
       });
-  
+
       setCubeResults(potentialResult);
     } catch (error) {
       console.error('Calculation error:', error);

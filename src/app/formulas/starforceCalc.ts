@@ -4,6 +4,12 @@ import { getCost, getNewCost } from './sf/cost';
 export function calculateStarforceStats(
   startStar: number,
   endStar: number,
+  itemLevel: number,
+  starCatch: boolean,
+  safeguard: boolean,
+  discount30: boolean,
+  reducedBooms: boolean,
+  mvpDiscount: string,
   equipLevel: number
 ): {
   averageCost: string;
@@ -16,7 +22,7 @@ export function calculateStarforceStats(
   let totalVarianceCost = 0;
 
   for (let star = startStar; star < endStar; star++) {
-    const { success, boom } = getChance(star);
+    const { success, boom } = getChance(star, starCatch, safeguard);
     const cost = parseFloat(getCost(star, equipLevel).replace(/,/g, ''));
     const pSuccess = success / 100;
     const pBoom = boom / 100;
@@ -25,7 +31,7 @@ export function calculateStarforceStats(
 
     const varianceAttempts = (1 - pSuccess) / (pSuccess * pSuccess);
 
-    totalExpectedCost += (expectedAttempts * cost);
+    totalExpectedCost += expectedAttempts * cost;
     totalExpectedBooms += pBoom * expectedAttempts;
 
     totalVarianceCost +=
@@ -51,7 +57,12 @@ export function calculateStarforceStats(
 export function calculateKMS(
   startStar: number,
   endStar: number,
-  equipLevel: number
+  equipLevel: number,
+  starCatch: boolean,
+  safeguard: boolean,
+  discount30: boolean,
+  reducedBooms: boolean,
+  mvpDiscount: string
 ): {
   averageCost: string;
   averageBooms: string;
@@ -63,34 +74,29 @@ export function calculateKMS(
   let totalVarianceCost = 0;
 
   for (let star = startStar; star < endStar; star++) {
-    const { success, boom } = getChance(star);
-    const cost = parseFloat(getNewCost(star, equipLevel).replace(/,/g, ''));
+    const { success, boom } = getChance(star, starCatch, safeguard, reducedBooms);
+    const cost = parseFloat(
+      getNewCost(star, equipLevel, safeguard, discount30, mvpDiscount).replace(/,/g, '')
+    );
     const pSuccess = success / 100;
     const pBoom = boom / 100;
 
     const expectedAttempts = 1 / pSuccess;
-
     const varianceAttempts = (1 - pSuccess) / (pSuccess * pSuccess);
 
     totalExpectedCost += expectedAttempts * cost;
-    totalExpectedBooms += pBoom / (pBoom + pSuccess);
-
+    totalExpectedBooms += pBoom * expectedAttempts;
     totalVarianceCost += varianceAttempts * Math.pow(cost, 2);
   }
 
   const stdDev = Math.sqrt(totalVarianceCost);
-
-  const luckyCost = totalExpectedCost - 1 * stdDev;
-  const unluckyCost = totalExpectedCost + 1 * stdDev;
-
-  const formatNumber = (num: number) => num.toLocaleString();
-
-  const roundedAverageBooms = Math.round(totalExpectedBooms * 100) / 100;
+  const luckyCost = Math.max(0, totalExpectedCost - stdDev); // Prevent negative values
+  const unluckyCost = totalExpectedCost + stdDev;
 
   return {
-    averageCost: formatNumber(Math.round(totalExpectedCost)),
-    averageBooms: roundedAverageBooms.toFixed(2),
-    luckyCost: formatNumber(Math.round(luckyCost)),
-    unluckyCost: formatNumber(Math.round(unluckyCost)),
+    averageCost: Math.round(totalExpectedCost).toLocaleString(),
+    averageBooms: totalExpectedBooms.toFixed(2),
+    luckyCost: Math.round(luckyCost).toLocaleString(),
+    unluckyCost: Math.round(unluckyCost).toLocaleString(),
   };
 }

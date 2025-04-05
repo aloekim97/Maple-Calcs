@@ -2,7 +2,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import itemStats from '../formulas/sf/itemstats';
 import { calculateKMS } from '../formulas/starforceCalc';
-import { Input } from "@/components/ui/input";
+import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import Image from 'next/image';
@@ -14,28 +14,50 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from '@/components/ui/select';
 import { Item } from '../../../types/item';
 import { useEffect } from 'react';
 
 interface StarForceProps {
   selectedGear: Item | null;
+  setEndStar: Dispatch<SetStateAction<string> | ''>;
+  setSfRes: Dispatch<SetStateAction<StarForceResults | null>>;
+}
+type InputState = {
+  itemLevel: number | null;
+  startStar: number;
   endStar: string;
-  setEndStar: Dispatch<SetStateAction<string>>;
+};
+
+export interface StarForceResults {
+  averageCost: string;
+  averageBooms: string;
+  luckyCost: string;
+  unluckyCost: string;
+  stats: any;
 }
 
-export default function StarForce({ selectedGear, endStar, setEndStar }: StarForceProps) {
-  const [inputs, setInputs] = useState({
+export default function StarForce({
+  selectedGear,
+  setEndStar,
+  setSfRes,
+}: StarForceProps) {
+  const [inputs, setInputs] = useState<InputState>({
     itemLevel: selectedGear?.Level || null,
-    startStar: '',
+    startStar: 0,
+    endStar: '',
   });
 
-  useEffect(() => {
-    setInputs(prev => ({
-      ...prev,
-      itemLevel: selectedGear?.Level || null,
-    }));
-  }, [selectedGear]);
+  // Add state for the switches
+  const [events, setEvents] = useState({
+    starCatch: false,
+    safeguard: false,
+    discount30: false,
+    reducedBooms: false,
+  });
+
+  // Add state for MVP discount
+  const [mvpDiscount, setMvpDiscount] = useState<string>('none');
 
   const [results, setResults] = useState<{
     averageCost: string;
@@ -47,79 +69,108 @@ export default function StarForce({ selectedGear, endStar, setEndStar }: StarFor
       difference: { stat: number; att: number };
     };
   }>();
+  useEffect(() => {
+    setInputs((prev) => ({
+      ...prev,
+      itemLevel: selectedGear?.Level || null,
+    }));
+  }, [selectedGear]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setInputs((prev) => ({ ...prev, [name]: value }));
+
+    setInputs((prev) => ({
+      ...prev,
+      [name]:
+        name === 'itemLevel' || name === 'startStar'
+          ? Number(value) || 0 // Convert to number, fallback to 0
+          : value,
+    }));
+  };
+
+  // Handler for event switches
+  const handleEventToggle = (eventName: keyof typeof events) => {
+    setEvents((prev) => ({
+      ...prev,
+      [eventName]: !prev[eventName],
+    }));
   };
 
   const calculate = () => {
-    const itemLevelNum = Number(inputs.itemLevel);
-    const startStarNum = Number(inputs.startStar);
-    const endStarNum = Number(endStar);
+    const itemLevelNum = inputs.itemLevel ?? 0;
+    const startStarNum = inputs.startStar;
+    const endStarNum = Number(inputs.endStar);
 
     if (!itemLevelNum || isNaN(startStarNum) || isNaN(endStarNum)) {
-      alert('Please fill all fields');
+      alert('Please fill all fields with valid numbers');
       return;
     }
 
-    const starForceResult = calculateKMS(
-      startStarNum,
-      endStarNum,
-      itemLevelNum
-    );
-    const statsResult = itemStats(startStarNum, endStarNum, itemLevelNum);
+    try {
+      const starForceResult = calculateKMS(
+        startStarNum,
+        endStarNum,
+        itemLevelNum,
+        events.starCatch,
+        events.safeguard,
+        events.discount30,
+        events.reducedBooms,
+        mvpDiscount
+      );
 
-    setResults({
-      ...starForceResult,
-      stats: statsResult,
-    });
+      const statsResult = itemStats(startStarNum, endStarNum, itemLevelNum);
+      setEndStar(inputs.endStar);
+      setSfRes({
+        ...starForceResult,
+        stats: statsResult,
+      });
+    } catch (error) {
+      console.error('Calculation error:', error);
+      alert('An error occurred during calculation');
+      setSfRes(null);
+    }
   };
 
   return (
     <div className="flex flex-col grow bg-white p-[16px] rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] h-full w-full justify-between">
-      <div className='flex flex-col gap-[16px]'>
+      <div className="flex flex-col gap-[16px]">
         {/* HEADER */}
-        <div className='flex w-full justify-between'>
-          <div className='flex gap-[8px]'>
+        <div className="flex w-full justify-between">
+          <div className="flex gap-[8px]">
             <Image
               src="image/Star_Icon.svg"
               width={16}
               height={16}
-              alt='star'
+              alt="star"
             />
             <h4>Star Force Calculator</h4>
           </div>
-          <Switch
-            defaultChecked
-          />
+          <Switch defaultChecked />
         </div>
         {/* Input Fields */}
         <div className="flex flex-col gap-[16px]">
-          <div className='flex gap-[16px] w-full'>
+          <div className="flex gap-[16px] w-full">
             <div className="w-full">
-             <p className='p3'>MVP Discount</p>
-             <Select
-            //  onValueChange={field.onChange}             
-             >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="e.g. Silver" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>MVP Discount</SelectLabel>
-                  <SelectItem value="none">None</SelectItem>
-                  <SelectItem value="silver">Silver</SelectItem>
-                  <SelectItem value="gold">Gold</SelectItem>
-                  <SelectItem value="diamond">Diamond</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+              <p className="p3">MVP Discount</p>
+              <Select value={mvpDiscount} onValueChange={setMvpDiscount}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="e.g. Silver" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>MVP Discount</SelectLabel>
+                    <SelectItem value="none">None</SelectItem>
+                    <SelectItem value="silver">Silver</SelectItem>
+                    <SelectItem value="gold">Gold</SelectItem>
+                    <SelectItem value="diamond">Diamond</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
           </div>
-          <div className='flex gap-[16px] w-full'>
+          <div className="flex gap-[16px] w-full">
             <div>
-              <p className='p3'>Start Star</p>
+              <p className="p3">Start Star</p>
               <Input
                 type="number"
                 name="startStar"
@@ -129,37 +180,53 @@ export default function StarForce({ selectedGear, endStar, setEndStar }: StarFor
               />
             </div>
             <div>
-              <p className='p3'>End Star</p>
+              <p className="p3">End Star</p>
               <Input
                 type="number"
                 name="endStar"
-                value={endStar}
-                onChange={(e) => setEndStar(e.target.value)}
+                value={inputs.endStar}
+                onChange={handleInputChange}
                 placeholder="e.g. 15"
               />
             </div>
           </div>
         </div>
       </div>
-      <div className='w-full h-[1px] rounded-full bg-black opacity-20'/>
-      
+      <div className="w-full h-[1px] rounded-full bg-black opacity-20" />
+
       <div className="flex flex-col gap-[16px]">
-        <div className='flex flex-col gap-[16px]'>
-        <Label htmlFor="Events">Events</Label>
-          <div className='flex gap-[8px]'>
-            <Switch id="Star-Catching" />
+        <div className="flex flex-col gap-[16px]">
+          <Label htmlFor="Events">Events</Label>
+          <div className="flex gap-[8px]">
+            <Switch
+              id="Star-Catching"
+              checked={events.starCatch}
+              onCheckedChange={() => handleEventToggle('starCatch')}
+            />
             <Label htmlFor="Star-Catching">Star Catching</Label>
           </div>
-          <div className='flex gap-[8px]'>
-            <Switch id="Safeguarding" />
+          <div className="flex gap-[8px]">
+            <Switch
+              id="Safeguarding"
+              checked={events.safeguard}
+              onCheckedChange={() => handleEventToggle('safeguard')}
+            />
             <Label htmlFor="Safeguarding">Safeguarding</Label>
           </div>
-          <div className='flex gap-[8px]'>
-            <Switch id="30%-off" />
+          <div className="flex gap-[8px]">
+            <Switch
+              id="30%-off"
+              checked={events.discount30}
+              onCheckedChange={() => handleEventToggle('discount30')}
+            />
             <Label htmlFor="30%-off">30% off</Label>
           </div>
-          <div className='flex gap-[8px]'>
-            <Switch id="-30%-booms" />
+          <div className="flex gap-[8px]">
+            <Switch
+              id="-30%-booms"
+              checked={events.reducedBooms}
+              onCheckedChange={() => handleEventToggle('reducedBooms')}
+            />
             <Label htmlFor="-30%-booms">-30% booms &lt;21</Label>
           </div>
         </div>
@@ -216,6 +283,12 @@ export default function StarForce({ selectedGear, endStar, setEndStar }: StarFor
           </div>
         )}
       </div>
+      <button
+        onClick={calculate}
+        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+      >
+        Calculate
+      </button>
     </div>
   );
 }

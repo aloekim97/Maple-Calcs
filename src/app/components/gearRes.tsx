@@ -6,25 +6,28 @@ interface GearProps {
   selectedGear: Item;
   endStar: string;
   potLines: any;
+  sfStats: any;
 }
 
 export default function GearRes({
   selectedGear,
   endStar,
   potLines,
+  sfStats,
 }: GearProps) {
   const [stat, setStat] = useState('');
   const getPotValue = (potLine: string) => {
     try {
       const parsed = JSON.parse(potLine);
-      return parsed.stat || 0; // Return 0 if stat doesn't exist
+      return parsed.stat || 0; 
     } catch {
-      return 0; // Fallback if JSON parsing fails
+      return 0; 
     }
   };
+  console.log(sfStats)
   useEffect(() => {
     if (selectedGear.Type === 'Weapon') {
-      setStat(selectedGear.Job === 'Mage' ? 'M.ATT' : 'ATT');
+      setStat(selectedGear.Job === 'Mage' ? 'MAGIC ATT' : 'ATT');
     } else {
       setStat(
         selectedGear.Job === 'Warrior'
@@ -37,12 +40,11 @@ export default function GearRes({
           ? 'LUK'
           : selectedGear.Job === 'Archer'
           ? 'DEX'
-          : 'stat' // Default fallback
+          : 'stat' 
       );
     }
   }, [selectedGear.Type, selectedGear.Job]);
 
-  console.log({ selectedGear, potLines, stat });
   return (
     <>
       <div className="flex flex-col justify-between items-center w-full p-[12px]">
