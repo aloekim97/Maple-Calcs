@@ -24,34 +24,29 @@ export default function itemStats(
   const calculateStatsUpTo = (targetStar: number) => {
     let currentStat = 0;
     let currentAtt = 0;
-    let attIncrement = 0;
-    const baseAttack = 0; // Your base attack value
-    
-    for (let star = 0; star < targetStar; star++) {
+    let attGain = 0;
+
+    for (let star = 0; star <= targetStar; star++) {
       if (star < 5) {
         currentStat += 2;
       } else if (star < 15) {
         currentStat += 3;
-      } else if (star < 20) {
+      } else {
         currentStat += baseStat;
-        if (star === 15) {
-          // Initialize attack at 16★
-          attIncrement = baseAttack;
-        } else if (star >= 16) {
-          // Progressive increase from 16★ to 19★
-          currentAtt += attIncrement;
-          attIncrement += 1;
-        }
-      } else if (star === 20) {
-        currentStat += baseStat;
-        currentAtt += attIncrement + 1; // +12 (from 11+1)
+      }
+
+      if (star === 16) {
+        attGain = baseAtt;
+        currentAtt += attGain;
+      } else if (star >= 17 && star <= 20) {
+        attGain += 1;
+        currentAtt += attGain;
       } else if (star === 21) {
-        currentStat += baseStat;
-        currentAtt += attIncrement + 2; // +13 (from 11+2)
-      } else if (star === 22) {
-        currentAtt += attIncrement + 4; // +15 (from 11+4) to reach 78
-      } else if (star < 30) {
-        currentAtt += baseAttack + 2; // Default for stars beyond 22
+        attGain += 1;
+        currentAtt += attGain;
+      } else if (star >= 22) {
+        attGain += 2;
+        currentAtt += attGain;
       }
     }
 
