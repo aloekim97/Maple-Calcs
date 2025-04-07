@@ -4,7 +4,8 @@ import items from '../../../public/data.json';
 import ItemButton from '@/components/ui/itembuttons';
 import { Item } from '../../../types/item';
 import { Dispatch, SetStateAction } from 'react';
-import { Input } from "@/components/ui/search";
+import { Input2 } from "@/components/ui/search";
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -22,11 +23,16 @@ interface ItemsPageProps {
 
 const itemList = items as Item[];
 
-const ItemsPage = ({ setSelectedGear }: ItemsPageProps) => {
+const ItemsPage = ({ setSelectedGear}: ItemsPageProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [itemType, setItemType] = useState<string | null>(null);
   const [itemSet, setItemSet] = useState<string | null>(null);
+  const [number, setNumber] = useState<string | null>(null);
   const [jobFilter, setJobFilter] = useState<string | null>(null);
+
+  const changeNum = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNumber(e.target.value)
+  }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value.toLowerCase());
@@ -43,19 +49,19 @@ const ItemsPage = ({ setSelectedGear }: ItemsPageProps) => {
 
   return (
     <div className="p-4 flex flex-col gap-[8px]">
-      <div className="grid grid-cols-4 gap-[8px]">
-        <div className='flex flex-col gap-[4px]'>
+      <div className="flex gap-[8px]">
+        <div className='flex-1 flex-col gap-[4px]'>
           <p className='p3 opacity-60'>
             Search by Name
           </p>
-          <Input
+          <Input2
             type="text"
             placeholder="Search items..."
             value={searchTerm}
             onChange={handleSearch}
           />
         </div>
-        <div className='flex flex-col gap-[4px]'>
+        <div className='flex-1 flex-col gap-[4px]'>
           <p className='p3 opacity-60'>
             Filter by Type
           </p>
@@ -80,7 +86,7 @@ const ItemsPage = ({ setSelectedGear }: ItemsPageProps) => {
             </SelectContent>
           </Select>
         </div>
-        <div className='flex flex-col gap-[4px]'>
+        <div className='flex-1 flex-col gap-[4px]'>
           <p className='p3 opacity-60'>
             Filter by Set
           </p>
@@ -115,7 +121,7 @@ const ItemsPage = ({ setSelectedGear }: ItemsPageProps) => {
             </SelectContent>
           </Select>
         </div>
-        <div className='flex flex-col gap-[4px]'>
+        <div className='flex-1 flex-col gap-[4px]'>
           <p className='p3 opacity-60'>
             Filter by Job
           </p>
@@ -136,6 +142,16 @@ const ItemsPage = ({ setSelectedGear }: ItemsPageProps) => {
               </SelectGroup>
             </SelectContent>
           </Select>
+        </div>
+        <div className='flex w-[1px] rounded-full h-full bg-black opacity-20'/>
+        <div className='flex-1 flex-col gap-[4px]'>
+          <p className='p3 opacity-60'>Set Number</p>
+          <Input
+            type="number"
+            placeholder="Set#"
+            value={setNumber}
+            onChange={changeNum}
+          />
         </div>
       </div>
 

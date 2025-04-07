@@ -1,17 +1,20 @@
 import Image from 'next/image';
 import { Item } from '../../../types/item';
 import { useEffect, useState } from 'react';
+import sets from '../../../public/sets.json';
 
 interface GearProps {
   selectedGear: Item;
   endStar: string;
   potLines: any;
+  setNumber: string;
 }
 
 export default function GearRes({
   selectedGear,
   endStar,
   potLines,
+  setNumber,
 }: GearProps) {
   const [stat, setStat] = useState('');
   const getPotValue = (potLine: string) => {
@@ -22,6 +25,12 @@ export default function GearRes({
       return 0; // Fallback if JSON parsing fails
     }
   };
+  const setCount = parseInt(setNumber);
+  const setStats = selectedGear?.Set 
+    ? sets.find(s => s[""] === selectedGear.Set && s["Set Count"] === setCount)
+    : null;
+  console.log(selectedGear?.Set)
+  console.log(setCount)
   useEffect(() => {
     if (selectedGear.Type === 'Weapon') {
       setStat(selectedGear.Job === 'Mage' ? 'M.ATT' : 'ATT');
@@ -79,81 +88,66 @@ export default function GearRes({
         <div className="flex flex-col gap-[8px] w-full">
           <div className="flex justify-between w-full">
             <h4 className="text-[#00B188]">{stat}:</h4>
-            <h4 className="text-pot">+{getPotValue(potLines?.first)}%</h4>
+            <h4 className="text-[#00B188]">+{getPotValue(potLines?.first)}%</h4>
           </div>
           <div className="flex justify-between w-full">
             <h4 className="text-[#00B188]">{stat}:</h4>
-            <h4 className="text-pot">+{getPotValue(potLines?.second)}%</h4>
+            <h4 className="text-[#00B188]">+{getPotValue(potLines?.second)}%</h4>
           </div>
           <div className="flex justify-between w-full">
             <h4 className="text-[#00B188]">{stat}:</h4>
-            <h4 className="text-pot">+{getPotValue(potLines?.third)}%</h4>
+            <h4 className="text-[#00B188]">+{getPotValue(potLines?.third)}%</h4>
           </div>
         </div>
       </div>
       <div className="flex flex-col justify-center items-center w-full p-[12px] gap-[8px]">
-        <h3 className="flex w-full justify-start leading-[24px]">
-          {selectedGear['Item Name'].replace(/_/g, ' ')}
-        </h3>
-
-        <div className="flex justify-between w-full">
-          <h4>Type:</h4>
-          <p className="flex justify-end items-end">{selectedGear.Type}</p>
+        <h3 className="flex w-full justify-start leading-[24px]">{selectedGear['Item Name'].replace(/_/g, ' ')}</h3>
+        <div className='flex w-full h-full justify-between'>
+          <div className='flex flex-col gap-[4px] justify-end'>
+           <h4>Type:</h4>
+           <h4>Level:</h4>
+           <h4>Set:</h4>
+           <h4>Main Stat:</h4>
+           <h4>Sub Stat:</h4>
+           <h4>HP:</h4>
+           <h4>MP:</h4>
+           <h4>ATK:</h4>
+           <h4>M.ATK:</h4>
+           <h4>IED:</h4>
+           <h4>BOSS DAMAGE:</h4>
+           <h4>DAMAGE:</h4>
+          </div>
+          <div className='flex flex-col gap-[4px] items-end'>            
+            <p>{selectedGear.Type}</p>
+            <p>{selectedGear.Level}</p>
+            <p>{selectedGear.Set || 'none'}</p>
+            <p>{selectedGear['Main Stat'] || 0}</p>
+            <p>{selectedGear['Sub Stat'] || 0}</p>
+            <p>{selectedGear.HP || 0}</p>
+            <p>{selectedGear.MP || 0}</p>
+            <p>{selectedGear.ATK || 0}</p>
+            <p>{selectedGear['M.ATK'] || 0}</p>
+            <p>{selectedGear.IED || 0}</p>
+            <p>{selectedGear['BOSS DAMAGE'] || 0}</p>
+            <p>{selectedGear.DAMAGE || 0}</p>
+          </div>
         </div>
-
-        <div className="flex justify-between w-full">
-          <h4>Level:</h4>
-          <p>{selectedGear.Level}</p>
-        </div>
-
-        <div className="flex justify-between w-full">
-          <h4>Set:</h4>
-          <p>{selectedGear.Set || 'none'}</p>
-        </div>
-
-        <div className="flex justify-between w-full">
-          <h4>Main Stat:</h4>
-          <p>{selectedGear['Main Stat'] || 0}</p>
-        </div>
-
-        <div className="flex justify-between w-full">
-          <h4>Sub Stat:</h4>
-          <p>{selectedGear['Sub Stat'] || 0}</p>
-        </div>
-
-        <div className="flex justify-between w-full">
-          <h4>HP:</h4>
-          <p>{selectedGear.HP || 0}</p>
-        </div>
-
-        <div className="flex justify-between w-full">
-          <h4>MP:</h4>
-          <p>{selectedGear.MP || 0}</p>
-        </div>
-
-        <div className="flex justify-between w-full">
-          <h4>ATK:</h4>
-          <p>{selectedGear.ATK || 0}</p>
-        </div>
-
-        <div className="flex justify-between w-full">
-          <h4>M.ATK:</h4>
-          <p>{selectedGear['M.ATK'] || 0}</p>
-        </div>
-
-        <div className="flex justify-between w-full">
-          <h4>IED:</h4>
-          <p>{selectedGear.IED || 0}</p>
-        </div>
-
-        <div className="flex justify-between w-full">
-          <h4>BOSS DAMAGE:</h4>
-          <p>{selectedGear['BOSS DAMAGE'] || 0}</p>
-        </div>
-
-        <div className="flex justify-between w-full">
-          <h4>DAMAGE:</h4>
-          <p>{selectedGear.DAMAGE || 0}</p>
+        <div className="flex justify-betwen w-full h-full">
+          <div className='flex flex-col'>
+            <h5>Set:</h5>
+          </div>
+          <div className='flex flex-col'>
+            <p>{selectedGear?.Set || 'none'}</p>
+            {setStats && (
+              <div>
+                <p>Stat: {setStats.Stat}</p>
+                <p>HP&MP: {setStats["HP&MP"]}</p>
+                <p>Boss Damage: {setStats["Boss Damage"] || 'N/A'}</p>
+                <p>IED: {setStats.IED || 'N/A'}</p>
+                <p>Crit Damage: {setStats["Crit Damage"] || 'N/A'}</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>
