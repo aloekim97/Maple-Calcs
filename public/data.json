@@ -1668,7 +1668,7 @@
   {
     "Item Name": "Genesis_OH_Sword",
     "Job": "Warrior",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -1685,7 +1685,7 @@
   {
     "Item Name": "Genesis_TH_Sword",
     "Job": "Warrior",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -1702,7 +1702,7 @@
   {
     "Item Name": "Genesis_OH_Axe",
     "Job": "Warrior",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -1719,7 +1719,7 @@
   {
     "Item Name": "Genesis_TH_Axe",
     "Job": "Warrior",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -1736,7 +1736,7 @@
   {
     "Item Name": "Genesis_OH_Blunt_Wep",
     "Job": "Warrior",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -1753,7 +1753,7 @@
   {
     "Item Name": "Genesis_TH_Blunt_Weapon",
     "Job": "Warrior",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -1770,7 +1770,7 @@
   {
     "Item Name": "Genesis_Spear",
     "Job": "Warrior",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -1787,7 +1787,7 @@
   {
     "Item Name": "Genesis_Polearm",
     "Job": "Warrior",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -1804,7 +1804,7 @@
   {
     "Item Name": "Genesis_Bladecaster",
     "Job": "Warrior",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -1821,7 +1821,7 @@
   {
     "Item Name": "Genesis_Katana",
     "Job": "Warrior",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -1838,7 +1838,7 @@
   {
     "Item Name": "Genesis_Arm_Cannon",
     "Job": "Warrior",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -1855,7 +1855,7 @@
   {
     "Item Name": "Genesis_Desperado",
     "Job": "Warrior",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -2552,7 +2552,7 @@
   {
     "Item Name": "Genesis_Wand",
     "Job": "Mage",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -2569,7 +2569,7 @@
   {
     "Item Name": "Genesis_Staff",
     "Job": "Mage",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -2586,7 +2586,7 @@
   {
     "Item Name": "Genesis_Shining_Rod",
     "Job": "Mage",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -2603,7 +2603,7 @@
   {
     "Item Name": "Genesis_Psy-Limiter",
     "Job": "Mage",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -2620,7 +2620,7 @@
   {
     "Item Name": "Genesis_Fan",
     "Job": "Mage",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -2637,7 +2637,7 @@
   {
     "Item Name": "Genesis_Lucent_Gauntlet",
     "Job": "Mage",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -2654,7 +2654,7 @@
   {
     "Item Name": "Genesis_Memorial_Staff",
     "Job": "Mage",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -3249,7 +3249,7 @@
   {
     "Item Name": "Genesis_Bow",
     "Job": "Bowman",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -3266,7 +3266,7 @@
   {
     "Item Name": "Genesis_Crossbow",
     "Job": "Bowman",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -3283,7 +3283,7 @@
   {
     "Item Name": "Genesis_Dual_Bowguns",
     "Job": "Bowman",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -3300,7 +3300,7 @@
   {
     "Item Name": "Genesis_Whispershot",
     "Job": "Bowman",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -3317,7 +3317,7 @@
   {
     "Item Name": "Genesis_Ancient_Bow",
     "Job": "Bowman",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -4014,7 +4014,7 @@
   {
     "Item Name": "Genesis_Dagger",
     "Job": "Thief",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -4031,7 +4031,7 @@
   {
     "Item Name": "Genesis_Claw",
     "Job": "Thief",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -4048,7 +4048,7 @@
   {
     "Item Name": "Genesis_Cane",
     "Job": "Thief",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -4065,7 +4065,7 @@
   {
     "Item Name": "Genesis_Chakram",
     "Job": "Thief",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -4082,7 +4082,7 @@
   {
     "Item Name": "Genesis_Whipblade",
     "Job": "Thief",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -4099,7 +4099,7 @@
   {
     "Item Name": "Genesis_Chain",
     "Job": "Thief",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -4116,7 +4116,7 @@
   {
     "Item Name": "Genesis_Ritual_Fan",
     "Job": "Thief",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -4660,7 +4660,7 @@
   {
     "Item Name": "Genesis_Knuckle",
     "Job": "Pirate",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -4677,7 +4677,7 @@
   {
     "Item Name": "Genesis_Gun",
     "Job": "Pirate",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -4694,7 +4694,7 @@
   {
     "Item Name": "Genesis_Hand_Cannon",
     "Job": "Pirate",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,
@@ -4711,7 +4711,7 @@
   {
     "Item Name": "Genesis_Soul_Shooter",
     "Job": "Pirate",
-    "Set": "Genesis",
+    "Set": "Eternal",
     "Type": "Weapon",
     "Sub-Type": "Weapon",
     "Level": 200,

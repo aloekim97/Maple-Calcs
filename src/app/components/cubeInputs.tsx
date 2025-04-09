@@ -246,12 +246,12 @@ export default function Cube({ selectedGear, setCubeResults, setPotLines }: Cube
           </Select>
         </div>
 
-        <button
+        {/* <button
           onClick={calculate}
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
         >
           Calculate
-        </button>
+        </button> */}
 
         {/* Results display */}
         {results && (

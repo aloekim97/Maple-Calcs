@@ -1,6 +1,6 @@
 [
   {
-    "": "CRA",
+    "Set": "CRA",
     "Set Count": 2,
     "Stat": 20,
     "Att": "",
@@ -10,7 +10,7 @@
     "Crit Damage": ""
   },
   {
-    "": "CRA",
+    "Set": "CRA",
     "Set Count": 3,
     "Stat": "",
     "Att": 50,
@@ -20,7 +20,7 @@
     "Crit Damage": ""
   },
   {
-    "": "CRA",
+    "Set": "CRA",
     "Set Count": 4,
     "Stat": "",
     "Att": "",
@@ -30,7 +30,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Absolab",
+    "Set": "Absolab",
     "Set Count": 2,
     "Stat": "",
     "Att": 20,
@@ -40,7 +40,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Absolab",
+    "Set": "Absolab",
     "Set Count": 3,
     "Stat": 30,
     "Att": 20,
@@ -50,7 +50,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Absolab",
+    "Set": "Absolab",
     "Set Count": 4,
     "Stat": "",
     "Att": 25,
@@ -60,7 +60,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Absolab",
+    "Set": "Absolab",
     "Set Count": 5,
     "Stat": "",
     "Att": 30,
@@ -70,7 +70,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Arcane",
+    "Set": "Arcane",
     "Set Count": 2,
     "Stat": "",
     "Att": 30,
@@ -80,7 +80,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Arcane",
+    "Set": "Arcane",
     "Set Count": 3,
     "Stat": "",
     "Att": 30,
@@ -90,7 +90,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Arcane",
+    "Set": "Arcane",
     "Set Count": 4,
     "Stat": 50,
     "Att": 35,
@@ -100,7 +100,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Arcane",
+    "Set": "Arcane",
     "Set Count": 5,
     "Stat": "",
     "Att": 40,
@@ -110,7 +110,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Eternal",
+    "Set": "Eternal",
     "Set Count": 2,
     "Stat": "",
     "Att": 40,
@@ -120,7 +120,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Eternal",
+    "Set": "Eternal",
     "Set Count": 3,
     "Stat": 50,
     "Att": 40,
@@ -130,7 +130,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Eternal",
+    "Set": "Eternal",
     "Set Count": 4,
     "Stat": "",
     "Att": 40,
@@ -140,7 +140,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Eternal",
+    "Set": "Eternal",
     "Set Count": 5,
     "Stat": "",
     "Att": 40,
@@ -150,7 +150,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Eternal",
+    "Set": "Eternal",
     "Set Count": 6,
     "Stat": "",
     "Att": 40,
@@ -160,7 +160,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Eternal",
+    "Set": "Eternal",
     "Set Count": 7,
     "Stat": 50,
     "Att": 40,
@@ -170,7 +170,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Eternal",
+    "Set": "Eternal",
     "Set Count": 8,
     "Stat": "",
     "Att": 40,
@@ -180,7 +180,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Boss",
+    "Set": "Boss",
     "Set Count": 3,
     "Stat": 10,
     "Att": 5,
@@ -190,7 +190,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Boss",
+    "Set": "Boss",
     "Set Count": 5,
     "Stat": 10,
     "Att": 5,
@@ -200,7 +200,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Boss",
+    "Set": "Boss",
     "Set Count": 7,
     "Stat": 10,
     "Att": 10,
@@ -210,7 +210,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Boss",
+    "Set": "Boss",
     "Set Count": 9,
     "Stat": 15,
     "Att": 10,
@@ -220,7 +220,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Reinforced",
+    "Set": "Reinforced",
     "Set Count": 2,
     "Stat": 15,
     "Att": "",
@@ -230,7 +230,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Reinforced",
+    "Set": "Reinforced",
     "Set Count": 3,
     "Stat": "",
     "Att": 30,
@@ -240,7 +240,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Reinforced",
+    "Set": "Reinforced",
     "Set Count": 4,
     "Stat": "",
     "Att": "",
@@ -250,7 +250,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Superior",
+    "Set": "Superior",
     "Set Count": 2,
     "Stat": 20,
     "Att": "",
@@ -260,7 +260,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Superior",
+    "Set": "Superior",
     "Set Count": 3,
     "Stat": "",
     "Att": 35,
@@ -270,7 +270,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Superior",
+    "Set": "Superior",
     "Set Count": 4,
     "Stat": "",
     "Att": "",
@@ -280,7 +280,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Dawn",
+    "Set": "Dawn",
     "Set Count": 2,
     "Stat": 10,
     "Att": 10,
@@ -290,7 +290,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Dawn",
+    "Set": "Dawn",
     "Set Count": 3,
     "Stat": 10,
     "Att": 10,
@@ -300,7 +300,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Dawn",
+    "Set": "Dawn",
     "Set Count": 4,
     "Stat": 10,
     "Att": 10,
@@ -310,7 +310,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Pitch",
+    "Set": "Pitch",
     "Set Count": 2,
     "Stat": 10,
     "Att": 10,
@@ -320,7 +320,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Pitch",
+    "Set": "Pitch",
     "Set Count": 3,
     "Stat": 10,
     "Att": 10,
@@ -330,7 +330,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Pitch",
+    "Set": "Pitch",
     "Set Count": 4,
     "Stat": 15,
     "Att": 15,
@@ -340,7 +340,7 @@
     "Crit Damage": "5%"
   },
   {
-    "": "Pitch",
+    "Set": "Pitch",
     "Set Count": 5,
     "Stat": 15,
     "Att": 15,
@@ -350,7 +350,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Pitch",
+    "Set": "Pitch",
     "Set Count": 6,
     "Stat": 15,
     "Att": 15,
@@ -360,7 +360,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Pitch",
+    "Set": "Pitch",
     "Set Count": 7,
     "Stat": 15,
     "Att": 15,
@@ -370,7 +370,7 @@
     "Crit Damage": "5%"
   },
   {
-    "": "Pitch",
+    "Set": "Pitch",
     "Set Count": 8,
     "Stat": 15,
     "Att": 15,
@@ -380,7 +380,7 @@
     "Crit Damage": ""
   },
   {
-    "": "Pitch",
+    "Set": "Pitch",
     "Set Count": 9,
     "Stat": 15,
     "Att": 15,
@@ -390,12 +390,12 @@
     "Crit Damage": "5%"
   },
   {
-    "": "Pitch",
+    "Set": "Pitch",
     "Set Count": 10,
     "Stat": 20,
     "Att": 20,
     "HP&MP": 500,
-    "Boss Damage": "15%",
+    "Boss Damage": 15,
     "IED": "",
     "Crit Damage": ""
   }

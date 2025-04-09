@@ -19,21 +19,23 @@ import { Label } from '@radix-ui/react-label';
 
 interface ItemsPageProps {
   setSelectedGear: Dispatch<SetStateAction<Item | null>>;
+  setNumber: string;          // Add this
+  setSetNumber: Dispatch<SetStateAction<string>>; // Add this
 }
 
 const itemList = items as Item[];
 
-const ItemsPage = ({ setSelectedGear}: ItemsPageProps) => {
+const ItemsPage = ({ setSelectedGear, setNumber, setSetNumber }: ItemsPageProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [itemType, setItemType] = useState<string | null>(null);
   const [itemSet, setItemSet] = useState<string | null>(null);
-  const [number, setNumber] = useState<string | null>(null);
   const [jobFilter, setJobFilter] = useState<string | null>(null);
 
   const changeNum = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNumber(e.target.value)
-  }
-
+    const value = e.target.value;
+    // Update parent state directly
+    setSetNumber(value || ''); // Default to '2' if empty
+  };
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value.toLowerCase());
   };
@@ -149,7 +151,7 @@ const ItemsPage = ({ setSelectedGear}: ItemsPageProps) => {
           <Input
             type="number"
             placeholder="Set#"
-            value={setNumber}
+            value={setNumber}  // Use prop value
             onChange={changeNum}
           />
         </div>

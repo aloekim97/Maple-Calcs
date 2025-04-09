@@ -34,9 +34,8 @@ const ItemButton = ({ item, onClick }: ItemButtonProps) => {
         <Image
           src={imagePath}
           alt={item['Item Name'].replace(/_/g, ' ')}
-          layout="fill"
-          objectFit="contain"
-          className="p-[4px]"
+          width={100}
+          height={100}
         />
       </div>
     </button>

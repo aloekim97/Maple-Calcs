@@ -150,12 +150,12 @@ h4 {
 }
 
 h5 {
-  @apply text-[16px] font-semibold leading-[24px]
-      sm:text-[16px] sm:leading-[24px]; /* Mobile size */
+  @apply text-[12px] font-semibold leading-[16px]
+      sm:text-[12px] sm:leading-[16px]; /* Mobile size */
 }
 
 h6 {
-  @apply text-[12px] font-semibold leading-[16px]
+  @apply text-[12px] font-normal leading-[16px]
       sm:text-[12px] sm:leading-[16px]; /* Mobile size */
 }
 

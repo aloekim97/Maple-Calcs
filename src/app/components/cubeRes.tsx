@@ -1,9 +1,9 @@
 export default function CubeCost() {
   return (
-    <div className="flex w-full flex-col border border-[#00B188] bg-[#E6F8F4] rounded-[8px] p-[12px] gap-[4px]">
+    <div className="flex w-full flex-col border border-[#00B188] bg-[#E6F8F4] rounded-[8px] p-[12px] gap-[4px] shrink">
       <h4>Potential Cost</h4>
-      <div className="flex flex-col w-full h-full">
-        <div className="grid grid-cols-4 w-full h-full gap-x-[16px] gap-y-[4px] items-center">
+      <div className="flex flex-col w-full">
+        <div className="grid grid-cols-4 w-full gap-x-[16px] gap-y-[4px] items-center">
           <h4 className="flex justify-start h-full w-full items-center">
             Median:
           </h4>
