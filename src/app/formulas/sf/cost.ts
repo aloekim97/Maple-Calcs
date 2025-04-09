@@ -91,3 +91,10 @@ export function getNewCost(
   const totalCost = Math.round(cost *100 / 100) * 100;
   return totalCost.toLocaleString();
 }
+
+export function calculateMedianCost (totalExpectedCost: number, stdDev: number) {
+  if (stdDev === 0) return totalExpectedCost; // deterministic case
+  const cv = stdDev / totalExpectedCost; // coefficient of variation
+  const adjustment = Math.sqrt(1 + cv * cv);
+  return totalExpectedCost / adjustment;
+};

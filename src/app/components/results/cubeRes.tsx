@@ -1,22 +1,28 @@
-import { PotCalcResult } from '../formulas/cube/potentialprobability';
+import { PotCalcResult } from "@/app/formulas/cube/potentialprobability";
+
 
 interface CubeRes {
-  cubeRes: PotCalcResult | null;
+  cubeRes: (PotCalcResult & {
+    luckyCost?: string;
+    unluckyCost?: string;
+    medianCost?: string;
+  }) | null;
 }
 
 export default function CubeCost({ cubeRes }: CubeRes) {
   const transformAndFormat = (costString: string | null | undefined): string => {
-    // Remove all commas and convert to number
-    const num = Number(costString?.replace(/,/g, ''));
+    if (!costString) return 'NA';
+    
+    const num = Number(costString.replace(/,/g, ''));
 
-    if (isNaN(num)) return 'NA'; // Handle NaN cases
+    if (isNaN(num)) return 'NA';
     if (num === Infinity) return '∞';
 
     let transformed: number;
     let suffix: string = '';
 
     if (num >= 1_000_000_000_000) {
-      transformed = num / 1_000_000_000;
+      transformed = num / 1_000_000_000_000;
       suffix = 'T';
     } else if (num >= 1_000_000_000) {
       transformed = num / 1_000_000_000;
@@ -25,15 +31,16 @@ export default function CubeCost({ cubeRes }: CubeRes) {
       transformed = num / 1_000_000;
       suffix = 'M';
     } else {
-      return num.toLocaleString(); // Format regular numbers with commas
+      return num.toLocaleString();
     }
 
-    // Format to 3 decimal places, remove trailing zeros, and add suffix
-    return transformed.toFixed(3).replace(/\.?0+$/, '') + suffix;
+    return transformed.toFixed(2).replace(/\.?0+$/, '') + suffix;
   };
 
-  // Usage with your cubeRes.averageCost string:
   const averageCostDisplay = transformAndFormat(cubeRes?.averageCost);
+  const unlucky = transformAndFormat(cubeRes?.unluckyCost);
+  const lucky = transformAndFormat(cubeRes?.luckyCost);
+  const median = transformAndFormat(cubeRes?.medianCost);
 
   return (
     <div className="flex w-full flex-col border border-[#00B188] bg-[#E6F8F4] rounded-[8px] p-[12px] gap-[4px]">
@@ -44,13 +51,13 @@ export default function CubeCost({ cubeRes }: CubeRes) {
             Median:
           </h4>
           <p className="font-normal flex justify-end h-full w-full items-center">
-            140 B
+            {median}
           </p>
           <h4 className="flex justify-start h-full w-full items-center">
             Unlucky:
           </h4>
           <p className="font-normal flex justify-end h-full w-full items-center">
-            140 B
+            {unlucky}
           </p>
           <h4 className="flex justify-start h-full w-full items-center">
             Average:
@@ -62,7 +69,7 @@ export default function CubeCost({ cubeRes }: CubeRes) {
             Lucky:
           </h4>
           <p className="font-normal flex justify-end h-full w-full items-center">
-            140 B
+            {lucky}
           </p>
         </div>
       </div>

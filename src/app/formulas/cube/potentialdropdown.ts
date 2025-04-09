@@ -10,23 +10,30 @@ const OTHER_LINE = {
   low: [12, 9, 6],
   high: [13, 10, 7],
 };
+const SPECIAL_LINE = {
+  cdr: { L: [8]},
+  cd: { L: [1, 2], },
+  boss: { L: [35, 40], U: [30] },
+  ied: { L: [35, 40], U: [30] },
+  dropmeso: { L: [20] },
+}
 
 export type WSEItemType = 'weapon' | 'secondary' | 'emblem';
 
 export type WSETier = {
   weapon: {
-    att: number[];
-    boss: number[];
-    ied: number[];
+    att: { prime: number[]; nonPrime: number[] };
+    boss: { prime: number[]; nonPrime: number[] };
+    ied: { prime: number[]; nonPrime: number[] };
   };
   secondary: {
-    att: number[];
-    boss: number[];
-    ied: number[];
+    att: { prime: number[]; nonPrime: number[] };
+    boss: { prime: number[]; nonPrime: number[] };
+    ied: { prime: number[]; nonPrime: number[] };
   };
   emblem: {
-    att: number[];
-    ied: number[];
+    att: { prime: number[]; nonPrime: number[] };
+    ied: { prime: number[]; nonPrime: number[] };
   };
 };
 
@@ -39,34 +46,82 @@ export type WSEPotential = {
 export const WSE: { low: WSETier; high: WSETier } = {
   low: {
     weapon: {
-      att: [9, 18, 21, 30, 33, 36],
-      boss: [30, 35, 40],
-      ied: [30, 35, 40],
+      att: {
+        prime: [12],
+        nonPrime: [9],
+      },
+      boss: {
+        prime: [35, 40],
+        nonPrime: [30],
+      },
+      ied: {
+        prime: [35, 40],
+        nonPrime: [30],
+      },
     },
     secondary: {
-      att: [30, 35, 40],
-      boss: [30, 35, 40],
-      ied: [30, 35, 40],
+      att: {
+        prime: [12],
+        nonPrime: [9],
+      },
+      boss: {
+        prime: [35, 40],
+        nonPrime: [30],
+      },
+      ied: {
+        prime: [35, 40],
+        nonPrime: [30],
+      },
     },
     emblem: {
-      att: [30, 35, 40],
-      ied: [30, 35, 40],
+      att: {
+        prime: [12],
+        nonPrime: [9],
+      },
+      ied: {
+        prime: [35, 40],
+        nonPrime: [30],
+      },
     },
   },
   high: {
     weapon: {
-      att: [10, 20, 23, 33, 36, 39],
-      boss: [30, 35, 40],
-      ied: [30, 35, 40],
+      att: {
+        prime: [13],
+        nonPrime: [10],
+      },
+      boss: {
+        prime: [35, 40],
+        nonPrime: [30],
+      },
+      ied: {
+        prime: [35, 40],
+        nonPrime: [30],
+      },
     },
     secondary: {
-      att: [30, 35, 40],
-      boss: [30, 35, 40],
-      ied: [30, 35, 40],
+      att: {
+        prime: [13],
+        nonPrime: [10],
+      },
+      boss: {
+        prime: [35, 40],
+        nonPrime: [30],
+      },
+      ied: {
+        prime: [35, 40],
+        nonPrime: [30],
+      },
     },
     emblem: {
-      att: [30, 35, 40],
-      ied: [30, 35, 40],
+      att: {
+        prime: [13],
+        nonPrime: [10],
+      },
+      ied: {
+        prime: [35, 40],
+        nonPrime: [30],
+      },
     },
   },
 };
@@ -80,22 +135,135 @@ export const getGoalOptions = (
   const currentStatTier = STAT_TIERS[tier];
   const firstLine = FIRST_LINE[tier];
   const otherLines = OTHER_LINE[tier];
-
-  // Handle WSE items (weapon, secondary, emblem)
-  if (['weapon', 'secondary', 'emblem'].includes(itemType)) {
-    const combinations = generateWSECombinations(
-      itemType as 'weapon' | 'secondary' | 'emblem',
-      itemLevel
-    );
-    return Object.fromEntries(
-      combinations.map((combo) => {
-        const label = formatWSEOption(combo);
-        return [label, combo];
-      })
-    );
-  }
+  const wseFirst = WSE[tier];
+  const wseSecond = WSE[tier];
 
   switch (itemType) {
+    case 'Weapon':
+      const weaponTier = WSE[tier].weapon;
+      if (lineNumber === 1) {
+        return Object.fromEntries([
+          ...weaponTier.att.prime.map((stat) => [
+            `${stat}% ATT`,
+            { att: stat },
+          ]),
+          ...weaponTier.boss.prime.map((stat) => [
+            `${stat}% Boss`,
+            { boss: stat },
+          ]),
+          ...weaponTier.ied.prime.map((stat) => [
+            `${stat}% IED`,
+            { ied: stat },
+          ]),
+        ]);
+      } else {
+        return Object.fromEntries([
+          ...weaponTier.att.prime.map((stat) => [
+            `${stat}% ATT`,
+            { att: stat },
+          ]),
+          ...weaponTier.att.nonPrime.map((stat) => [
+            `${stat}% ATT`,
+            { att: stat },
+          ]),
+          ...weaponTier.boss.prime.map((stat) => [
+            `${stat}% Boss`,
+            { boss: stat },
+          ]),
+          ...weaponTier.boss.nonPrime.map((stat) => [
+            `${stat}% Boss`,
+            { boss: stat },
+          ]),
+          ...weaponTier.ied.prime.map((stat) => [
+            `${stat}% IED`,
+            { ied: stat },
+          ]),
+          ...weaponTier.ied.nonPrime.map((stat) => [
+            `${stat}% IED`,
+            { ied: stat },
+          ]),
+        ]);
+      }
+
+    case 'Secondary':
+      const secondaryTier = WSE[tier].secondary;
+      if (lineNumber === 1) {
+        return Object.fromEntries([
+          ...secondaryTier.att.prime.map((stat) => [
+            `${stat}% ATT`,
+            { att: stat },
+          ]),
+          ...secondaryTier.boss.prime.map((stat) => [
+            `${stat}% Boss`,
+            { boss: stat },
+          ]),
+          ...secondaryTier.ied.prime.map((stat) => [
+            `${stat}% IED`,
+            { ied: stat },
+          ]),
+        ]);
+      } else {
+        return Object.fromEntries([
+          ...secondaryTier.att.prime.map((stat) => [
+            `${stat}% ATT`,
+            { att: stat },
+          ]),
+          ...secondaryTier.att.nonPrime.map((stat) => [
+            `${stat}% ATT`,
+            { att: stat },
+          ]),
+          ...secondaryTier.boss.prime.map((stat) => [
+            `${stat}% Boss`,
+            { boss: stat },
+          ]),
+          ...secondaryTier.boss.nonPrime.map((stat) => [
+            `${stat}% Boss`,
+            { boss: stat },
+          ]),
+          ...secondaryTier.ied.prime.map((stat) => [
+            `${stat}% IED`,
+            { ied: stat },
+          ]),
+          ...secondaryTier.ied.nonPrime.map((stat) => [
+            `${stat}% IED`,
+            { ied: stat },
+          ]),
+        ]);
+      }
+
+    case 'Emblem':
+      const emblemTier = WSE[tier].emblem;
+      if (lineNumber === 1) {
+        return Object.fromEntries([
+          ...emblemTier.att.prime.map((stat) => [
+            `${stat}% ATT`,
+            { att: stat },
+          ]),
+          ...emblemTier.ied.prime.map((stat) => [
+            `${stat}% IED`,
+            { ied: stat },
+          ]),
+        ]);
+      } else {
+        return Object.fromEntries([
+          ...emblemTier.att.prime.map((stat) => [
+            `${stat}% ATT`,
+            { att: stat },
+          ]),
+          ...emblemTier.att.nonPrime.map((stat) => [
+            `${stat}% ATT`,
+            { att: stat },
+          ]),
+          ...emblemTier.ied.prime.map((stat) => [
+            `${stat}% IED`,
+            { ied: stat },
+          ]),
+          ...emblemTier.ied.nonPrime.map((stat) => [
+            `${stat}% IED`,
+            { ied: stat },
+          ]),
+        ]);
+      }
     case 'Hat': {
       const hatStatOptions =
         lineNumber === 1
@@ -136,53 +304,3 @@ export const getGoalOptions = (
   }
 };
 
-// Helper functions for WSE
-const generateWSECombinations = (
-  itemType: keyof WSETier,
-  itemLevel: number
-): WSEPotential[] => {
-  const tier = itemLevel > 150 ? 'high' : 'low';
-  const itemData = WSE[tier][itemType];
-  const combinations: WSEPotential[] = [];
-
-  itemData.att.forEach((attValue) => {
-    // Base combination
-    combinations.push({ att: attValue });
-    if (attValue >= 30) return;
-
-    // Handle boss if exists
-    if ('boss' in itemData) {
-      itemData.boss.forEach((bossValue) => {
-        combinations.push({ att: attValue, boss: bossValue });
-      });
-    }
-
-    // Handle ied if exists
-    if ('ied' in itemData) {
-      itemData.ied.forEach((iedValue) => {
-        combinations.push({ att: attValue, ied: iedValue });
-      });
-    }
-
-    // Handle combined boss+ied if both exist
-    if (
-      'boss' in itemData &&
-      'ied' in itemData &&
-      (attValue === 9 || attValue === 10)
-    ) {
-      itemData.boss.forEach((bossValue) => {
-        itemData.ied.forEach((iedValue) => {
-          combinations.push({ att: attValue, boss: bossValue, ied: iedValue });
-        });
-      });
-    }
-  });
-
-  return combinations;
-};
-const formatWSEOption = (combo: WSEPotential): string => {
-  const parts = [`${combo.att} ATT`];
-  if (combo.boss) parts.push(`${combo.boss} Boss`);
-  if (combo.ied) parts.push(`${combo.ied} IED`);
-  return parts.join(' + ');
-};

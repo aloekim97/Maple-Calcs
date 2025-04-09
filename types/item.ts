@@ -12,6 +12,6 @@ export interface Item {
   ATK: number | string;
   "M.ATK": string;
   IED: number | string;
-  "BOSS DAMAGE": string;
+  "Boss Damage": string;
   DAMAGE: string;
 }

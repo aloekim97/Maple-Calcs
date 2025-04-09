@@ -1,11 +1,13 @@
-import { StarForceResults } from './starforceInputs';
+import { StarForceResults } from './inputs/starforceInputs';
 
 interface SfCost {
   sfResults: StarForceResults | null;
 }
 
 export default function SfCost({ sfResults }: SfCost) {
-  const transformAndFormat = (costString: string | null | undefined): string => {
+  const transformAndFormat = (
+    costString: string | null | undefined
+  ): string => {
     const num = Number(costString?.replace(/,/g, ''));
 
     if (isNaN(num)) return 'NA';
@@ -33,6 +35,7 @@ export default function SfCost({ sfResults }: SfCost) {
   const averageCostDisplay = transformAndFormat(sfResults?.averageCost);
   const unlucky = transformAndFormat(sfResults?.unluckyCost);
   const lucky = transformAndFormat(sfResults?.luckyCost);
+  const median = transformAndFormat(sfResults?.medianCost);
   return (
     <div className="flex w-full flex-col border border-[#FFCC02] bg-[#FFFAE6] rounded-[8px] p-[12px] gap-[4px]">
       <h4>Starforce Cost</h4>
@@ -42,7 +45,7 @@ export default function SfCost({ sfResults }: SfCost) {
             Median:
           </h4>
           <p className="font-normal flex justify-end h-full w-full items-center">
-            140 B
+            {median}
           </p>
           <h4 className="flex justify-start h-full w-full items-center">
             Unlucky:

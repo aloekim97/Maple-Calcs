@@ -1,5 +1,5 @@
 import { getChance } from './sf/chance';
-import { getCost, getNewCost } from './sf/cost';
+import { calculateMedianCost, getCost, getNewCost } from './sf/cost';
 
 export function calculateStarforceStats(
   startStar: number,
@@ -16,6 +16,7 @@ export function calculateStarforceStats(
   averageBooms: string;
   luckyCost: string;
   unluckyCost: string;
+  medianCost: string;
 } {
   let totalExpectedCost = 0;
   let totalExpectedBooms = 0;
@@ -51,6 +52,7 @@ export function calculateStarforceStats(
     averageBooms: formatNumber(Math.round(totalExpectedBooms)),
     luckyCost: formatNumber(Math.round(luckyCost)),
     unluckyCost: formatNumber(Math.round(unluckyCost)),
+    medianCost: 'hji',
   };
 }
 
@@ -68,15 +70,24 @@ export function calculateKMS(
   averageBooms: string;
   luckyCost: string;
   unluckyCost: string;
+  medianCost: string;
 } {
   let totalExpectedCost = 0;
   let totalExpectedBooms = 0;
   let totalVarianceCost = 0;
 
   for (let star = startStar; star < endStar; star++) {
-    const { success, boom } = getChance(star, starCatch, safeguard, reducedBooms);
+    const { success, boom } = getChance(
+      star,
+      starCatch,
+      safeguard,
+      reducedBooms
+    );
     const cost = parseFloat(
-      getNewCost(star, equipLevel, safeguard, discount30, mvpDiscount).replace(/,/g, '')
+      getNewCost(star, equipLevel, safeguard, discount30, mvpDiscount).replace(
+        /,/g,
+        ''
+      )
     );
     const pSuccess = success / 100;
     const pBoom = boom / 100;
@@ -92,11 +103,13 @@ export function calculateKMS(
   const stdDev = Math.sqrt(totalVarianceCost);
   const luckyCost = Math.max(0, totalExpectedCost - stdDev); // Prevent negative values
   const unluckyCost = totalExpectedCost + stdDev;
+  const medianCost = calculateMedianCost(totalExpectedCost, stdDev);
 
   return {
     averageCost: Math.round(totalExpectedCost).toLocaleString(),
     averageBooms: totalExpectedBooms.toFixed(2),
     luckyCost: Math.round(luckyCost).toLocaleString(),
     unluckyCost: Math.round(unluckyCost).toLocaleString(),
+    medianCost: Math.round(medianCost).toLocaleString(),
   };
 }

@@ -7,8 +7,8 @@ export interface ProbabilityTiers {
 
 export interface ItemProbabilities {
   stat: ProbabilityTiers;
-  cooldown?: { [key: number]: number };
-  critdamage?: { [key: number]: number };
+  cdr?: { [key: number]: number };
+  cd?: { [key: number]: number };
   dropmeso?: { [key: number]: number };
 }
 
@@ -20,7 +20,9 @@ export interface WSE {
   ied35: number;
   ied40: number;
   att9: number;
+  att10: number;
   att12: number;
+  att13: number;
 }
 
 export interface CubeProbabilities {
@@ -33,10 +35,25 @@ export const CUBE_PROBABILITIES = {
   black: {
     L: { line1: 1, line2: 0.2, line3: 0.05 },
     U: { line1: 1, line2: 0.8, line3: 0.95 },
+    cdr: { line1: 1, line2: 0.2, line3: 0.05 },
+    cd: { line1: 1, line2: 0.8, line3: 0.95 },
+    dropmeso: { line1: 1, line2: 0.2, line3: 0.05 },
+    boss: { line1: 1, line2: 0.2, line3: 0.05 },
+    ied: { line1: 1, line2: 0.2, line3: 0.05 },
+    att: { line1: 1, line2: 0.2, line3: 0.05 },
+    "": { line1: 1, line2: 1, line3: 1},
   },
   red: {
     L: { line1: 1, line2: 0.1, line3: 0.01 },
     U: { line1: 1, line2: 0.9, line3: 0.99 },
+    cdr: { line1: 1, line2: 0.1, line3: 0.01 },
+    cd: { line1: 1, line2: 0.9, line3: 0.99 },
+    dropmeso: { line1: 1, line2: 0.9, line3: 0.99 },
+    boss: { line1: 1, line2: 0.9, line3: 0.99 },
+    ied: { line1: 1, line2: 0.9, line3: 0.99 },
+    att: { line1: 1, line2: 0.9, line3: 0.99 },
+    "": { line1: 1, line2: 1, line3: 1 },
+    
   },
 };
 
@@ -56,24 +73,28 @@ export const uPrime: { [key: string]: number[] } = {
 };
 
 export const WSE_PROBABILITIES: { [key: string]: WSE } = {
-  weapon: {
+  Weapon: {
     boss30: 6.66,
     boss35: 9.756,
     boss40: 4.878,
     ied30: 6.66,
     ied35: 4.878,
     ied40: 4.878,
-    att9: 6.66,
-    att12: 4.878,
+    att9: 6.66,  
+    att10: 6.66,   
+    att12: 4.878, 
+    att13: 4.878,  
   },
-  emblem: {
+  Emblem: {
     ied30: 7.5,
     ied35: 5.714,
     ied40: 5.714,
     att9: 7.5,
+    att10: 7.5,
     att12: 5.714,
+    att13: 5.714,
   },
-  secondary: {
+  Secondary: {
     boss30: 5.882,
     boss35: 8.51,
     boss40: 4.255,
@@ -81,7 +102,9 @@ export const WSE_PROBABILITIES: { [key: string]: WSE } = {
     ied35: 4.255,
     ied40: 4.255,
     att9: 5.882,
+    att10: 5.882,
     att12: 4.255,
+    att13: 4.255,
   },
 };
 
@@ -93,7 +116,7 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
       statNonPrime: 9.61,
       allNonPrime: 7.69,
     },
-    cooldown: {
+    cdr: {
       1: 7.32,
       2: 4.88,
     },
@@ -121,7 +144,7 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
       statNonPrime: 8.9,
       allNonPrime: 7.14,
     },
-    critdamage: {
+    cd: {
       1: 10,
     },
   },
