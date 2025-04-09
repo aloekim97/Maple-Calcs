@@ -1,4 +1,9 @@
-export function getChance(star: number): {
+export function getChance(
+  star: number,
+  starCatch: boolean,
+  safeguard: boolean,
+  reduceBooms?: boolean
+): {
   success: number;
   fail: number;
   boom: number;
@@ -40,6 +45,11 @@ export function getChance(star: number): {
     else success = 0;
   }
 
+  if (starCatch) {
+    success = success * 1.05;
+  }
+
+
   const boomChances: { [key: number]: number } = {
     15: 2.1,
     16: 2.1,
@@ -58,7 +68,14 @@ export function getChance(star: number): {
     29: 19.8,
   };
 
-  const boom = boomChances[star] || 0;
+  let boom = boomChances[star] || 0;
+
+  if (safeguard && star >= 15 && star <= 17) {
+    boom = 0;
+  }
+  if (reduceBooms && star >= 15 && star < 21) {
+    boom = boom * .3
+  }
 
   const fail = 100 - success - boom;
 

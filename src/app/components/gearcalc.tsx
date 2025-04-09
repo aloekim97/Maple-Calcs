@@ -1,15 +1,18 @@
 'use client';
-import StarForce from './starforceInputs';
-import Cube from './cubeInputs';
+import StarForce, {
+  StarForceHandle,
+  StarForceResults,
+} from './inputs/starforceInputs';
+import Cube, { CubeHandle } from './inputs/cubeInputs';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import ItemsPage from './itemlist';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Item } from '../../../types/item';
 import { Lines, PotCalcResult } from '../formulas/cube/potentialprobability';
-import CubeCost from './cubeRes';
+import CubeCost from './results/cubeRes';
 import SfCost from './starForceRes';
-import GearRes from './gearRes';
+import GearRes from './results/gearRes';
 
 const getMaxStars = (level: number): number => {
   if (level >= 138) return 30;
@@ -23,10 +26,23 @@ const getMaxStars = (level: number): number => {
 export default function GearCalculator() {
   const [selectedGear, setSelectedGear] = useState<Item | null>(null);
   const [cubeResults, setCubeResults] = useState<PotCalcResult | null>(null);
-  const [sfResults, setSfResults] = useState<PotCalcResult | null>(null);
+  const [sfResults, setSfResults] = useState<StarForceResults | null>(null);
   const [potLines, setPotLines] = useState<Lines | null>(null);
   const [endStar, setEndStar] = useState('');
   const [setNumber, setSetNumber] = useState<string>('2');
+  const starForceRef = useRef<StarForceHandle>(null);
+  const cubeRef = useRef<CubeHandle>(null);
+
+  useEffect(() => {
+    setSfResults(null);
+    setCubeResults(null);
+    setEndStar('');
+  }, [selectedGear]);
+
+  const handleCalculate = () => {
+    const starForceResult = starForceRef.current?.calculate();
+    const cubeResult = cubeRef.current?.calculate();
+  };
   return (
     <div className="flex flex-col w-[1440px] h-[860px] py-[32px] gap-[32px]">
       <div className="flex gap-[8px] h-[64px] w-full justify-center items-center">
@@ -46,8 +62,9 @@ export default function GearCalculator() {
             <div className="w-full">
               <StarForce
                 selectedGear={selectedGear}
-                endStar={endStar}
                 setEndStar={setEndStar}
+                setSfRes={setSfResults}
+                ref={starForceRef}
               />
             </div>
             <div className="w-full">
@@ -55,10 +72,11 @@ export default function GearCalculator() {
                 selectedGear={selectedGear}
                 setCubeResults={setCubeResults}
                 setPotLines={setPotLines}
+                ref={cubeRef}
               />
             </div>
           </div>
-          <Button>Calculate</Button>
+          <Button onClick={handleCalculate}>Calculate</Button>
         </div>
         <div className="flex flex-col w-full h-full bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] p-[16px] gap-[16px]">
           <div className="flex w-full h-full gap-[16px] rounded-[8px] border grow">
@@ -67,17 +85,17 @@ export default function GearCalculator() {
                 selectedGear={selectedGear}
                 endStar={endStar}
                 potLines={potLines}
-                setNumber={setNumber}
+                sfStats={sfResults?.stats}
               />
             ) : (
-              <div className="flex items-center justify-center w-full h-full grow">
+              <div className="flex items-center justify-center w-full h-full">
                 <p>Select an item to view details</p>
               </div>
             )}
           </div>
-          <div className="flex w-full gap-[16px] shrink">
-            <SfCost />
-            <CubeCost />
+          <div className="flex w-full h-full gap-[16px]">
+            <SfCost sfResults={sfResults} />
+            <CubeCost cubeRes={cubeResults} />
           </div>
           <div className="flex w-full gap-[16px]">
             <div className="flex w-full flex-col border rounded-[8px] p-[12px] gap-[4px]">
