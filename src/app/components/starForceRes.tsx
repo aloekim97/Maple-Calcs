@@ -17,7 +17,7 @@ export default function SfCost({ sfResults }: SfCost) {
     let suffix: string = '';
 
     if (num >= 1_000_000_000_000) {
-      transformed = num / 1_000_000_000;
+      transformed = num / 1_000_000_000_000;
       suffix = 'T';
     } else if (num >= 1_000_000_000) {
       transformed = num / 1_000_000_000;
@@ -32,6 +32,7 @@ export default function SfCost({ sfResults }: SfCost) {
     return transformed.toFixed(2).replace(/\.?0+$/, '') + suffix;
   };
 
+  const booms = sfResults?.averageBooms;
   const averageCostDisplay = transformAndFormat(sfResults?.averageCost);
   const unlucky = transformAndFormat(sfResults?.unluckyCost);
   const lucky = transformAndFormat(sfResults?.luckyCost);
