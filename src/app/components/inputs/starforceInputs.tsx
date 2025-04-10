@@ -6,7 +6,6 @@ import {
   forwardRef,
   useImperativeHandle,
   useEffect,
-  useMemo,
 } from 'react';
 import itemStats from '../../formulas/sf/itemstats';
 import { calculateKMS } from '../../formulas/starforceCalc';
@@ -349,4 +348,5 @@ const StarForce = forwardRef<StarForceHandle, StarForceProps>(
     );
   }
 );
+StarForce.displayName = "StarForce"
 export default StarForce;

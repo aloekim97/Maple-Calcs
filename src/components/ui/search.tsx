@@ -22,6 +22,11 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
     height={16}
     width={16}
     alt="Search_Icon"
+    role="img"
+    style={{
+      width: 'auto', 
+      height: 'auto' 
+    }}
     />
     </div>
   )

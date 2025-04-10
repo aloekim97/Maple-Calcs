@@ -92,7 +92,11 @@ export default function potentialPermutations(
       : `${val}% ${statType.toUpperCase()}`;
   };
 
-  const getProbabilityKey = (statType: PotentialStat, value: number, isL: boolean): string => {
+  const getProbabilityKey = (
+    statType: PotentialStat,
+    value: number,
+    isL: boolean
+  ): string => {
     if (statType === 'att') {
       return isL ? `att${value}` : `att${value}`;
     }

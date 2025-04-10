@@ -39,13 +39,23 @@ export default function GearCalculator() {
   }, [selectedGear]);
 
   const handleCalculate = () => {
-    const starForceResult = starForceRef.current?.calculate();
-    const cubeResult = cubeRef.current?.calculate();
+    starForceRef.current?.calculate();
+    cubeRef.current?.calculate();
   };
   return (
     <div className="flex flex-col w-[1440px] h-[924px] py-[32px] gap-[32px]">
       <div className="flex gap-[8px] h-[64px] w-full justify-center items-center">
-        <Image src="image/geardiff.svg" width={22} height={24} alt="geardiff" />
+        <Image
+          src="image/geardiff.svg"
+          width={22}
+          height={24}
+          alt="geardiff"
+          role="img"
+          style={{
+            width: 'auto', 
+            height: 'auto' 
+          }}
+        />
         <h2 className="">Gear Diff</h2>
       </div>
       <div className="flex grow h-full gap-[32px]">

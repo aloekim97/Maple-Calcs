@@ -95,8 +95,8 @@ export default function GearRes({
   };
 
   useEffect(() => {
-    let att =
-    selectedGear.ATK === '' ? selectedGear['M.ATK'] : selectedGear.ATK;
+    const att =
+      selectedGear.ATK === '' ? selectedGear['M.ATK'] : selectedGear.ATK;
     if (selectedGear.Set === 'Genesis') {
       const gene = itemStats(0, 22, 200, att, selectedGear.Type);
       setSfResults(gene);
@@ -136,6 +136,11 @@ export default function GearRes({
             width={16}
             height={16}
             alt="star"
+            role="img"
+            style={{
+              width: 'auto',
+              height: 'auto',
+            }}
           />
         );
       }
