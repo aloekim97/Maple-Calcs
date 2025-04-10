@@ -1,10 +1,12 @@
-import Image from "next/image";
-import GearCalculator from "./components/gearcalc";
+// app/page.tsx
+import GearCalculator from './components/gearcalc';
+import ServiceWorker from './components/ServiceWorker';
 
 export default function Home() {
   return (
     <div className="flex flex-col">
-      <GearCalculator/>
+      <ServiceWorker />
+      <GearCalculator />
     </div>
   );
 }

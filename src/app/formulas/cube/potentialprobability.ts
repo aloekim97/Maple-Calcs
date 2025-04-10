@@ -59,7 +59,7 @@ function classifyLine(line: string): LineClassification {
   if (attMatch) {
     return {
       type: 'att',
-      value: parseInt(attMatch[1])
+      value: parseInt(attMatch[1]),
     };
   }
 
@@ -68,7 +68,7 @@ function classifyLine(line: string): LineClassification {
   if (wseMatch) {
     return {
       type: wseMatch[2].toLowerCase(),
-      value: parseInt(wseMatch[1])
+      value: parseInt(wseMatch[1]),
     };
   }
 
@@ -88,11 +88,15 @@ function classifyLine(line: string): LineClassification {
   const value = parseInt(match[1]);
   const lineType = match[2].toUpperCase();
   if (lineType === 'L') {
-    if (STAT_VALUES.statPrime.includes(value)) return { type: 'statPrime', value };
-    if (STAT_VALUES.allPrime.includes(value)) return { type: 'allPrime', value };
+    if (STAT_VALUES.statPrime.includes(value))
+      return { type: 'statPrime', value };
+    if (STAT_VALUES.allPrime.includes(value))
+      return { type: 'allPrime', value };
   } else {
-    if (STAT_VALUES.statNonPrime.includes(value)) return { type: 'statNonPrime', value };
-    if (STAT_VALUES.allNonPrime.includes(value)) return { type: 'allNonPrime', value };
+    if (STAT_VALUES.statNonPrime.includes(value))
+      return { type: 'statNonPrime', value };
+    if (STAT_VALUES.allNonPrime.includes(value))
+      return { type: 'allNonPrime', value };
   }
 
   return { type: 'unknown', value };
@@ -127,12 +131,14 @@ function getLineProbability(
     if (SPECIAL_LINES.includes(lineInfo.type as SpecialLineType)) {
       const probTable = itemProb[lineInfo.type as SpecialLineType];
       if (probTable && typeof probTable === 'object') {
-        itemLineProb = (probTable as Record<number, number>)[lineInfo.value] || 0;
+        itemLineProb =
+          (probTable as Record<number, number>)[lineInfo.value] || 0;
       }
     }
     // Handle stat lines
     else if (itemProb.stat && lineInfo.type in itemProb.stat) {
-      itemLineProb = itemProb.stat[lineInfo.type as keyof ProbabilityTiers] || 0;
+      itemLineProb =
+        itemProb.stat[lineInfo.type as keyof ProbabilityTiers] || 0;
     }
   }
 
@@ -146,7 +152,7 @@ function calculateWSEProbability(
 ): number {
   const cubeProbabilities = CUBE_PROBABILITIES[cubeType];
   const itemProb = WSE_PROBABILITIES[itemType];
-  
+
   let totalProbability = 0;
 
   for (const combo of combinations) {
@@ -171,7 +177,7 @@ function calculateWSEProbability(
     const tier1 = getTier(line1Info);
     const tier2 = getTier(line2Info);
     const tier3 = getTier(line3Info);
-    
+
     const cubeProb1 = cubeProbabilities[tier1];
     const cubeProb2 = cubeProbabilities[tier2];
     const cubeProb3 = cubeProbabilities[tier3];
@@ -193,7 +199,7 @@ function calculateRegularItemProbability(
 ): number {
   const cubeProbabilities = CUBE_PROBABILITIES[cubeType];
   const itemProb = ITEM_PROBABILITIES[itemType];
-  
+
   if (!itemProb) {
     return 0;
   }
@@ -207,17 +213,53 @@ function calculateRegularItemProbability(
 
     // Determine tiers based on item type and line content
     if (itemType === 'Hat') {
-      tier1 = combo.lines[0].includes('CDR') ? 'cdr' : combo.lines[0].endsWith('L') ? 'L' : 'U';
-      tier2 = combo.lines[1].includes('CDR') ? 'cdr' : combo.lines[1].endsWith('L') ? 'L' : 'U';
-      tier3 = combo.lines[2].includes('CDR') ? 'cdr' : combo.lines[2].endsWith('L') ? 'L' : 'U';
+      tier1 = combo.lines[0].includes('CDR')
+        ? 'cdr'
+        : combo.lines[0].endsWith('L')
+        ? 'L'
+        : 'U';
+      tier2 = combo.lines[1].includes('CDR')
+        ? 'cdr'
+        : combo.lines[1].endsWith('L')
+        ? 'L'
+        : 'U';
+      tier3 = combo.lines[2].includes('CDR')
+        ? 'cdr'
+        : combo.lines[2].endsWith('L')
+        ? 'L'
+        : 'U';
     } else if (itemType === 'Gloves') {
-      tier1 = combo.lines[0].includes('CD') ? 'cd' : combo.lines[0].endsWith('L') ? 'L' : 'U';
-      tier2 = combo.lines[1].includes('CD') ? 'cd' : combo.lines[1].endsWith('L') ? 'L' : 'U';
-      tier3 = combo.lines[2].includes('CD') ? 'cd' : combo.lines[2].endsWith('L') ? 'L' : 'U';
+      tier1 = combo.lines[0].includes('CD')
+        ? 'cd'
+        : combo.lines[0].endsWith('L')
+        ? 'L'
+        : 'U';
+      tier2 = combo.lines[1].includes('CD')
+        ? 'cd'
+        : combo.lines[1].endsWith('L')
+        ? 'L'
+        : 'U';
+      tier3 = combo.lines[2].includes('CD')
+        ? 'cd'
+        : combo.lines[2].endsWith('L')
+        ? 'L'
+        : 'U';
     } else if (itemType === 'Accessory') {
-      tier1 = combo.lines[0].includes('DROPMESO') ? 'dropmeso' : combo.lines[0].endsWith('L') ? 'L' : 'U';
-      tier2 = combo.lines[1].includes('DROPMESO') ? 'dropmeso' : combo.lines[1].endsWith('L') ? 'L' : 'U';
-      tier3 = combo.lines[2].includes('DROPMESO') ? 'dropmeso' : combo.lines[2].endsWith('L') ? 'L' : 'U';
+      tier1 = combo.lines[0].includes('DROPMESO')
+        ? 'dropmeso'
+        : combo.lines[0].endsWith('L')
+        ? 'L'
+        : 'U';
+      tier2 = combo.lines[1].includes('DROPMESO')
+        ? 'dropmeso'
+        : combo.lines[1].endsWith('L')
+        ? 'L'
+        : 'U';
+      tier3 = combo.lines[2].includes('DROPMESO')
+        ? 'dropmeso'
+        : combo.lines[2].endsWith('L')
+        ? 'L'
+        : 'U';
     } else {
       tier1 = combo.lines[0].endsWith('L') ? 'L' : 'U';
       tier2 = combo.lines[1].endsWith('L') ? 'L' : 'U';
@@ -248,11 +290,23 @@ export function findComboProb(
   itemType: string
 ): PotCalcResult {
   let totalProbability: number;
-  
-  if (itemType === 'Weapon' || itemType === 'Secondary' || itemType === 'Emblem') {
-    totalProbability = calculateWSEProbability(combinations, cubeType, itemType as 'Weapon' | 'Secondary' | 'Emblem');
+
+  if (
+    itemType === 'Weapon' ||
+    itemType === 'Secondary' ||
+    itemType === 'Emblem'
+  ) {
+    totalProbability = calculateWSEProbability(
+      combinations,
+      cubeType,
+      itemType as 'Weapon' | 'Secondary' | 'Emblem'
+    );
   } else {
-    totalProbability = calculateRegularItemProbability(combinations, cubeType, itemType);
+    totalProbability = calculateRegularItemProbability(
+      combinations,
+      cubeType,
+      itemType
+    );
   }
 
   const averageTry = totalProbability > 0 ? 1 / totalProbability : Infinity;

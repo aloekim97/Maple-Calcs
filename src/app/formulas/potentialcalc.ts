@@ -4,7 +4,7 @@ import aggregateLines from './cube/simplifypotential';
 import { CUBE_COST } from './cube/cubeInfo';
 import { CubeType } from '../components/inputs/cubeInputs';
 
-interface PotCalculationInput {
+export interface PotCalculationInput {
   itemLevel: number;
   cubeType: string;
   startingTier: string;
@@ -46,7 +46,6 @@ export function potCalc(
 
   // Calculate cost metrics using percentiles
   const averageTry = potProb.averageTry;
-  const pSuccess = 1 / averageTry;
 
   const luckyTries = getPercentileTries(0.25); // 25th percentile (lucky)
   const medianTries = getPercentileTries(0.5); // 50th percentile (median)

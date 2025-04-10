@@ -1,7 +1,5 @@
 'use client';
 import {
-  Dispatch,
-  SetStateAction,
   useState,
   forwardRef,
   useImperativeHandle,
@@ -54,8 +52,6 @@ const Cube = forwardRef<CubeHandle, CubeProps>(
     const [events, setEvents] = useState({
       canCube: true,
     });
-
-    const [results, setResults] = useState<PotCalcResult>();
 
     const lineOptions = useMemo(() => {
       if (!inputs.itemType || !inputs.itemLevel)
@@ -295,5 +291,5 @@ const Cube = forwardRef<CubeHandle, CubeProps>(
     );
   }
 );
-
+Cube.displayName = 'Cube';
 export default Cube;

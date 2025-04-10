@@ -2,8 +2,8 @@ export default function itemStats(
   start: number,
   end: number,
   equipLevel: number,
-  weaponAtt?: any,
-  type?: any
+  weaponAtt: number,
+  type?: string
 ): {
   difference: { stat: number; att: number };
 } {
@@ -41,43 +41,47 @@ export default function itemStats(
     else return equipSf(targetStar);
   };
 
-  const weaponSf = (targetStar: number, weaponAtt: any) => {
+  const weaponSf = (targetStar: number, weaponAtt: number) => {
     let currentStat = 0;
-    let totalAtt = 0;
+    let totalAtt = weaponAtt;
     let attCount = 0;
     let post15 = wpnAtt;
-
+  
     for (let star = 1; star <= targetStar; star++) {
       if (star >= 1 && star <= 22) {
         if (star === 1) {
           currentStat += 2;
-          attCount += Math.round(weaponAtt * 0.02);
-          console.log(attCount);
-          totalAtt += attCount + weaponAtt;
+          const star1Gain = 1+ Math.floor(weaponAtt * 0.02); // +3 for 165 attack
+          attCount += star1Gain;
+          totalAtt = weaponAtt + star1Gain;
         } else if (star <= 5) {
           currentStat += 2;
-          attCount += Math.round(totalAtt * 0.02);
-          totalAtt += attCount;
+          const gain = 1+ Math.floor(totalAtt * 0.02);
+          attCount += gain;
+          totalAtt += gain;
         } else if (star <= 15) {
           currentStat += 3;
-          attCount += Math.round(totalAtt * 0.02);
-          totalAtt += attCount;
+          const gain =  1+ Math.floor(totalAtt * 0.02);
+          attCount += gain;
+          totalAtt += gain;
         } else {
-          currentStat += baseStat; // Changed from baseStat to wpnStat
+          currentStat += wpnStat;
+          // Post-15 attack logic (only runs for stars 16+)
+          if (star === 16) {
+            attCount += wpnAtt;
+          } else if (star === 17) {
+            attCount += post15;
+          } else if (star === 18) {
+            post15 += 1;
+            attCount += post15;
+          } else if (star === 19) {
+            attCount += post15;
+            post15 += 1;
+          } else if (star <= 22) {
+            attCount += post15;
+            post15 += 1;
+          }
         }
-      }
-
-      if (star === 16) {
-        attCount += wpnAtt;
-        post15 += 1;
-      } else if (star === 17) {
-        attCount += post15;
-      } else if (star === 18) {
-        attCount += post15;
-        post15 += 1;
-      } else if (star <= 22) {
-        // attCount += post15;
-        post15 += 1;
       }
     }
     return {
