@@ -48,7 +48,29 @@ export default function GearRes({
   endStar,
   potLines,
   sfStats,
+  setNumber,
 }: GearProps) {
+  const [stat, setStat] = useState('');
+  const getPotValue = (potLine: string) => {
+    try {
+      const parsed = JSON.parse(potLine);
+      return parsed.stat || 0; // Return 0 if stat doesn't exist
+    } catch {
+      return 0; // Fallback if JSON parsing fails
+    }
+  };
+
+  const setCount = parseInt(setNumber || '', 10); // Fallback to '2' if empty
+  const isValidSetCount = !isNaN(setCount) && setCount > 0;
+
+  const setStats = selectedGear?.Set && isValidSetCount
+  ? sets.find(s => {
+      const isSetMatch = s["Set"].toLowerCase() === selectedGear.Set.toLowerCase();
+      const isCountMatch = s["Set Count"] === setCount;
+      return isSetMatch && isCountMatch;
+    })
+  : null;
+
   const [potValues, setPotValues] = useState<PotValues>({
     first: { value: 0, stat: '' },
     second: { value: 0, stat: '' },
@@ -176,25 +198,75 @@ export default function GearRes({
           className="p-[4px]"
         />
 
-        <div className="flex flex-col gap-[8px] w-full">
-          {potLines?.first && potValues.first.stat && (
+<div className='flex justify-between items-start w-full gap-[16px]'>
+          <div className="flex flex-col gap-[8px] w-full h-full">
+            <h5 className='opacity-60 text-[#00B188]'>Potential:</h5>
             <div className="flex justify-between w-full">
-              <h4 className="text-[#00B188]">{potValues.first.stat}:</h4>
-              <h4 className="text-pot">+{potValues.first.value}%</h4>
+              <h5 className="text-[#00B188]">{potValues.first.stat}:</h5>
+              <h6 className="text-[#00B188]">+{getPotValue(potLines?.first)}%</h6>
             </div>
-          )}
-          {potLines?.second && potValues.second.stat && (
             <div className="flex justify-between w-full">
-              <h4 className="text-[#00B188]">{potValues.second.stat}:</h4>
-              <h4 className="text-pot">+{potValues.second.value}%</h4>
+              <h5 className="text-[#00B188]">{potValues.second.stat}:</h5>
+              <h6 className="text-[#00B188]">+{getPotValue(potLines?.second)}%</h6>
             </div>
-          )}
-          {potLines?.third && potValues.third.stat && (
             <div className="flex justify-between w-full">
-              <h4 className="text-[#00B188]">{potValues.third.stat}:</h4>
-              <h4 className="text-pot">+{potValues.third.value}%</h4>
+              <h5 className="text-[#00B188]">{potValues.third.stat}:</h5>
+              <h6 className="text-[#00B188]">+{getPotValue(potLines?.third)}%</h6>
             </div>
-          )}
+          </div>
+          <div className="flex justify-betwen w-full h-full">
+            <div className='flex flex-col h-full w-full'>
+              {setStats ? (
+                <div className='flex flex-col gap-[8px]'>
+                  <div className='flex gap-[4px]'>
+                    {/* <h5 className='opacity-60'>Set Bonus:</h5> */}
+                    <div className='flex gap-[4px]'>
+                      {setStats["Set"] && <h5 className='opacity-60'>{setStats["Set"]}</h5>}
+                      {setStats["Set Count"] && <h5 className='opacity-60'>( {setStats["Set Count"]} )</h5>}
+                    </div>
+                  </div>
+                  {setStats.Stat && 
+                    <div className='flex w-full justify-between'>
+                      <h5>All Stat:</h5>
+                      <h6>+{setStats.Stat}</h6>
+                    </div>
+                  }
+                  {setStats.Att && 
+                    <div className='flex w-full justify-between'>
+                      <h5>ATT:</h5>
+                      <h6>+{setStats.Att}</h6>
+                    </div>
+                  }
+                  {setStats["HP&MP"] && 
+                    <div className='flex w-full justify-between'>
+                      <h5>HP/MP:</h5>
+                      <h6>+{setStats["HP&MP"]}</h6>
+                    </div>
+                  }
+                  {setStats["Boss Damage"] && 
+                    <div className='flex w-full justify-between'>
+                      <h5>Boss:</h5>
+                      <h6>+{setStats["Boss Damage"]}</h6>
+                    </div>
+                  }
+                  {setStats.IED && 
+                    <div className='flex w-full justify-between'>
+                      <h5>IED:</h5>
+                      <h6>+{setStats.IED}</h6>
+                    </div>
+                  }
+                  {setStats["Crit Damage"] && 
+                    <div className='flex w-full justify-between'>
+                      <h5>Crit Damage:</h5>
+                      <h6>+{setStats["Crit Damage"]}</h6>
+                    </div>
+                  }
+                </div>
+              ) : (
+                <div className='h-0'/>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 

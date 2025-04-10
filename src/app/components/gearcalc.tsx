@@ -103,7 +103,7 @@ export default function GearCalculator() {
               </div>
             )}
           </div>
-          <div className="flex w-full h-full gap-[16px]">
+          <div className="flex w-full gap-[16px]">
             <SfCost sfResults={sfResults} />
             <CubeCost cubeRes={cubeResults} />
           </div>
