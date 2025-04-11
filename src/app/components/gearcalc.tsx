@@ -98,11 +98,11 @@ export default function GearCalculator() {
               </div>
             )}
           </div>
-          <div className="flex w-full h-full gap-[16px]">
+          <div className="flex w-full gap-[16px]">
             <SfCost sfResults={sfResults} />
             <CubeCost cubeRes={cubeResults} />
           </div>
-          <div className="flex w-full h-full gap-[16px]">
+          <div className="flex w-full gap-[16px]">
             <div className="flex w-full flex-col border rounded-[8px] p-[12px] gap-[4px]">
               <h4>Total Cost</h4>
               <div className="grid grid-cols-4 w-full h-full gap-x-[16px] gap-y-[4px] items-center">
@@ -149,9 +149,9 @@ export default function GearCalculator() {
               </div>
             </div>
           </div>
-          <div className="flex w-full h-full gap-[16px] border p-[12px] rounded-[8px]">
+          <div className="flex w-full gap-[16px] border p-[12px] rounded-[8px]">
             <h4 className="opacity-60">FD</h4>
-            <div className="flex flex-col w-full h-full justify-end items-end">
+            <div className="flex flex-col w-full justify-end items-end">
               <h1 className="flex text-[72px] leading-[72px] font-bold w-full justify-end items-end">
                 ~20.1%
               </h1>

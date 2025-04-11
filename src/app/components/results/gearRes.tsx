@@ -137,10 +137,6 @@ export default function GearRes({
             height={16}
             alt="star"
             role="img"
-            style={{
-              width: 'auto',
-              height: 'auto',
-            }}
           />
         );
       }
@@ -180,19 +176,19 @@ export default function GearRes({
           {potLines?.first && potValues.first.stat && (
             <div className="flex justify-between w-full">
               <h4 className="text-[#00B188]">{potValues.first.stat}:</h4>
-              <h4 className="text-pot">+{potValues.first.value}%</h4>
+              <h4 className="text-[#00B188]">+{potValues.first.value}%</h4>
             </div>
           )}
           {potLines?.second && potValues.second.stat && (
             <div className="flex justify-between w-full">
               <h4 className="text-[#00B188]">{potValues.second.stat}:</h4>
-              <h4 className="text-pot">+{potValues.second.value}%</h4>
+              <h4 className="text-[#00B188]">+{potValues.second.value}%</h4>
             </div>
           )}
           {potLines?.third && potValues.third.stat && (
             <div className="flex justify-between w-full">
               <h4 className="text-[#00B188]">{potValues.third.stat}:</h4>
-              <h4 className="text-pot">+{potValues.third.value}%</h4>
+              <h4 className="text-[#00B188]">+{potValues.third.value}%</h4>
             </div>
           )}
         </div>

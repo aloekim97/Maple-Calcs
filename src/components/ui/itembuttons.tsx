@@ -76,7 +76,7 @@ const ItemButton = ({ item, onClick }: ItemButtonProps) => {
       aria-label={`${item['Item Name'].replace(/_/g, ' ')} item button`}
     >
       <div
-        className="relative size-[40px] p-[4px] border-[1px] rounded-[8px] border-opacity-20 hover:border-[3px] transition-all duration-200"
+        className="relative size-[40px] p-[4px] border-[1px] rounded-[8px] border-opacity-20 hover:border-[3px] transition-all duration-200 hover:cursor-pointer"
         style={{ borderColor }}
       >
         {isLoaded ? (
@@ -85,13 +85,13 @@ const ItemButton = ({ item, onClick }: ItemButtonProps) => {
             alt={item['Item Name'].replace(/_/g, ' ')}
             fill
             sizes="40px"
-            className="p-[4px] object-contain"
+            className="p-[4px] object-contain hover:cursor-pointer"
             onError={() => {
               setImageSrc('/image/items/fallback.png');
             }}
           />
         ) : (
-          <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-[4px]"></div>
+          <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-[4px] hover:cursor-pointer"></div>
         )}
       </div>
     </button>
