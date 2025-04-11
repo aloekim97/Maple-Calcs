@@ -43,7 +43,7 @@ export default function GearCalculator() {
     cubeRef.current?.calculate();
   };
   return (
-    <div className="flex flex-col w-[1440px] h-[924px] py-[32px] gap-[32px]">
+    <div className="flex flex-col w-[1440px] max-h-[946px] p-[32px] gap-[32px]">
       <div className="flex gap-[8px] h-[64px] w-full justify-center items-center">
         <Image
           src="image/geardiff.svg"
@@ -58,9 +58,9 @@ export default function GearCalculator() {
         />
         <h2 className="">Gear Diff</h2>
       </div>
-      <div className="flex grow h-full gap-[32px]">
+      <div className="flex gap-[32px]">
         <div className="flex flex-col w-full gap-[32px]">
-          <div className="flex w-full h-[640px] overflow-hidden bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)]">
+          <div className="flex w-full overflow-hidden h-[280px] bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)]">
             <ItemsPage setSelectedGear={setSelectedGear} />
           </div>
           <div className="flex w-full gap-[32px]">
@@ -83,8 +83,8 @@ export default function GearCalculator() {
           </div>
           <Button onClick={handleCalculate}>Calculate</Button>
         </div>
-        <div className="flex flex-col w-full h-full bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] p-[16px] gap-[16px]">
-          <div className="flex w-full h-full gap-[16px] rounded-[8px] border grow">
+        <div className="flex flex-col w-full grow bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] p-[16px] gap-[16px]">
+          <div className="flex w-full gap-[16px] rounded-[8px] border grow">
             {selectedGear ? (
               <GearRes
                 selectedGear={selectedGear}

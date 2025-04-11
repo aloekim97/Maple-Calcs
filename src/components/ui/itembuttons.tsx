@@ -83,9 +83,8 @@ const ItemButton = ({ item, onClick }: ItemButtonProps) => {
           <Image
             src={imageSrc}
             alt={item['Item Name'].replace(/_/g, ' ')}
-            fill
-            sizes="40px"
-            className="p-[4px] object-contain hover:cursor-pointer"
+            width={100}
+            height={100}
             onError={() => {
               setImageSrc('/image/items/fallback.png');
             }}
