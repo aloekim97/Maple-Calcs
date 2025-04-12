@@ -38,7 +38,7 @@ export default function SfCost({ sfResults }: SfCost) {
   const median = transformAndFormat(sfResults?.medianCost);
   return (
     <div className="flex w-full flex-col border border-[#FFCC02] bg-[#FFFAE6] rounded-[8px] p-[12px] gap-[4px]">
-      <h4>Starforce Cost</h4>
+      <h5 className="opacity-60">StarForce Cost</h5>
       <div className="flex flex-col w-full h-full">
         <div className="grid grid-cols-4 w-full h-full gap-x-[16px] gap-y-[4px] items-center">
           <h4 className="flex justify-start h-full w-full items-center">
@@ -48,7 +48,7 @@ export default function SfCost({ sfResults }: SfCost) {
             {median}
           </p>
           <h4 className="flex justify-start h-full w-full items-center">
-            Unlucky:
+            Lower:
           </h4>
           <p className="font-normal flex justify-end h-full w-full items-center">
             {unlucky}
@@ -60,7 +60,7 @@ export default function SfCost({ sfResults }: SfCost) {
             {averageCostDisplay}
           </p>
           <h4 className="flex justify-start h-full w-full items-center">
-            Lucky:
+            Upper:
           </h4>
           <p className="font-normal flex justify-end h-full w-full items-center">
             {lucky}

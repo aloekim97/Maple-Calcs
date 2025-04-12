@@ -10,7 +10,11 @@ interface GearProps {
   endStar: string;
   potLines: any;
   sfStats: any;
+  setNumber: string;
+  setStats: SetData | null;
+  renderStatWithBonus: renderStatWithBonus | null;
 }
+
 interface SFResults {
   hp?: number;
   endStar?: number;
@@ -51,6 +55,7 @@ export default function GearRes({
   potLines,
   sfStats,
   setNumber,
+  setStats,
 }: GearProps) {
   const [stat, setStat] = useState('');
   const [potValues, setPotValues] = useState<PotValues>({
@@ -59,16 +64,18 @@ export default function GearRes({
     third: { value: 0, stat: '' },
   });
 
-  const setCount = parseInt(setNumber || '', 10); // Fallback to '2' if empty
-  const isValidSetCount = !isNaN(setCount) && setCount > 0;
+  // const setCount = parseInt(setNumber || '', 10);
+  // const isValidSetCount = !isNaN(setCount) && setCount > 0;
 
-  const setStats = selectedGear?.Set && isValidSetCount
-  ? sets.find(s => {
-      const isSetMatch = s["Set"].toLowerCase() === selectedGear.Set.toLowerCase();
-      const isCountMatch = s["Set Count"] === setCount;
-      return isSetMatch && isCountMatch;
-    })
-  : null;
+  // const setStats = selectedGear?.Set && isValidSetCount
+  // ? sets.find(s => {
+  //     const isSetMatch = s["Set"] === selectedGear.Set;
+  //     const isCountMatch = s["Set Count"] === setCount;
+  //     console.log(selectedGear.Set)
+  //     console.log(setCount)
+  //     return isSetMatch && isCountMatch;
+  //   })
+  // : null;
 
   const [sfResults, setSfResults] = useState<SFResults | null>(null);
   const getPotValueAndStat = (
@@ -187,43 +194,100 @@ export default function GearRes({
           alt={selectedGear['Item Name'].replace(/_/g, ' ')}
           className="p-[4px]"
         />
-        <div>
 
-        </div>
-        <div className="flex flex-col">
-
-        </div>
-        <div className="flex flex-col gap-[8px] w-full">
-          <h5 className='opacity-60 text-[#00B188]'>Potential:</h5>
-          {potLines?.first && potValues.first.stat && (
-            <div className="flex justify-between w-full">
-              <h4 className="text-[#00B188]">{potValues.first.stat}:</h4>
-              <h4 className="text-[#00B188]">+{potValues.first.value}%</h4>
+        <div className='flex w-full'>
+        {potLines ? (
+          <div className="flex flex-col gap-[8px] w-full mr-[16px]">
+            {potLines?.first && potValues.first.stat && (
+              <div className="flex flex-col gap-[8px] w-full">
+                <h5 className='opacity-60 text-[#00B188]'>Potential:</h5>
+                <div className="flex justify-between w-full">
+                  <h5 className="text-[#00B188]">{potValues.first.stat}:</h5>
+                  <h6 className="text-[#00B188]">+{potValues.first.value}%</h6>
+                </div>
+              </div>
+            )}
+            {potLines?.second && potValues.second.stat && (
+              <div className="flex justify-between w-full">
+                <h5 className="text-[#00B188]">{potValues.second.stat}:</h5>
+                <h6 className="text-[#00B188]">+{potValues.second.value}%</h6>
+              </div>
+            )}
+            {potLines?.third && potValues.third.stat && (
+              <div className="flex justify-between w-full">
+                <h5 className="text-[#00B188]">{potValues.third.stat}:</h5>
+                <h6 className="text-[#00B188]">+{potValues.third.value}%</h6>
+              </div>
+            )}
+          </div>
+        ):(<div/>)}
+          <div className='w-full'>
+            {setStats ? (
+              <div className='flex flex-col gap-[8px]'>
+                <div className='flex gap-[4px]'>
+                  {/* <h5 className='opacity-60'>Set Bonus:</h5> */}
+                  <div className='flex gap-[4px]'>
+                    {setStats["Set"] && <h5 className='opacity-60'>{setStats["Set"]}</h5>}
+                    {setStats["Set Count"] && <h5 className='opacity-60'>( {setStats["Set Count"]} )</h5>}
+                  </div>
+                </div>
+                {setStats.Stat && 
+                  <div className='flex w-full justify-between'>
+                    <h5>All Stat:</h5>
+                    <h6>+{setStats.Stat}</h6>
+                  </div>
+                }
+                {setStats.Att && 
+                  <div className='flex w-full justify-between'>
+                    <h5>ATT:</h5>
+                    <h6>+{setStats.Att}</h6>
+                  </div>
+                }
+                {setStats["HP&MP"] && 
+                  <div className='flex w-full justify-between'>
+                    <h5>HP/MP:</h5>
+                    <h6>+{setStats["HP&MP"]}</h6>
+                  </div>
+                }
+                {setStats["Boss Damage"] && 
+                  <div className='flex w-full justify-between'>
+                    <h5>Boss:</h5>
+                    <h6>+{setStats["Boss Damage"]}</h6>
+                  </div>
+                }
+                {setStats.IED && 
+                  <div className='flex w-full justify-between'>
+                    <h5>IED:</h5>
+                    <h6>+{setStats.IED}</h6>
+                  </div>
+                }
+                {setStats["Crit Damage"] && 
+                  <div className='flex w-full justify-between'>
+                    <h5>Crit Damage:</h5>
+                    <h6>+{setStats["Crit Damage"]}</h6>
+                  </div>
+                }
+              </div>
+            ) : (
+            <div className='flex flex-col w-full gap-[4px]'> 
+              <div className='flex gap-[4px]'>
+                <h5 className='opacity-60'>Set</h5>
+                <h5 className='opacity-60'>(0)</h5>
+              </div>
+              <div className='flex gap-[4px]'>
+                <h5 className='opacity-80'>Input a valid value for "Set Number" to see the respective set bonuses.</h5>
+              </div>
             </div>
-          )}
-          {potLines?.second && potValues.second.stat && (
-            <div className="flex justify-between w-full">
-              <h4 className="text-[#00B188]">{potValues.second.stat}:</h4>
-              <h4 className="text-[#00B188]">+{potValues.second.value}%</h4>
-            </div>
-          )}
-          {potLines?.third && potValues.third.stat && (
-            <div className="flex justify-between w-full">
-              <h4 className="text-[#00B188]">{potValues.third.stat}:</h4>
-              <h4 className="text-[#00B188]">+{potValues.third.value}%</h4>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="flex flex-col justify-center items-center w-full p-[12px] gap-[8px]">
+      <div className="flex flex-col justify-start items-start w-full p-[12px] gap-[8px]">
         <h3 className="flex w-full justify-start leading-[24px]">
           {selectedGear['Item Name'].replace(/_/g, ' ')}
         </h3>
-
-        {/* <div className="flex w-full justify-between"> */}
-        {/* </div> */}
-        <div className='flex flex-col w-full gap-[4px]'>
+        <div className='flex flex-col h-full w-full gap-[6px] justify-between'>
           <div className="flex justify-between gap-[4px]">
             <h4>Type:</h4>
             <p>{selectedGear.Type}</p>
@@ -271,7 +335,7 @@ export default function GearRes({
           </div>
 
           <div className="flex justify-between w-full">
-            <h4>ATK:</h4>
+            <h4>Atk:</h4>
             <p>
               {sfResults
                 ? renderStatWithBonus(selectedGear.ATK, sfResults.difference.att)
@@ -280,7 +344,7 @@ export default function GearRes({
           </div>
 
           <div className="flex justify-between w-full">
-            <h4>M.ATK:</h4>
+            <h4>M.Atk:</h4>
             <p>
               {sfResults
                 ? renderStatWithBonus(selectedGear.ATK, sfResults.difference.att)
@@ -294,12 +358,12 @@ export default function GearRes({
           </div>
 
           <div className="flex justify-between w-full">
-            <h4>BOSS DAMAGE:</h4>
+            <h4>Boss Damage:</h4>
             <p>{selectedGear['Boss Damage'] || 0}</p>
           </div>
 
           <div className="flex justify-between w-full">
-            <h4>DAMAGE:</h4>
+            <h4>Damage:</h4>
             <p>{selectedGear.DAMAGE || 0}</p>
           </div>
         </div>

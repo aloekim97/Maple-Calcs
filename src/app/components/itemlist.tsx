@@ -4,7 +4,8 @@ import items from '../../../public/data.json';
 import ItemButton from '@/components/ui/itembuttons';
 import { Item } from '../../../types/item';
 import { Dispatch, SetStateAction } from 'react';
-import { Input } from "@/components/ui/search";
+import { Input2 } from "@/components/ui/search";
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -18,6 +19,8 @@ import { Label } from '@radix-ui/react-label';
 
 interface ItemsPageProps {
   setSelectedGear: Dispatch<SetStateAction<Item | null>>;
+  setNumber: string;          // Add this
+  setSetNumber: Dispatch<SetStateAction<string>>; // Add this
 }
 
 const itemList = items as Item[];
@@ -33,7 +36,6 @@ const ItemsPage = ({ setSelectedGear, setNumber, setSetNumber }: ItemsPageProps)
     // Update parent state directly
     setSetNumber(value || ''); // Default to '2' if empty
   };
-
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value.toLowerCase());
   };
@@ -50,18 +52,18 @@ const ItemsPage = ({ setSelectedGear, setNumber, setSetNumber }: ItemsPageProps)
   return (
     <div className="p-4 flex flex-col gap-[8px]">
       <div className="flex gap-[8px]">
-        <div className='flex w-full flex-col gap-[4px]'>
+        <div className='flex-1 flex-col gap-[4px]'>
           <p className='p3 opacity-60'>
-            Search by Name
+            Search Items
           </p>
-          <Input
+          <Input2
             type="text"
-            placeholder="Search items..."
+            placeholder="Search..."
             value={searchTerm}
             onChange={handleSearch}
           />
         </div>
-        <div className='flex w-full flex-col gap-[4px]'>
+        <div className='flex-1 flex-col gap-[4px]'>
           <p className='p3 opacity-60'>
             Filter by Type
           </p>
@@ -86,7 +88,7 @@ const ItemsPage = ({ setSelectedGear, setNumber, setSetNumber }: ItemsPageProps)
             </SelectContent>
           </Select>
         </div>
-        <div className='flex w-full flex-col gap-[4px]'>
+        <div className='flex-1 flex-col gap-[4px]'>
           <p className='p3 opacity-60'>
             Filter by Set
           </p>
@@ -121,7 +123,7 @@ const ItemsPage = ({ setSelectedGear, setNumber, setSetNumber }: ItemsPageProps)
             </SelectContent>
           </Select>
         </div>
-        <div className='flex w-full flex-col gap-[4px]'>
+        <div className='flex-1 flex-col gap-[4px]'>
           <p className='p3 opacity-60'>
             Filter by Job
           </p>
@@ -143,19 +145,19 @@ const ItemsPage = ({ setSelectedGear, setNumber, setSetNumber }: ItemsPageProps)
             </SelectContent>
           </Select>
         </div>
-          <div className='flex w-[1px] rounded-full h-full bg-black opacity-20'/>
-          <div className='flex flex-col w-full gap-[4px]'>
-            <p className='p3 opacity-60'>Set Number</p>
-            <Input
-              type="number"
-              placeholder="Set#"
-              value={setNumber}  // Use prop value
-              onChange={changeNum}
-            />
-          </div>
+        <div className='flex w-[1px] rounded-full h-full bg-black opacity-20'/>
+        <div className='flex-1 flex-col gap-[4px]'>
+          <p className='p3 opacity-60'>Set Number</p>
+          <Input
+            type="number"
+            placeholder="Set#"
+            value={setNumber}  // Use prop value
+            onChange={changeNum}
+          />
+        </div>
       </div>
 
-      <div className="grid grid-cols-14 overflow-y-auto w-full justify-start items-start">
+      <div className="grid grid-cols-14 overflow-y-auto w-full justify-start items-start overflow-x-hidden">
         {filteredItems.map((item) => (
           <ItemButton
             key={item["Item Name"]}
