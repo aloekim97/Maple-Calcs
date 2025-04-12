@@ -1,0 +1,25 @@
+// export function getCost(star: number, equip: number): string {
+//   let totalCost = 0;
+//   let adjustLvl = Math.floor(equip / 10) * 10;
+//   let inner = 0;
+
+//   if (star < 10) {
+//     inner = (adjustLvl ** 3 * (star + 1)) / 2500 + 10;
+//   } else if (star === 10) {
+//     inner = (adjustLvl ** 3 * (star + 1) ** 2.7) / 40000 + 10;
+//   } else if (star === 11) {
+//     inner = (adjustLvl ** 3 * (star + 1) ** 2.7) / 22000 + 10;
+//   } else if (star === 12) {
+//     inner = (adjustLvl ** 3 * (star + 1) ** 2.7) / 15000 + 10;
+//   } else if (star === 13) {
+//     inner = (adjustLvl ** 3 * (star + 1) ** 2.7) / 11000 + 10;
+//   } else if (star === 14) {
+//     inner = (adjustLvl ** 3 * (star + 1) ** 2.7) / 7500 + 10;
+//   } else if (star >= 15) {
+//     inner = (adjustLvl ** 3 * (star + 1) ** 2.7) / 20000 + 10;
+//   }
+
+//   totalCost = Math.round(totalCost / 100) * 100;
+
+//   return totalCost.toLocaleString();
+// }

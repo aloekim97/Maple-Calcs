@@ -1,5 +1,6 @@
-import { getChance } from './sf/chance';
+import starForceAttempts from '../formulas/sf/chance';
 import { getNewCost } from './sf/cost';
+
 
 export function calculateKMS(
   startStar: number,
@@ -33,18 +34,16 @@ export function calculateKMS(
   
   // Calculate costs and booms for each star level
   for (let star = startStar; star < endStar; star++) {
-    const { success, boom } = getChance(
+    const sfStats = starForceAttempts(
       star,
+      endStar,
       starCatch,
       safeguard,
       reducedBooms
     );
-    
-    const cost = parseFloat(
-      getNewCost(star, equipLevel, safeguard, discount30, mvpDiscount).replace(/,/g, '')
-    );
-    const pSuccess = success / 100;
-    const pBoom = boom / 100;
+    // console.log(sfStats)
+    const kmsCost = getNewCost(sfStats.starAttempts, equipLevel, safeguard, discount30, mvpDiscount, endStar, sfStats.attemptsPerBoom)
+
 
     // Expected attempts considering booms
     const expectedAttempts = 1 / pSuccess;
@@ -60,7 +59,6 @@ export function calculateKMS(
     totalExpectedCost += starCost;
     totalVarianceCost += varianceAttempts * Math.pow(cost, 2);
   }
-  console.log(totalExpectedBooms)
 
   // Calculate statistics
   const stdDev = Math.sqrt(totalVarianceCost);

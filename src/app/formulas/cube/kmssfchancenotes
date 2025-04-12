@@ -1,22 +1,4 @@
-export interface StarAttemptStats {
-  attempts: number;
-  booms: number;
-  successRate: number;
-  failRate: number;
-  boomRate: number;
-}
-
-export interface StarForceResult {
-  totalAttempts: number;
-  totalBooms: number;
-  attemptsPerBoom: number;
-  starAttempts: {
-    [star: number]: StarAttemptStats;
-  };
-}
-
-
-export default function starForceAttempts(startStar, endStar, starCatch = false, safeguard = false, reducedBooms = false) {
+function calculateStarForceStats(startStar, endStar, starCatch = false, safeguard = false, reducedBooms = false) {
   const rates = {
     initial: {
       0: [95, 5, 0],
@@ -44,7 +26,7 @@ export default function starForceAttempts(startStar, endStar, starCatch = false,
       18: [15, 78.2, 6.8],
       19: [15, 76.5, 8.5],
       20: [30, 59.5, 10.5],
-      21: [15, 72.5, 12.75],
+      21: [15, 72.5, 12.5],
       22: [15, 68, 17],
       23: [10, 72, 18],
       24: [10, 72, 18],
@@ -61,10 +43,11 @@ export default function starForceAttempts(startStar, endStar, starCatch = false,
     throw new Error("Invalid star range");
   }
 
+  // Initialize variables
   let currentStar = startStar;
   let totalAttempts = 0;
   let totalBooms = 0;
-  const starAttempts = {};
+  const starAttempts = {}; // Stores attempts needed for each star
 
   while (currentStar < endStar) {
     // Determine which rate table to use
@@ -76,23 +59,18 @@ export default function starForceAttempts(startStar, endStar, starCatch = false,
     // Get current rates
     let [success, fail, boom] = rateTable[currentStar];
     
-    // Apply modifiers in the exact order you specified
-    if (starCatch) {
-      success *= 1.05; // 5% success rate increase
-      fail = 100 - success - boom;
+    // Apply modifiers
+    if (starCatch && boom > 0) {
+      boom /= 2;
+      fail += (rateTable[currentStar][2] - boom);
     }
-
+    
     if (reducedBooms && boom > 0) {
-      boom *= 0.7; // 30% boom chance reduction
-      fail = 100 - success - boom;
+      boom *= 0.7;
+      fail += (rateTable[currentStar][2] - boom);
     }
 
-    if (safeguard && (currentStar === 15 || currentStar === 16 || currentStar === 17)) {
-      boom = 0;
-      fail = 100 - success;
-    }
-
-    // Normalize rates (in case of floating point errors)
+    // Normalize rates
     const total = success + fail + boom;
     success = success / total;
     fail = fail / total;
@@ -108,21 +86,19 @@ export default function starForceAttempts(startStar, endStar, starCatch = false,
     const expectedBoomsAtThisStar = attemptsForThisStar * boomProbabilityPerAttempt;
     
     // If we boom, we have to redo from 15, so we need to account for that
-    if (boom > 0 && currentStar > 12) {
-      const recoveryAttempts = calculateRecoveryAttempts(12, currentStar, starCatch, safeguard, reducedBooms);
+    if (boom > 0 && currentStar > 15) {
+      const recoveryAttempts = calculateRecoveryAttempts(15, currentStar, starCatch, safeguard, reducedBooms);
       totalAttempts += attemptsForThisStar + (expectedBoomsAtThisStar * recoveryAttempts.attempts);
       totalBooms += expectedBoomsAtThisStar + (expectedBoomsAtThisStar * recoveryAttempts.booms);
     } else {
+      // No boom risk or already at/above 15 (booming doesn't set us back further)
       totalAttempts += attemptsForThisStar;
       totalBooms += expectedBoomsAtThisStar;
     }
 
     starAttempts[currentStar] = {
       attempts: attemptsForThisStar,
-      booms: expectedBoomsAtThisStar,
-      successRate: success * 100,
-      failRate: fail * 100,
-      boomRate: boom * 100
+      booms: expectedBoomsAtThisStar
     };
 
     currentStar++;
@@ -150,20 +126,14 @@ export default function starForceAttempts(startStar, endStar, starCatch = false,
 
       let [success, fail, boom] = rateTable[star];
       
-      // Apply modifiers in the same order
-      if (starCatch) {
-        success *= 1.05;
-        fail = 100 - success - boom;
+      if (starCatch && boom > 0) {
+        boom /= 2;
+        fail += (rateTable[star][2] - boom);
       }
       
       if (reducedBooms && boom > 0) {
         boom *= 0.7;
-        fail = 100 - success - boom;
-      }
-
-      if (safeguard && (star === 15 || star === 16 || star === 17)) {
-        boom = 0;
-        fail = 100 - success;
+        fail += (rateTable[star][2] - boom);
       }
 
       const total = success + fail + boom;
@@ -176,9 +146,9 @@ export default function starForceAttempts(startStar, endStar, starCatch = false,
       attempts += attemptsForThisStar;
       booms += expectedBoomsAtThisStar;
 
-      // If we boom during recovery, we have to restart recovery from 12 again
-      if (boom > 0 && star > 12) {
-        const recovery = calculateRecoveryAttempts(12, star, starCatch, safeguard, reducedBooms);
+      // If we boom during recovery, we have to restart recovery from 15 again
+      if (boom > 0 && star > 15) {
+        const recovery = calculateRecoveryAttempts(15, star, starCatch, safeguard, reducedBooms);
         attempts += expectedBoomsAtThisStar * recovery.attempts;
         booms += expectedBoomsAtThisStar * recovery.booms;
       }
@@ -189,12 +159,41 @@ export default function starForceAttempts(startStar, endStar, starCatch = false,
 }
 
 // Example usage:
-const stats = starForceAttempts(15, 22, false, false, false);
+const stats = calculateStarForceStats(0, 23, false, false, false);
 console.log(`Estimated to reach star ${stats.endStar} from ${stats.startStar}:`);
 console.log(`- Total attempts: ${stats.totalAttempts.toFixed(2)}`);
 console.log(`- Total booms: ${stats.totalBooms.toFixed(2)}`);
 console.log(`- Attempts per boom: ${stats.attemptsPerBoom.toFixed(2)}`);
 console.log("Per-star breakdown:", stats.starAttempts);
-const result = starForceAttempts(15, 22);
-const avgTapsPerStar = result.totalAttempts / (result.endStar - result.startStar);
-console.log(`Average taps per star: ${avgTapsPerStar.toFixed(2)}`);
+
+
+const starMultipliers: { [key: number]: number } = {
+  17: 1.31766055,
+  18: 2.8571348,
+  19: 4.44443047,
+  21: 1.59999951,
+};
+
+if (currentStar < 10) {
+  baseCost = (100 * Math.pow(adjustedLevel, 3) * (currentStar + 1)) / 2500 + 10;
+} else if (currentStar === 10) {
+  baseCost = (100 * Math.pow(adjustedLevel, 3) * Math.pow(currentStar + 1, 2.7)) / 40000 + 10;
+} else if (currentStar === 11) {
+  baseCost = (100 * Math.pow(adjustedLevel, 3) * Math.pow(currentStar + 1, 2.7)) / 22000 + 10;
+} else if (currentStar === 12) {
+  baseCost = (100 * Math.pow(adjustedLevel, 3) * Math.pow(currentStar + 1, 2.7)) / 15000 + 10;
+} else if (currentStar === 13) {
+  baseCost = (100 * Math.pow(adjustedLevel, 3) * Math.pow(currentStar + 1, 2.7)) / 11000 + 10;
+} else if (currentStar === 14) {
+  baseCost = (100 * Math.pow(adjustedLevel, 3) * Math.pow(currentStar + 1, 2.7)) / 7500 + 10;
+} else {
+  baseCost = (100 * Math.pow(adjustedLevel, 3) * Math.pow(currentStar + 1, 2.7)) / 20000 + 10;
+}
+
+
+export function calculateMedianCost(totalExpectedCost: number, stdDev: number) {
+  if (stdDev === 0) return totalExpectedCost; // deterministic case
+  const cv = stdDev / totalExpectedCost; // coefficient of variation
+  const adjustment = Math.sqrt(1 + cv * cv);
+  return totalExpectedCost / adjustment;
+}

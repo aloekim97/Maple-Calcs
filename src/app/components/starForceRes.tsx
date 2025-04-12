@@ -16,8 +16,11 @@ export default function SfCost({ sfResults }: SfCost) {
     let transformed: number;
     let suffix: string = '';
 
-    if (num >= 1_000_000_000_000) {
-      transformed = num / 1_000_000_000;
+    if (num >= 1_000_000_000_000_000) {
+      transformed = num / 1_000_000_000_000_000;
+      suffix = 'Q';
+    } else if (num >= 1_000_000_000_000) {
+      transformed = num / 1_000_000_000_000;
       suffix = 'T';
     } else if (num >= 1_000_000_000) {
       transformed = num / 1_000_000_000;
