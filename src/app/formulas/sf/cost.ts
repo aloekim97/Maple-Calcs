@@ -7,11 +7,10 @@ export function getNewCost(
   discount30: boolean = false,
   mvpDiscount: string = "",
   maxStar: number = 25,
-  booms: number,
 ): string {
   let totalCost = 0;
   const adjustedLevel = Math.floor(equipLevel / 10) * 10;
-
+  console.log(attempts)
   for (let currentStar = 0; currentStar <= maxStar; currentStar++) {
     if (!attempts[currentStar]) continue;
 

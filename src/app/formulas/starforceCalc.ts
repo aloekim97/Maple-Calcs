@@ -42,7 +42,7 @@ export function calculateKMS(
       reducedBooms
     );
     // console.log(sfStats)
-    const kmsCost = getNewCost(sfStats.starAttempts, equipLevel, safeguard, discount30, mvpDiscount, endStar, sfStats.attemptsPerBoom)
+    const kmsCost = getNewCost(sfStats.starAttempts, equipLevel, safeguard, discount30, mvpDiscount, endStar)
 
 
     // Expected attempts considering booms
