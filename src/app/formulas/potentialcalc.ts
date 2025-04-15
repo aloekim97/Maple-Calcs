@@ -33,7 +33,7 @@ export function potCalc(
   console.log(addedUpLines)
 
   // Generate all valid combinations with permutations
-  const potCombo = potentialPermutations(addedUpLines, tier, itemType);
+  const potCombo = potentialPermutations(addedUpLines, tier);
   console.log(potCombo)
 
   // Calculate probabilities
