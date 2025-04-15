@@ -1,6 +1,27 @@
 import starForceAttempts from '../formulas/sf/chance';
-import { getNewCost } from './sf/cost';
+import getNewCost from './sf/cost';
 
+export interface StarAttemptStats {
+  attempts: number;
+  booms: number;
+  successRate: number;
+  failRate: number;
+  boomRate: number;
+  cost: number;
+  recoveryCost: number;
+}
+
+export interface StarForceStats {
+  startStar: number;
+  endStar: number;
+  totalAttempts: number;
+  totalBooms: number;
+  attemptsPerBoom: number;
+  totalCost: number;
+  starAttempts: {
+    [star: number]: StarAttemptStats;
+  };
+}
 
 export function calculateKMS(
   startStar: number,
@@ -23,58 +44,44 @@ export function calculateKMS(
     throw new Error('startStar must be less than endStar');
   }
 
-  // Initialize totals
-  let totalExpectedCost = 0;
-  let totalExpectedBooms = 0;
-  let totalVarianceCost = 0;
-  const costBreakdown: {[star: number]: number} = {};
+  // Get star force statistics
+  const sfStats = starForceAttempts(
+    startStar,
+    endStar,
+    starCatch,
+    safeguard,
+    reducedBooms
+  );
+  // console.log(sfStats)
+  // Calculate costs for the requested star range
+  const kmsCost = getNewCost(
+    sfStats.starAttempts,
+    equipLevel,
+    safeguard,
+    discount30,
+    mvpDiscount,
+    startStar,
+    endStar
+  );
 
-  // Calculate expected booms starting from 12★
-  const boomStartStar = Math.max(12, startStar); // Start counting booms from 12★ or higher
-  
-  // Calculate costs and booms for each star level
-  for (let star = startStar; star < endStar; star++) {
-    const sfStats = starForceAttempts(
-      star,
-      endStar,
-      starCatch,
-      safeguard,
-      reducedBooms
-    );
-    // console.log(sfStats)
-    const kmsCost = getNewCost(sfStats.starAttempts, equipLevel, safeguard, discount30, mvpDiscount, endStar)
+  // Calculate additional statistics (optional - remove if not needed)
+  const totalCost = kmsCost;
+  const totalBooms = sfStats.totalBooms;
 
+  // Calculate standard deviation (placeholder - adjust based on your actual variance model)
+  const costPerAttempt = totalCost / sfStats.totalAttempts;
+  const stdDev = Math.sqrt(sfStats.totalAttempts) * costPerAttempt * 0.5; // Adjust multiplier as needed
 
-    // Expected attempts considering booms
-    const expectedAttempts = 1 / pSuccess;
-    const varianceAttempts = (1 - pSuccess) / (pSuccess * pSuccess);
+  // Calculate result metrics
+  const luckyCost = Math.max(0, totalCost - stdDev);
+  const unluckyCost = totalCost + stdDev;
+  const medianCost = totalCost; // For normal distribution, median ≈ mean
 
-    // Only count booms from 12★ and above
-    const expectedBooms = star >= boomStartStar ? (pBoom / pSuccess) : 0;
-    totalExpectedBooms += expectedBooms;
-
-    // Cost for this star level
-    const starCost = expectedAttempts * cost;
-    costBreakdown[star] = starCost;
-    totalExpectedCost += starCost;
-    totalVarianceCost += varianceAttempts * Math.pow(cost, 2);
-  }
-
-  // Calculate statistics
-  const stdDev = Math.sqrt(totalVarianceCost);
-  const luckyCost = Math.max(0, totalExpectedCost - stdDev);
-  const unluckyCost = totalExpectedCost + stdDev;
-  const medianCost = calculateMedianCost(totalExpectedCost, stdDev);
   return {
-    averageCost: Math.round(totalExpectedCost).toLocaleString(),
-    averageBooms: totalExpectedBooms.toFixed(2),
+    averageCost: Math.round(totalCost).toLocaleString(),
+    averageBooms: totalBooms.toFixed(2),
     luckyCost: Math.round(luckyCost).toLocaleString(),
     unluckyCost: Math.round(unluckyCost).toLocaleString(),
     medianCost: Math.round(medianCost).toLocaleString(),
   };
-}
-
-function calculateMedianCost(expected: number, stdDev: number): number {
-  const cv = stdDev / expected;
-  return expected * Math.exp(-0.5 * Math.pow(cv, 2) * (1 - Math.pow(cv, 3) / 3));
 }

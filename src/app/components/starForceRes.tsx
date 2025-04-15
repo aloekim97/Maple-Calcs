@@ -1,6 +1,6 @@
 import { StarForceResults } from './inputs/starforceInputs';
 
-interface SfCost {
+export interface SfCost {
   sfResults: StarForceResults | null;
 }
 

@@ -1,4 +1,4 @@
-function calculateStarForceStats(startStar, endStar, starCatch = false, safeguard = false, reducedBooms = false) {
+export default function calculateStarForceStats(startStar, endStar, starCatch = false, safeguard = false, reducedBooms = false) {
   const rates = {
     initial: {
       0: [95, 5, 0],

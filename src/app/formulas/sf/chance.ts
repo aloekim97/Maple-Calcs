@@ -1,22 +1,10 @@
-export interface StarAttemptStats {
-  attempts: number;
-  booms: number;
-  successRate: number;
-  failRate: number;
-  boomRate: number;
-}
-
-export interface StarForceResult {
-  totalAttempts: number;
-  totalBooms: number;
-  attemptsPerBoom: number;
-  starAttempts: {
-    [star: number]: StarAttemptStats;
-  };
-}
-
-
-export default function starForceAttempts(startStar, endStar, starCatch = false, safeguard = false, reducedBooms = false) {
+export default function calculateStarForceStats(
+  startStar,
+  endStar,
+  starCatch = false,
+  safeguard = false,
+  reducedBooms = false
+) {
   const rates = {
     initial: {
       0: [95, 5, 0],
@@ -57,14 +45,21 @@ export default function starForceAttempts(startStar, endStar, starCatch = false,
   };
 
   // Validate input
-  if (startStar < 0 || startStar > 29 || endStar < 0 || endStar > 29 || startStar >= endStar) {
-    throw new Error("Invalid star range");
+  if (
+    startStar < 0 ||
+    startStar > 29 ||
+    endStar < 0 ||
+    endStar > 29 ||
+    startStar >= endStar
+  ) {
+    throw new Error('Invalid star range');
   }
 
+  // Initialize variables
   let currentStar = startStar;
   let totalAttempts = 0;
   let totalBooms = 0;
-  const starAttempts = {};
+  const starAttempts = {}; // Stores attempts needed for each star
 
   while (currentStar < endStar) {
     // Determine which rate table to use
@@ -75,24 +70,19 @@ export default function starForceAttempts(startStar, endStar, starCatch = false,
 
     // Get current rates
     let [success, fail, boom] = rateTable[currentStar];
-    
-    // Apply modifiers in the exact order you specified
-    if (starCatch) {
-      success *= 1.05; // 5% success rate increase
-      fail = 100 - success - boom;
+
+    // Apply modifiers
+    if (starCatch && boom > 0) {
+      boom /= 2;
+      fail += rateTable[currentStar][2] - boom;
     }
 
     if (reducedBooms && boom > 0) {
-      boom *= 0.7; // 30% boom chance reduction
-      fail = 100 - success - boom;
+      boom *= 0.7;
+      fail += rateTable[currentStar][2] - boom;
     }
 
-    if (safeguard && (currentStar === 15 || currentStar === 16 || currentStar === 17)) {
-      boom = 0;
-      fail = 100 - success;
-    }
-
-    // Normalize rates (in case of floating point errors)
+    // Normalize rates
     const total = success + fail + boom;
     success = success / total;
     fail = fail / total;
@@ -100,19 +90,31 @@ export default function starForceAttempts(startStar, endStar, starCatch = false,
 
     // Calculate expected attempts for this star
     const attemptsForThisStar = 1 / success;
-    
+
     // Calculate boom probability per attempt at this star
     const boomProbabilityPerAttempt = boom;
-    
+
     // Expected booms while attempting this star
-    const expectedBoomsAtThisStar = attemptsForThisStar * boomProbabilityPerAttempt;
-    
+    const expectedBoomsAtThisStar =
+      attemptsForThisStar * boomProbabilityPerAttempt;
+
     // If we boom, we have to redo from 15, so we need to account for that
-    if (boom > 0 && currentStar > 12) {
-      const recoveryAttempts = calculateRecoveryAttempts(12, currentStar, starCatch, safeguard, reducedBooms);
-      totalAttempts += attemptsForThisStar + (expectedBoomsAtThisStar * recoveryAttempts.attempts);
-      totalBooms += expectedBoomsAtThisStar + (expectedBoomsAtThisStar * recoveryAttempts.booms);
+    if (boom > 0 && currentStar > 15) {
+      const recoveryAttempts = calculateRecoveryAttempts(
+        15,
+        currentStar,
+        starCatch,
+        safeguard,
+        reducedBooms
+      );
+      totalAttempts +=
+        attemptsForThisStar +
+        expectedBoomsAtThisStar * recoveryAttempts.attempts;
+      totalBooms +=
+        expectedBoomsAtThisStar +
+        expectedBoomsAtThisStar * recoveryAttempts.booms;
     } else {
+      // No boom risk or already at/above 15 (booming doesn't set us back further)
       totalAttempts += attemptsForThisStar;
       totalBooms += expectedBoomsAtThisStar;
     }
@@ -120,9 +122,6 @@ export default function starForceAttempts(startStar, endStar, starCatch = false,
     starAttempts[currentStar] = {
       attempts: attemptsForThisStar,
       booms: expectedBoomsAtThisStar,
-      successRate: success * 100,
-      failRate: fail * 100,
-      boomRate: boom * 100
     };
 
     currentStar++;
@@ -134,14 +133,20 @@ export default function starForceAttempts(startStar, endStar, starCatch = false,
     totalAttempts,
     totalBooms,
     attemptsPerBoom: totalBooms > 0 ? totalAttempts / totalBooms : Infinity,
-    starAttempts
+    starAttempts,
   };
 
   // Helper function to calculate attempts needed to recover after a boom
-  function calculateRecoveryAttempts(from, to, starCatch, safeguard, reducedBooms) {
+  function calculateRecoveryAttempts(
+    from,
+    to,
+    starCatch,
+    safeguard,
+    reducedBooms
+  ) {
     let attempts = 0;
     let booms = 0;
-    
+
     for (let star = from; star < to; star++) {
       let rateTable;
       if (star <= 11) rateTable = rates.initial;
@@ -149,21 +154,15 @@ export default function starForceAttempts(startStar, endStar, starCatch = false,
       else rateTable = rates.funzone;
 
       let [success, fail, boom] = rateTable[star];
-      
-      // Apply modifiers in the same order
-      if (starCatch) {
-        success *= 1.05;
-        fail = 100 - success - boom;
-      }
-      
-      if (reducedBooms && boom > 0) {
-        boom *= 0.7;
-        fail = 100 - success - boom;
+
+      if (starCatch && boom > 0) {
+        boom /= 2;
+        fail += rateTable[star][2] - boom;
       }
 
-      if (safeguard && (star === 15 || star === 16 || star === 17)) {
-        boom = 0;
-        fail = 100 - success;
+      if (reducedBooms && boom > 0) {
+        boom *= 0.7;
+        fail += rateTable[star][2] - boom;
       }
 
       const total = success + fail + boom;
@@ -176,25 +175,20 @@ export default function starForceAttempts(startStar, endStar, starCatch = false,
       attempts += attemptsForThisStar;
       booms += expectedBoomsAtThisStar;
 
-      // If we boom during recovery, we have to restart recovery from 12 again
-      if (boom > 0 && star > 12) {
-        const recovery = calculateRecoveryAttempts(12, star, starCatch, safeguard, reducedBooms);
+      // If we boom during recovery, we have to restart recovery from 15 again
+      if (boom > 0 && star > 15) {
+        const recovery = calculateRecoveryAttempts(
+          15,
+          star,
+          starCatch,
+          safeguard,
+          reducedBooms
+        );
         attempts += expectedBoomsAtThisStar * recovery.attempts;
         booms += expectedBoomsAtThisStar * recovery.booms;
       }
     }
-    
+
     return { attempts, booms };
   }
 }
-
-// Example usage:
-const stats = starForceAttempts(15, 22, false, false, false);
-console.log(`Estimated to reach star ${stats.endStar} from ${stats.startStar}:`);
-console.log(`- Total attempts: ${stats.totalAttempts.toFixed(2)}`);
-console.log(`- Total booms: ${stats.totalBooms.toFixed(2)}`);
-console.log(`- Attempts per boom: ${stats.attemptsPerBoom.toFixed(2)}`);
-console.log("Per-star breakdown:", stats.starAttempts);
-const result = starForceAttempts(15, 22);
-const avgTapsPerStar = result.totalAttempts / (result.endStar - result.startStar);
-console.log(`Average taps per star: ${avgTapsPerStar.toFixed(2)}`);

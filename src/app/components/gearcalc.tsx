@@ -13,6 +13,7 @@ import { Lines, PotCalcResult } from '../formulas/cube/potentialprobability';
 import CubeCost from './results/cubeRes';
 import SfCost from './starForceRes';
 import GearRes from './results/gearRes';
+import TotalCost from './totalCost';
 
 const getMaxStars = (level: number): number => {
   if (level >= 138) return 30;
@@ -37,7 +38,6 @@ export default function GearCalculator() {
     setCubeResults(null);
     setEndStar('');
   }, [selectedGear]);
-
   const handleCalculate = () => {
     starForceRef.current?.calculate();
     cubeRef.current?.calculate();
@@ -103,43 +103,7 @@ export default function GearCalculator() {
             <CubeCost cubeRes={cubeResults} />
           </div>
           <div className="flex w-full h-full gap-[16px]">
-            <div className="flex w-full flex-col border rounded-[8px] p-[12px] gap-[4px]">
-              <h4>Total Cost</h4>
-              <div className="grid grid-cols-4 w-full h-full gap-x-[16px] gap-y-[4px] items-center">
-                <h4 className="flex justify-start h-full w-full items-center">
-                  Median:
-                </h4>
-                <p className="font-normal flex justify-end h-full w-full items-center">
-                  140 B
-                </p>
-                <h4 className="flex justify-start h-full w-full items-center">
-                  Unlucky:
-                </h4>
-                <p className="font-normal flex justify-end h-full w-full items-center">
-                  140 B
-                </p>
-                <h4 className="flex justify-start h-full w-full items-center">
-                  Average:
-                </h4>
-                <p className="font-normal flex justify-end h-full w-full items-center">
-                  140 B
-                </p>
-                <h4 className="flex justify-start h-full w-full items-center">
-                  Lucky:
-                </h4>
-                <p className="font-normal flex justify-end h-full w-full items-center">
-                  140 B
-                </p>
-              </div>
-              <div className="flex justify-between">
-                <h4 className="flex justify-start h-full w-full items-center">
-                  Average Spares:
-                </h4>
-                <p className="font-normal flex justify-end h-full w-full items-center">
-                  40
-                </p>
-              </div>
-            </div>
+            <TotalCost sfResults={sfResults}/>
             <div className="flex w-full flex-col border rounded-[8px] p-[12px] gap-[4px] justify-between">
               <h4 className="opacity-60">Meso/1FD</h4>
               <div className="flex flex-col w-full h-full justify-end items-end">

@@ -8,7 +8,7 @@ import {
   useEffect,
 } from 'react';
 import itemStats from '../../formulas/sf/itemstats';
-import { calculateKMS } from '../../formulas/starforceCalc';
+import {calculateKMS} from '../../formulas/starforceCalc';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
@@ -31,7 +31,7 @@ interface StarForceProps {
 }
 type InputState = {
   itemLevel: number | null;
-  startStar: number;
+  startStar: string;
   endStar: string;
 };
 
@@ -40,7 +40,10 @@ export interface StarForceResults {
   averageBooms: string;
   luckyCost: string;
   unluckyCost: string;
-  stats: any;
+  stats: {
+    finalStats?: { stat: number; att: number };
+    difference: { stat: number; att: number };
+  };
   medianCost?: string;
 }
 export interface StarForceHandle {
@@ -51,7 +54,7 @@ const StarForce = forwardRef<StarForceHandle, StarForceProps>(
   ({ selectedGear, setEndStar, setSfRes }, ref) => {
     const [inputs, setInputs] = useState<InputState>({
       itemLevel: selectedGear?.Level || null,
-      startStar: 0,
+      startStar: '',
       endStar: '',
     });
 
@@ -67,7 +70,7 @@ const StarForce = forwardRef<StarForceHandle, StarForceProps>(
     // Add state for MVP discount
     const [mvpDiscount, setMvpDiscount] = useState<string>('none');
 
-    const [results, setResults] = useState<{
+    const [results] = useState<{
       averageCost: string;
       averageBooms: string;
       luckyCost: string;
@@ -136,9 +139,10 @@ const StarForce = forwardRef<StarForceHandle, StarForceProps>(
         }
 
         const itemLevelNum = inputs.itemLevel ?? 0;
-        const startStarNum = inputs.startStar;
+        const startStarNum = inputs.startStar ? Number(inputs.startStar) : 0;
 
-        const endStarNum = selectedGear?.Type === 'Genesis' ? 22 : Number(inputs.endStar);
+        const endStarNum =
+          selectedGear?.Type === 'Genesis' ? 22 : Number(inputs.endStar);
 
         if (!itemLevelNum || isNaN(startStarNum) || isNaN(endStarNum)) {
           return { error: 'Please fill all fields with valid numbers' };
@@ -156,8 +160,14 @@ const StarForce = forwardRef<StarForceHandle, StarForceProps>(
             mvpDiscount
           );
 
-          const statsResult = itemStats(startStarNum, endStarNum, itemLevelNum, selectedGear?.ATK, selectedGear?.Type);
-
+          const attackValue = Number(selectedGear.ATK) || 0;
+          const statsResult = itemStats(
+            startStarNum,
+            endStarNum,
+            itemLevelNum,
+            attackValue,
+            selectedGear?.Type
+          );
           setEndStar(endStarNum.toString());
           setSfRes({
             ...starForceResult,
@@ -172,7 +182,7 @@ const StarForce = forwardRef<StarForceHandle, StarForceProps>(
       },
     }));
 
-      const isDisabled = !events.canStarforce;
+    const isDisabled = !events.canStarforce;
 
     return (
       <div
@@ -348,5 +358,5 @@ const StarForce = forwardRef<StarForceHandle, StarForceProps>(
     );
   }
 );
-StarForce.displayName = "StarForce"
+StarForce.displayName = 'StarForce';
 export default StarForce;

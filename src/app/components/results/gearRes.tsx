@@ -6,9 +6,14 @@ import itemStats from '@/app/formulas/sf/itemstats';
 interface GearProps {
   selectedGear: Item;
   endStar: string;
-  potLines: any;
-  sfStats: any;
+  potLines: {
+    first?: string | PotentialLine;
+    second?: string | PotentialLine;
+    third?: string | PotentialLine;
+  };
+  sfStats?: SFResults;
 }
+
 interface SFResults {
   hp?: number;
   endStar?: number;
@@ -55,6 +60,7 @@ export default function GearRes({
     third: { value: 0, stat: '' },
   });
   const [sfResults, setSfResults] = useState<SFResults | null>(null);
+
   const getPotValueAndStat = (
     potLine: string | PotentialLine | undefined
   ): PotValue => {
@@ -64,7 +70,7 @@ export default function GearRes({
       const parsed =
         typeof potLine === 'string' ? JSON.parse(potLine) : potLine;
 
-      const statMap = [
+      const statMap: { key: keyof PotentialLine; label: string }[] = [
         { key: 'stat', label: 'STAT' },
         {
           key: 'att',
@@ -83,7 +89,7 @@ export default function GearRes({
 
       for (const { key, label } of statMap) {
         if (parsed[key] !== undefined) {
-          return { value: parsed[key], stat: label };
+          return { value: Number(parsed[key]), stat: label };
         }
       }
 
@@ -95,10 +101,9 @@ export default function GearRes({
   };
 
   useEffect(() => {
-    const att =
-      selectedGear.ATK === '' ? selectedGear['M.ATK'] : selectedGear.ATK;
+    const att = selectedGear.ATK === '' ? selectedGear['M.ATK'] : selectedGear.ATK;
     if (selectedGear.Set === 'Genesis') {
-      const gene = itemStats(0, 22, 200, att, selectedGear.Type);
+      const gene = itemStats(0, 22, 200, Number(att), selectedGear.Type);
       setSfResults(gene);
     } else {
       setSfResults(sfStats || null);
@@ -113,6 +118,7 @@ export default function GearRes({
       second: getPotValueAndStat(potLines.second),
       third: getPotValueAndStat(potLines.third),
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedGear.Job, potLines]);
 
   const toNumber = (value: string | number | undefined): number => {
@@ -157,9 +163,9 @@ export default function GearRes({
   const renderStatWithBonus = (
     baseValue: number | string | undefined,
     bonus: number
-  ) => {
+  ): string => {
     const base = toNumber(baseValue);
-    if (!sfResults || !sfResults.difference) return `${base}`;
+    if (!sfResults?.difference) return `${base}`;
     return `${base + bonus} (${base} + ${bonus})`;
   };
 
