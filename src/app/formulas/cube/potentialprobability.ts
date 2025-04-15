@@ -51,7 +51,7 @@ type TierType =
   | 'att'
   | '';
 
-const SPECIAL_LINES = ['cdr', 'cd', 'dropmeso', 'boss', 'ied', 'att'] as const;
+const SPECIAL_LINES = ['cdr', 'cd', 'dropmeso', 'boss', 'ied', 'att', 'any'] as const;
 type SpecialLineType = (typeof SPECIAL_LINES)[number];
 
 function classifyLine(line: string): LineClassification {

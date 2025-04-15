@@ -30,9 +30,11 @@ export function potCalc(
   const cost = CUBE_COST[cubeType];
   // Aggregate and validate lines
   const addedUpLines = aggregateLines(lines);
+  console.log(addedUpLines)
 
   // Generate all valid combinations with permutations
-  const potCombo = potentialPermutations(addedUpLines, tier);
+  const potCombo = potentialPermutations(addedUpLines, tier, itemType);
+  console.log(potCombo)
 
   // Calculate probabilities
   const potProb = findComboProb(potCombo, cubeType, itemType);

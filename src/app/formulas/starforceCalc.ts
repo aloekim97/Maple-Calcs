@@ -1,5 +1,5 @@
 import starForceAttempts from '../formulas/sf/chance';
-import getNewCost from './sf/cost';
+import getNewCost, { applyCostModifiers } from './sf/cost';
 
 export interface StarAttemptStats {
   attempts: number;
@@ -54,15 +54,14 @@ export function calculateKMS(
   );
   // console.log(sfStats)
   // Calculate costs for the requested star range
-  const kmsCost = getNewCost(
+  let kmsCost = getNewCost(
     sfStats.starAttempts,
     equipLevel,
     safeguard,
-    discount30,
-    mvpDiscount,
     startStar,
     endStar
   );
+  kmsCost = applyCostModifiers(kmsCost, discount30, mvpDiscount)
 
   // Calculate additional statistics (optional - remove if not needed)
   const totalCost = kmsCost;

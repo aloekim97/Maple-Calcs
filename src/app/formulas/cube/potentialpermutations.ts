@@ -1,270 +1,282 @@
 export interface Combination {
   lines: [string, string, string];
-  probabilities: [string, string, string]; // New field for probability keys
+  probabilities: [string, string, string];
 }
 
-type PotentialStat =
-  | 'stat'
-  | 'cdr'
-  | 'cd'
-  | 'boss'
-  | 'ied'
-  | 'att'
-  | 'dropmeso';
+type PotentialStat = 'stat' | 'cdr' | 'cd' | 'boss' | 'ied' | 'att' | 'dropmeso' | 'any';
 type Goal = Partial<Record<PotentialStat, number>>;
 type Tier = 'low' | 'high';
 
 interface StatValue {
   value: number;
   isL: boolean;
-  statType: PotentialStat;
+  statType: Exclude<PotentialStat, 'any'>;
 }
 
-const SPECIAL_LINE = {
-  cdr: { L: [1, 2] },
-  cd: { L: [8] },
+interface SpecialLineValues {
+  L: number[];
+  U: number[];
+}
+
+const SPECIAL_LINE: Record<Exclude<PotentialStat, 'stat' | 'any'>, SpecialLineValues> = {
+  cdr: { L: [1, 2], U: [] },
+  cd: { L: [8], U: [] },
   boss: { L: [35, 40], U: [30] },
   ied: { L: [35, 40], U: [30] },
-  dropmeso: { L: [20] },
+  dropmeso: { L: [20], U: [] },
+  att: { L: [12, 13], U: [9, 10] },
 };
 
-export default function potentialPermutations(
-  goal: Goal,
-  tier: Tier
-): Combination[] {
-  // Define stat values based on tier
-  const statValues = {
-    L: tier === 'low' ? [12, 9] : [13, 10],
-    U: tier === 'low' ? [9, 6] : [10, 7],
-  };
+const STAT_VALUES: Record<Tier, { L: number[]; U: number[] }> = {
+  low: { L: [12, 9], U: [9, 6] },
+  high: { L: [13, 10], U: [10, 7] },
+};
 
-  // Attack uses fixed values: L:[13], U:[10] regardless of tier
-  const attackValues = {
-    L: tier === 'low' ? [12] : [13],
-    U: tier === 'low' ? [9] : [10],
-  };
+interface LineInfo {
+  text: string;
+  probKey: string;
+}
 
-  const getValuesForStat = (
-    statType: PotentialStat,
-    isL: boolean
-  ): number[] => {
-    // Handle attack separately with fixed values
-    if (statType === 'att') {
-      return isL ? attackValues.L : attackValues.U;
-    }
+export default function potentialPermutations(goal: Goal, tier: Tier = 'high'): Combination[] {
+  const combinations: Combination[] = [];
 
-    // Handle stat - can be U or L tier
-    if (statType === 'stat') {
-      return isL
-        ? tier === 'low'
-          ? [12, 9]
-          : [13, 10]
-        : tier === 'low'
-        ? [9, 6]
-        : [10, 7];
-    }
+  // Generate required lines based on goal
+  const requiredLines: StatValue[] = [];
 
-    // Handle special lines according to SPECIAL_LINE definitions
-    const specialStat = SPECIAL_LINE[statType as keyof typeof SPECIAL_LINE];
-    if (isL) {
-      return specialStat.L || [];
-    }
-    return 'U' in specialStat ? specialStat.U : [];
-  };
-
-  const getStatLine = (val: number, isL: boolean, statType: PotentialStat) => {
-    // For attack, don't show tier
-    if (statType === 'att') {
-      return `${val}% ATT`;
-    }
-
-    // For stat, always show tier (L/U)
-    if (statType === 'stat') {
-      return `${val}% ${isL ? 'L' : 'U'}`;
-    }
-
-    // For special lines, only show tier if it's variable (exists in both L and U)
-    const specialStat = SPECIAL_LINE[statType as keyof typeof SPECIAL_LINE];
-    const hasBothTiers = 'U' in specialStat && specialStat.L.length > 0;
-
-    return hasBothTiers
-      ? `${val}% ${statType.toUpperCase()} ${isL ? 'L' : 'U'}`
-      : `${val}% ${statType.toUpperCase()}`;
-  };
-
-  const getProbabilityKey = (
-    statType: PotentialStat,
-    value: number,
-    isL: boolean
-  ): string => {
-    if (statType === 'att') {
-      return isL ? `att${value}` : `att${value}`;
-    }
-    if (statType === 'boss' || statType === 'ied') {
-      // For boss/ied, we still use the value (30/35/40)
-      return `${statType}${value}`;
-    }
-    // For other stats, we might not have probabilities
-    return '';
-  };
-
-  // Generate all valid stat sets (first line is L-tier, others can be L/U)
-  function* generateStatSets(): Generator<StatValue[]> {
-    const goalStats = Object.keys(goal) as PotentialStat[];
-
-    // Generate combinations where first line is each required stat type
-    for (const firstStatType of goalStats) {
-      const firstValues = getValuesForStat(firstStatType, true); // First line must be L-tier
-
-      for (const firstValue of firstValues) {
-        const otherStats = goalStats.filter((s) => s !== firstStatType);
-
-        // Case 1: All three lines are the same stat type
-        if (otherStats.length === 0) {
-          const possibleLines = [
-            ...getValuesForStat(firstStatType, true).map((value) => ({
-              value,
-              isL: true,
-              statType: firstStatType,
-            })),
-            ...getValuesForStat(firstStatType, false).map((value) => ({
-              value,
-              isL: false,
-              statType: firstStatType,
-            })),
-          ];
-
-          for (const second of possibleLines) {
-            for (const third of possibleLines) {
-              const stats = [
-                { value: firstValue, isL: true, statType: firstStatType },
-                second,
-                third,
-              ];
-
-              if (meetsGoalRequirements(stats, goal)) {
-                yield stats;
-              }
-            }
-          }
-        }
-        // Case 2: Mixed stat types
-        else {
-          // Generate all combinations of other required stats
-          for (const secondStatType of otherStats) {
-            const secondValues = [
-              ...getValuesForStat(secondStatType, true).map((value) => ({
-                value,
-                isL: true,
-                statType: secondStatType,
-              })),
-              ...getValuesForStat(secondStatType, false).map((value) => ({
-                value,
-                isL: false,
-                statType: secondStatType,
-              })),
-            ];
-
-            for (const thirdStatType of otherStats) {
-              const thirdValues = [
-                ...getValuesForStat(thirdStatType, true).map((value) => ({
-                  value,
-                  isL: true,
-                  statType: thirdStatType,
-                })),
-                ...getValuesForStat(thirdStatType, false).map((value) => ({
-                  value,
-                  isL: false,
-                  statType: thirdStatType,
-                })),
-              ];
-
-              for (const second of secondValues) {
-                for (const third of thirdValues) {
-                  const stats = [
-                    { value: firstValue, isL: true, statType: firstStatType },
-                    second,
-                    third,
-                  ];
-
-                  if (meetsGoalRequirements(stats, goal)) {
-                    yield stats;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+  // Handle CD requirement (only L lines exist)
+  if (goal.cd) {
+    requiredLines.push({ statType: 'cd', value: 8, isL: true });
   }
 
-  // Check if a stat set meets all goal requirements
-  function meetsGoalRequirements(stats: StatValue[], goal: Goal): boolean {
-    const statTotals: Partial<Record<PotentialStat, number>> = {};
+  // Handle STAT requirement
+  if (goal.stat) {
+    const goalStat = goal.stat;
+    const { L: lValues, U: uValues } = STAT_VALUES[tier];
 
-    for (const stat of stats) {
-      statTotals[stat.statType] = (statTotals[stat.statType] || 0) + stat.value;
+    lValues.filter(v => v >= goalStat).forEach(v => 
+      requiredLines.push({ statType: 'stat', value: v, isL: true })
+    );
+    uValues.filter(v => v >= goalStat).forEach(v => 
+      requiredLines.push({ statType: 'stat', value: v, isL: false })
+    );
+  }
+
+  // Handle other stat requirements
+  (Object.keys(goal) as PotentialStat[]).forEach(statType => {
+    if (statType === 'cd' || statType === 'stat' || statType === 'any') return;
+    
+    const goalValue = goal[statType]!;
+    const values = SPECIAL_LINE[statType as Exclude<PotentialStat, 'stat' | 'any' | 'cd'>];
+
+    values.L.filter(v => v >= goalValue).forEach(v => 
+      requiredLines.push({ statType: statType as Exclude<PotentialStat, 'any'>, value: v, isL: true })
+    );
+    values.U.filter(v => v >= goalValue).forEach(v => 
+      requiredLines.push({ statType: statType as Exclude<PotentialStat, 'any'>, value: v, isL: false })
+    );
+  });
+
+  const anyLinesNeeded = goal.any || 0;
+
+  // Generate all possible line combinations
+  if (requiredLines.length > 0) {
+    // Get all combinations of required lines (up to 3)
+    const lineCombinations = getLineCombinations(requiredLines, Math.min(requiredLines.length, 3));
+    
+    for (const lineCombo of lineCombinations) {
+      // Get all position permutations for these lines, ensuring U-lines aren't in first position
+      const positionPermutations = getValidPositionPermutations(lineCombo);
+      
+      for (const positions of positionPermutations) {
+        const lines: (string | null)[] = [null, null, null];
+        const probs: (string | null)[] = [null, null, null];
+        
+        // Place the required lines
+        for (let i = 0; i < lineCombo.length; i++) {
+          const line = lineCombo[i];
+          const pos = positions[i];
+          const lineInfo = getLineInfo(line, tier);
+          lines[pos] = lineInfo.text;
+          probs[pos] = lineInfo.probKey;
+        }
+        
+        // Fill remaining slots with ANY lines
+        for (let i = 0; i < 3; i++) {
+          if (lines[i] === null) {
+            lines[i] = getAnyLineText(i, anyLinesNeeded, tier);
+            probs[i] = '';
+          }
+        }
+        
+        combinations.push({
+          lines: lines as [string, string, string],
+          probabilities: probs as [string, string, string]
+        });
+      }
     }
+  } else if (anyLinesNeeded > 0) {
+    // Only ANY lines case - first line must be L
+    const lines: [string, string, string] = [
+      '1% ANY L',
+      anyLinesNeeded > 1 ? '1% ANY L/U' : tier === 'high' ? '1% ANY L' : '1% ANY U',
+      anyLinesNeeded > 2 ? '1% ANY L/U' : tier === 'high' ? '1% ANY L' : '1% ANY U'
+    ];
+    combinations.push({
+      lines,
+      probabilities: ['', '', '']
+    });
+  } else {
+    // Default case with no specific requirements
+    combinations.push({
+      lines: [
+        '1% ANY L',
+        tier === 'high' ? '1% ANY L' : '1% ANY U',
+        tier === 'high' ? '1% ANY L' : '1% ANY U'
+      ],
+      probabilities: ['', '', '']
+    });
+  }
 
-    for (const [statType, requiredValue] of Object.entries(goal)) {
-      const total = statTotals[statType as PotentialStat] || 0;
-      if (total < requiredValue) {
+  return filterValidCombinations(combinations, goal);
+}
+
+// Helper function to get valid permutations where U-lines aren't in first position
+function getValidPositionPermutations(lines: StatValue[]): number[][] {
+  const positions = [0, 1, 2];
+  const permutations = getPermutations(positions, lines.length);
+  
+  return permutations.filter(perm => {
+    // Check if any U-line is in first position (0)
+    for (let i = 0; i < lines.length; i++) {
+      if (perm[i] === 0 && !lines[i].isL) {
         return false;
       }
     }
-
     return true;
+  });
+}
+
+// Helper functions
+function getLineInfo(line: StatValue, tier: Tier): LineInfo {
+  const { statType, value, isL } = line;
+  let displayValue = value;
+
+  // Special handling for stat values to show the correct display value
+  if (statType === 'stat') {
+    const tierValues = STAT_VALUES[tier];
+    const validValues = isL ? tierValues.L : tierValues.U;
+    displayValue = validValues.includes(value) ? value : Math.max(...validValues);
   }
 
-  // Generate all unique orderings
-  function* generate(): Generator<Combination> {
-    const seen = new Set<string>();
+  const statText = formatStatText(statType, displayValue, isL);
+  const probKey = getProbabilityKey(statType, displayValue);
 
-    for (const stats of generateStatSets()) {
-      const [first, ...rest] = stats;
-      const restPermutations = getUniquePermutations(rest);
+  return { text: statText, probKey };
+}
 
-      for (const perm of restPermutations) {
-        const lines = [
-          getStatLine(first.value, first.isL, first.statType),
-          getStatLine(perm[0].value, perm[0].isL, perm[0].statType),
-          getStatLine(perm[1].value, perm[1].isL, perm[1].statType),
-        ] as [string, string, string];
+function formatStatText(statType: Exclude<PotentialStat, 'any'>, value: number, isL: boolean): string {
+  switch (statType) {
+    case 'stat':
+      return `${value}% ${isL ? 'L' : 'U'}`;
+    case 'att':
+      return `${value}% ATT`;
+    case 'boss':
+    case 'ied':
+      return `${value}% ${statType.toUpperCase()} ${isL ? 'L' : 'U'}`;
+    default:
+      return `${value}% ${statType.toUpperCase()}`;
+  }
+}
 
-        const probabilityKeys = [
-          getProbabilityKey(first.statType, first.value, first.isL),
-          getProbabilityKey(perm[0].statType, perm[0].value, perm[0].isL),
-          getProbabilityKey(perm[1].statType, perm[1].value, perm[1].isL),
-        ] as [string, string, string];
+function getProbabilityKey(statType: Exclude<PotentialStat, 'any'>, value: number): string {
+  switch (statType) {
+    case 'cd': return `cd${value}`;
+    case 'cdr': return `cdr${value}`;
+    case 'dropmeso': return `drop${value}`;
+    case 'boss': return `boss${value}`;
+    case 'ied': return `ied${value}`;
+    case 'att': return `att${value}`;
+    case 'stat': return `stat${value}`;
+    default: return '';
+  }
+}
 
-        const key = lines.join('|');
-        if (!seen.has(key)) {
-          seen.add(key);
-          yield { lines, probabilities: probabilityKeys };
-        }
-      }
+function getAnyLineText(position: number, anyLinesNeeded: number, tier: Tier): string {
+  if (position === 0) return '1% ANY L';
+  return anyLinesNeeded > position - 1 ? '1% ANY L/U' : 
+         tier === 'high' ? '1% ANY L' : '1% ANY U';
+}
+
+function getLineCombinations<T>(items: T[], maxLength: number): T[][] {
+  const result: T[][] = [];
+  
+  function backtrack(start: number, current: T[]) {
+    if (current.length > 0 && current.length <= maxLength) {
+      result.push([...current]);
+    }
+    
+    if (current.length === maxLength) return;
+    
+    for (let i = start; i < items.length; i++) {
+      current.push(items[i]);
+      backtrack(i + 1, current);
+      current.pop();
+    }
+  }
+  
+  backtrack(0, []);
+  return result;
+}
+
+function getPermutations<T>(items: T[], length: number): T[][] {
+  if (length === 0) return [[]];
+  const result: T[][] = [];
+
+  for (let i = 0; i < items.length; i++) {
+    const remaining = [...items.slice(0, i), ...items.slice(i + 1)];
+    for (const perm of getPermutations(remaining, length - 1)) {
+      result.push([items[i], ...perm]);
     }
   }
 
-  // Helper: Generate unique permutations
-  function getUniquePermutations<T>(arr: T[]): T[][] {
-    if (arr.length === 0) return [];
-    const permutations: T[][] = [];
-    const used = new Set<number>();
+  return result;
+}
 
-    for (let i = 0; i < arr.length; i++) {
-      if (used.has(i)) continue;
-      used.add(i);
-
-      const rest = arr.filter((_, j) => j !== i);
-      for (const perm of getUniquePermutations(rest)) {
-        permutations.push([arr[i], ...perm]);
-      }
+function filterValidCombinations(combinations: Combination[], goal: Goal): Combination[] {
+  if (!goal) return combinations;
+  
+  return combinations.filter(combo => {
+    // Check CD requirement
+    if (goal.cd && !combo.lines.some(l => l.includes('CD'))) return false;
+    
+    // Check STAT requirement
+    if (goal.stat) {
+      const statLines = combo.lines.filter(l => l.includes('% L') || l.includes('% U'));
+      if (!statLines.some(l => {
+        const value = parseInt(l.match(/\d+/)![0]);
+        return value >= goal.stat!;
+      })) return false;
     }
-
-    return permutations.length ? permutations : [arr];
-  }
-
-  return Array.from(generate());
+    
+    // Check ANY requirement
+    if (goal.any) {
+      const anyCount = combo.lines.filter(l => l.includes('ANY')).length;
+      if (anyCount < goal.any) return false;
+    }
+    
+    // Check other stat requirements
+    for (const statType in goal) {
+      if (statType === 'cd' || statType === 'stat' || statType === 'any') continue;
+      
+      const requiredValue = goal[statType as Exclude<PotentialStat, 'cd' | 'stat' | 'any'>]!;
+      const statLines = combo.lines.filter(l => l.includes(statType.toUpperCase()));
+      
+      if (!statLines.some(l => {
+        const value = parseInt(l.match(/\d+/)![0]);
+        return value >= requiredValue;
+      })) return false;
+    }
+    
+    return true;
+  });
 }

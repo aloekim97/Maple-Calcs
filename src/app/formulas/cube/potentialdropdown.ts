@@ -1,7 +1,3 @@
-const STAT_TIERS = {
-  low: [24, 27, 30, 33],
-  high: [30, 33, 36, 39],
-};
 const FIRST_LINE = {
   low: [12, 9],
   high: [13, 10],
@@ -10,13 +6,6 @@ const OTHER_LINE = {
   low: [12, 9, 6],
   high: [13, 10, 7],
 };
-const SPECIAL_LINE = {
-  cdr: { L: [8]},
-  cd: { L: [1, 2], },
-  boss: { L: [35, 40], U: [30] },
-  ied: { L: [35, 40], U: [30] },
-  dropmeso: { L: [20] },
-}
 
 export type WSEItemType = 'weapon' | 'secondary' | 'emblem';
 
@@ -132,11 +121,8 @@ export const getGoalOptions = (
   lineNumber: number = 1
 ) => {
   const tier = itemLevel > 150 ? 'high' : 'low';
-  const currentStatTier = STAT_TIERS[tier];
   const firstLine = FIRST_LINE[tier];
   const otherLines = OTHER_LINE[tier];
-  const wseFirst = WSE[tier];
-  const wseSecond = WSE[tier];
 
   switch (itemType) {
     case 'Weapon':
@@ -303,4 +289,3 @@ export const getGoalOptions = (
     }
   }
 };
-

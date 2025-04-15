@@ -49,7 +49,7 @@ export default function calculateStarForceStats(
     startStar < 0 ||
     startStar > 29 ||
     endStar < 0 ||
-    endStar > 29 ||
+    endStar > 31 ||
     startStar >= endStar
   ) {
     throw new Error('Invalid star range');
@@ -72,17 +72,23 @@ export default function calculateStarForceStats(
     let [success, fail, boom] = rateTable[currentStar];
 
     // Apply modifiers
-    if (starCatch && boom > 0) {
-      boom /= 2;
-      fail += rateTable[currentStar][2] - boom;
+    if (starCatch) {
+      success *= 1.05; // 1.05x multiplier to success rate when star catch is on
+      // Adjust fail rate to maintain total probability of 100%
+      fail = 100 - success - boom;
+    }
+
+    if (safeguard && (currentStar === 15 || currentStar === 16 || currentStar === 17)) {
+      boom = 0; // 0% boom rate for 15-17 when safeguard is on
+      fail = 100 - success; // Adjust fail rate
     }
 
     if (reducedBooms && boom > 0) {
-      boom *= 0.7;
-      fail += rateTable[currentStar][2] - boom;
+      boom *= 0.7; // 30% reduction in boom rate
+      fail = 100 - success - boom; // Adjust fail rate
     }
 
-    // Normalize rates
+    // Normalize rates to ensure they sum to 1 (100%)
     const total = success + fail + boom;
     success = success / total;
     fail = fail / total;
@@ -95,24 +101,19 @@ export default function calculateStarForceStats(
     const boomProbabilityPerAttempt = boom;
 
     // Expected booms while attempting this star
-    const expectedBoomsAtThisStar =
-      attemptsForThisStar * boomProbabilityPerAttempt;
+    const expectedBoomsAtThisStar = attemptsForThisStar * boomProbabilityPerAttempt;
 
     // If we boom, we have to redo from 15, so we need to account for that
     if (boom > 0 && currentStar > 15) {
       const recoveryAttempts = calculateRecoveryAttempts(
-        15,
+        12,
         currentStar,
         starCatch,
         safeguard,
         reducedBooms
       );
-      totalAttempts +=
-        attemptsForThisStar +
-        expectedBoomsAtThisStar * recoveryAttempts.attempts;
-      totalBooms +=
-        expectedBoomsAtThisStar +
-        expectedBoomsAtThisStar * recoveryAttempts.booms;
+      totalAttempts += attemptsForThisStar + expectedBoomsAtThisStar * recoveryAttempts.attempts;
+      totalBooms += expectedBoomsAtThisStar + expectedBoomsAtThisStar * recoveryAttempts.booms;
     } else {
       // No boom risk or already at/above 15 (booming doesn't set us back further)
       totalAttempts += attemptsForThisStar;
@@ -155,14 +156,20 @@ export default function calculateStarForceStats(
 
       let [success, fail, boom] = rateTable[star];
 
-      if (starCatch && boom > 0) {
-        boom /= 2;
-        fail += rateTable[star][2] - boom;
+      // Apply the same modifiers as in the main function
+      if (starCatch) {
+        success *= 1.05;
+        fail = 100 - success - boom;
+      }
+
+      if (safeguard && (star === 15 || star === 16 || star === 17)) {
+        boom = 0;
+        fail = 100 - success;
       }
 
       if (reducedBooms && boom > 0) {
         boom *= 0.7;
-        fail += rateTable[star][2] - boom;
+        fail = 100 - success - boom;
       }
 
       const total = success + fail + boom;
@@ -178,7 +185,7 @@ export default function calculateStarForceStats(
       // If we boom during recovery, we have to restart recovery from 15 again
       if (boom > 0 && star > 15) {
         const recovery = calculateRecoveryAttempts(
-          15,
+          12,
           star,
           starCatch,
           safeguard,
