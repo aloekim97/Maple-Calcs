@@ -48,7 +48,7 @@ export default function SfCost({ sfResults }: SfCost) {
             {median}
           </p>
           <h4 className="flex justify-start h-full w-full items-center">
-            Lower:
+            Upper:
           </h4>
           <p className="font-normal flex justify-end h-full w-full items-center">
             {unlucky}
@@ -60,7 +60,7 @@ export default function SfCost({ sfResults }: SfCost) {
             {averageCostDisplay}
           </p>
           <h4 className="flex justify-start h-full w-full items-center">
-            Upper:
+            Lower:
           </h4>
           <p className="font-normal flex justify-end h-full w-full items-center">
             {lucky}

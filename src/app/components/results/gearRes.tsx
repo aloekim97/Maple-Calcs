@@ -12,7 +12,6 @@ interface GearProps {
   sfStats: any;
   setNumber: string;
   setStats: SetData | null;
-  renderStatWithBonus: renderStatWithBonus | null;
 }
 
 interface SFResults {
@@ -64,19 +63,6 @@ export default function GearRes({
     third: { value: 0, stat: '' },
   });
 
-  // const setCount = parseInt(setNumber || '', 10);
-  // const isValidSetCount = !isNaN(setCount) && setCount > 0;
-
-  // const setStats = selectedGear?.Set && isValidSetCount
-  // ? sets.find(s => {
-  //     const isSetMatch = s["Set"] === selectedGear.Set;
-  //     const isCountMatch = s["Set Count"] === setCount;
-  //     console.log(selectedGear.Set)
-  //     console.log(setCount)
-  //     return isSetMatch && isCountMatch;
-  //   })
-  // : null;
-
   const [sfResults, setSfResults] = useState<SFResults | null>(null);
   const getPotValueAndStat = (
     potLine: string | PotentialLine | undefined
@@ -121,7 +107,7 @@ export default function GearRes({
     const att =
       selectedGear.ATK === '' ? selectedGear['M.ATK'] : selectedGear.ATK;
     if (selectedGear.Set === 'Genesis') {
-      const gene = itemStats(0, 22, 200, att, selectedGear.Type);
+      const gene = itemStats(0, 22, 200, toNumber(att), selectedGear.Type);
       setSfResults(gene);
     } else {
       setSfResults(sfStats || null);
@@ -197,9 +183,9 @@ export default function GearRes({
 
         <div className='flex w-full'>
         {potLines ? (
-          <div className="flex flex-col gap-[8px] w-full mr-[16px]">
+          <div className="flex flex-col gap-[4px] w-full mr-[16px]">
             {potLines?.first && potValues.first.stat && (
-              <div className="flex flex-col gap-[8px] w-full">
+              <div className="flex flex-col gap-[4px] w-full">
                 <h5 className='opacity-60 text-[#00B188]'>Potential:</h5>
                 <div className="flex justify-between w-full">
                   <h5 className="text-[#00B188]">{potValues.first.stat}:</h5>
@@ -223,12 +209,12 @@ export default function GearRes({
         ):(<div/>)}
           <div className='w-full'>
             {setStats ? (
-              <div className='flex flex-col gap-[8px]'>
-                <div className='flex gap-[4px]'>
+              <div className='flex flex-col gap-[4px]'>
+                <div className='flex w-full gap-[4px] justify-start items-center'>
                   {/* <h5 className='opacity-60'>Set Bonus:</h5> */}
                   <div className='flex gap-[4px]'>
-                    {setStats["Set"] && <h5 className='opacity-60'>{setStats["Set"]}</h5>}
-                    {setStats["Set Count"] && <h5 className='opacity-60'>( {setStats["Set Count"]} )</h5>}
+                    {setStats["Set"] && <h5 className='opacity-60 h-full border-white border'>{setStats["Set"]}</h5>}
+                    {setStats["Set Count"] && <h5 className='opacity-60 bg-gray-200 rounded-full border border-gray-400 px-[2px]'>{setStats["Set Count"]}</h5>}
                   </div>
                 </div>
                 {setStats.Stat && 

@@ -54,7 +54,7 @@ export default function CubeCost({ cubeRes }: CubeRes) {
             {median}
           </p>
           <h4 className="flex justify-start h-full w-full items-center">
-            Lower:
+            Upper:
           </h4>
           <p className="font-normal flex justify-end h-full w-full items-center">
             {unlucky}
@@ -66,7 +66,7 @@ export default function CubeCost({ cubeRes }: CubeRes) {
             {averageCostDisplay}
           </p>
           <h4 className="flex justify-start h-full w-full items-center">
-            Upper:
+            Lower:
           </h4>
           <p className="font-normal flex justify-end h-full w-full items-center">
             {lucky}

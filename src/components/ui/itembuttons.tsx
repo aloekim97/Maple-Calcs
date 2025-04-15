@@ -71,7 +71,7 @@ const ItemButton = ({ item, onClick }: ItemButtonProps) => {
     <button
       ref={ref}
       onClick={onClick}
-      className="p-1 hover:cursor-pointer"
+      className="pr-[4px] pl-[4px] pb-[4px] hover:cursor-pointer"
       title={item['Item Name'].replace(/_/g, ' ')}
       aria-label={`${item['Item Name'].replace(/_/g, ' ')} item button`}
     >

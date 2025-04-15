@@ -157,7 +157,7 @@ const ItemsPage = ({ setSelectedGear, setNumber, setSetNumber }: ItemsPageProps)
         </div>
       </div>
 
-      <div className="grid grid-cols-14 overflow-y-auto w-full justify-start items-start overflow-x-hidden">
+      <div className="grid grid-cols-14 overflow-y-auto w-full justify-start items-start overflow-x-hidden pr-[4px] pt-0">
         {filteredItems.map((item) => (
           <ItemButton
             key={item["Item Name"]}

@@ -1,12 +1,23 @@
 // FdRes.tsx
-import { SetData } from '../../../../types/set';
-import { Item } from '../../../../types/item';
-import StarForceResults from './inputs/starforceInputs'
+import { SetData } from '../../../types/set';
+import { Item } from '../../../types/item';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import itemStats from '../formulas/sf/itemstats';
 
 interface FdResProps {
   setStats: SetData | null;
   selectedGear: Item | null;
-  sfResults: any;
+  sfStats: any;
+  potLines: any;
+}
+
+interface SFResults {
+  hp?: number;
+  endStar?: number;
+  difference: {
+    stat: number;
+    att: number;
+  };
 }
 
 const MULTIPLIERS = {
@@ -17,6 +28,9 @@ const MULTIPLIERS = {
   CRIT_DAMAGE: 3,
   MAINSTAT: 100,
   SUBSTAT: 1200,
+  PERCENTALLSTAT: 10,
+  PERCENTMAINSTAT: 12,
+  PERCENTATK: 3,
 };
 
 const toNumber = (value: string | number | undefined): number => {
@@ -24,67 +38,125 @@ const toNumber = (value: string | number | undefined): number => {
   return typeof value === 'string' ? parseFloat(value) || 0 : value;
 };
 
-export default function FdRes({ setStats, selectedGear, sfResults }: FdResProps) {
+export default function FdRes({ 
+  setStats, 
+  selectedGear, 
+  sfStats,
+  potLines,
+}: FdResProps) {
+  const [sfResults, setSfResults] = useState<SFResults | null>(null);
+
+  useEffect(() => {
+    console.log("SFResults updated:", sfResults);
+  }, [sfResults])
+
+  useEffect(() => {
+    if (!selectedGear) {
+      setSfResults(sfStats || null);
+      return;
+    }
+    
+    const rawAtt = selectedGear.ATK === '' ? selectedGear['M.ATK'] : selectedGear.ATK;
+    const att = toNumber(rawAtt);
+    
+    if (selectedGear.Set === 'Genesis') {
+      const gene = itemStats(0, 22, 200, att, selectedGear.Type);
+      setSfResults(gene);
+    } else {
+      setSfResults(sfStats ? {...sfStats} : null);
+    }
+  }, [selectedGear, sfStats]);
 
   const calculateSetFD = () => {
     if (!setStats) return 0;
 
-    const stat = setStats.Stat || 0;
-    const atk = setStats.Att || 0;
-    const damage = setStats.Damage || 0;
-    const bossDamage = setStats["Boss Damage"] || 0;
-    const critDamage = setStats["Crit Damage"] || 0;
+    const stat = toNumber(setStats.Stat);
+    const atk = toNumber(setStats.Att);
+    const bossDamage = toNumber(setStats["Boss Damage"]);
+    const critDamage = toNumber(setStats["Crit Damage"]);
 
-    const statValue = stat / MULTIPLIERS.ALLSTAT;
-    const atkValue = atk / MULTIPLIERS.ATK;
-    const damageValue = damage / MULTIPLIERS.DAMAGE;
-    const bossDamageValue = bossDamage / MULTIPLIERS.BOSS_DAMAGE;
-    const critDamageValue = critDamage / MULTIPLIERS.CRIT_DAMAGE;
-
-    const setSum = statValue + atkValue + damageValue + bossDamageValue + critDamageValue;
-    return setSum
+    return (stat / MULTIPLIERS.ALLSTAT) +
+           (atk / MULTIPLIERS.ATK) +
+           (bossDamage / MULTIPLIERS.BOSS_DAMAGE) +
+           (critDamage / MULTIPLIERS.CRIT_DAMAGE);
   };
 
-  const calculateItemFD = () => {
-    // Get base values
-    const mainStatBase = toNumber(selectedGear?.['Main Stat'] || 0);
-    const subStatBase = toNumber(selectedGear?.['Sub Stat'] || 0);
-    const atkBase = toNumber(
-      (selectedGear?.ATK === '' ? selectedGear?.['M.ATK'] : selectedGear?.ATK) || 0
-    );
-    const damageBase = toNumber(selectedGear?.DAMAGE || 0);
-    const bossDamageBase = toNumber(selectedGear?.['Boss Damage'] || 0);
-    const critDamageBase = toNumber(selectedGear?.['Crit Damage'] || 0);
+  const calculateItemFD = useCallback(() => {
+    if (!selectedGear) return 0;
+  
+    // Base stats
+    const mainStatBase = toNumber(selectedGear['Main Stat']);
+    const subStatBase = toNumber(selectedGear['Sub Stat']);
+    const attackStat = selectedGear.ATK === '' ? selectedGear['M.ATK'] : selectedGear.ATK;
+    const atkBase = toNumber(attackStat);
 
-    // Add starforce bonuses
-    const mainStatTotal = mainStatBase + (sfResults?.difference?.stat || 0);
-    const subStatTotal = subStatBase + (sfResults?.difference?.stat || 0);
-    const atkTotal = atkBase + (sfResults?.difference?.att || 0);
+    // Starforce bonuses
+    const statBonus = sfResults?.difference.stat || 0;
+    const attBonus = sfResults?.difference.att || 0;
 
-    // Calculate individual values
-    const mainStatValue = mainStatTotal / MULTIPLIERS.MAINSTAT;
-    const subStatValue = subStatTotal / MULTIPLIERS.SUBSTAT;
-    const atkValue = atkTotal / MULTIPLIERS.ATK;
-    const damageValue = damageBase / MULTIPLIERS.DAMAGE;
-    const bossDamageValue = bossDamageBase / MULTIPLIERS.BOSS_DAMAGE;
-    const critDamageValue = critDamageBase / MULTIPLIERS.CRIT_DAMAGE;
+    // Total stats with bonuses
+    const mainStatTotal = mainStatBase + statBonus;
+    const subStatTotal = subStatBase + statBonus;  // Assuming same bonus for sub stat
+    const atkTotal = atkBase + attBonus;
 
-    const itemSum = mainStatValue + subStatValue + atkValue + damageValue + bossDamageValue + critDamageValue;
-    return itemSum
-  };
+    // FD calculations
+    return (mainStatTotal / MULTIPLIERS.MAINSTAT) +
+           (subStatTotal / MULTIPLIERS.SUBSTAT) +
+           (atkTotal / MULTIPLIERS.ATK);
+  }, [selectedGear, sfResults]);
 
-  const itemFD = calculateItemFD();
-  const setFD = calculateSetFD();
-  const totalFD = itemFD + setFD;
+  const calculatePotFD = useCallback(() => {
+    if (!potLines) return 0;
+  
+    let potFD = 0;
+  
+    // Process each potential line
+    const processLine = (line: any) => {
+      if (!line) return 0;
+      
+      try {
+        const parsed = typeof line === 'string' ? JSON.parse(line) : line;
+        
+        if (parsed.stat) {
+          potFD += parsed.stat / MULTIPLIERS.PERCENTMAINSTAT;
+          console.log('parsed stat:', parsed.stat)
+          console.log('potFDfuck:', potFD)
+        }
+        if (parsed.att) {
+          potFD += parsed.att / MULTIPLIERS.PERCENTATK;
+        }
+        if (parsed.boss) {
+          potFD += parsed.boss / MULTIPLIERS.BOSS_DAMAGE;
+        }
+        if (parsed.cd) {
+          potFD += parsed.cd / MULTIPLIERS.CRIT_DAMAGE;
+        }
+      } catch (error) {
+        console.error('Error parsing potential line:', error);
+      }
+    };
+  
+    // Process all three lines
+    processLine(potLines.first);
+    processLine(potLines.second);
+    processLine(potLines.third);
+  
+    return potFD;
+  }, [potLines]);
+  
+    const potFD = useMemo(() => calculatePotFD(), [calculatePotFD]);
+    const itemFD = useMemo(() => calculateItemFD(), [calculateItemFD]);
+    const setFD = useMemo(() => calculateSetFD(), [setStats]);
+    const totalFD = useMemo(() => itemFD + setFD + potFD, [itemFD, setFD, potFD]);
 
   return (
-    <div className="flex w-full border rounded-[8px] p-[12px] gap-[16px] justify-between">
+    <div className="flex w-full border rounded-[8px] p-[12px] gap-[16px] justify-between border-blue-500 bg-blue-50 ">
       <div className="flex flex-col justify-between h-full w-full">
         <h5 className="opacity-60">Item FD</h5>
         <div className='flex'>
-          <h2 className="flex font-bold w-full justify-end items-end">
-          ~{itemFD.toFixed(2)}
-          </h2>
+          <h3 className="flex font-bold w-full justify-end items-end">
+            ~{itemFD.toFixed(2)}
+          </h3>
           <h4 className='h-full flex justify-end items-end ml-[4px] pb-[4px]'>%</h4>
         </div>
       </div>
@@ -94,23 +166,27 @@ export default function FdRes({ setStats, selectedGear, sfResults }: FdResProps)
       <div className="flex flex-col justify-between h-full w-full">
         <h5 className="opacity-60">Set FD</h5>
         <div className='flex'>
-          <h2 className="flex font-bold w-full justify-end items-end">
+          <h3 className="flex font-bold w-full justify-end items-end">
             ~{setFD.toFixed(2)}
-          </h2>
+          </h3>
           <h4 className='h-full flex justify-end items-end ml-[4px] pb-[4px]'>%</h4>
         </div>
       </div>
+      
       <div className='h-full w-[1px] opacity-20 bg-black'/>
+      
       <div className="flex flex-col justify-between h-full w-full">
-        <h5 className="opacity-60">Total FD</h5>
+        <h5 className="opacity-60">Pot FD</h5>
         <div className='flex'>
-          <h2 className="flex font-bold w-full justify-end items-end">
-            ~{totalFD.toFixed(2)}
-          </h2>
+          <h3 className="flex font-bold w-full justify-end items-end">
+            ~{potFD.toFixed(2)}
+          </h3>
           <h4 className='h-full flex justify-end items-end ml-[4px] pb-[4px]'>%</h4>
         </div>
       </div>
+
       <div className='h-full w-[1px] opacity-20 bg-black'/>
+      
       <div className="flex flex-col justify-between h-full w-full">
         <h5 className="opacity-60">Total FD</h5>
         <div className='flex'>
