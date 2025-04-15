@@ -71,27 +71,26 @@ const ItemButton = ({ item, onClick }: ItemButtonProps) => {
     <button
       ref={ref}
       onClick={onClick}
-      className="p-1 hover:cursor-pointer transition-transform duration-200 hover:scale-105"
+      className="pr-[4px] pl-[4px] pb-[4px] hover:cursor-pointer"
       title={item['Item Name'].replace(/_/g, ' ')}
       aria-label={`${item['Item Name'].replace(/_/g, ' ')} item button`}
     >
       <div
-        className="relative size-[40px] p-[4px] border-[1px] rounded-[8px] border-opacity-20 hover:border-[3px] transition-all duration-200"
+        className="relative size-[40px] p-[4px] border-[1px] rounded-[8px] border-opacity-20 hover:border-[2px] transition-all duration-50 hover:cursor-pointer"
         style={{ borderColor }}
       >
         {isLoaded ? (
           <Image
             src={imageSrc}
             alt={item['Item Name'].replace(/_/g, ' ')}
-            fill
-            sizes="40px"
-            className="p-[4px] object-contain"
+            width={100}
+            height={100}
             onError={() => {
               setImageSrc('/image/items/fallback.png');
             }}
           />
         ) : (
-          <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-[4px]"></div>
+          <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-[4px] hover:cursor-pointer"></div>
         )}
       </div>
     </button>

@@ -2,7 +2,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 
-function Input({ className, type, ...props }: React.ComponentProps<"input">) {
+function Input2({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
     <div
       className={cn(
@@ -23,13 +23,9 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
     width={16}
     alt="Search_Icon"
     role="img"
-    style={{
-      width: 'auto', 
-      height: 'auto' 
-    }}
     />
     </div>
   )
 }
 
-export { Input }
+export { Input2 }

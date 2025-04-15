@@ -48,7 +48,7 @@ export default function itemStats(
     let post15 = wpnAtt;
   
     for (let star = 1; star <= targetStar; star++) {
-      if (star >= 1 && star <= 22) {
+      if (star >= 1 && star <= 30) {
         if (star === 1) {
           currentStat += 2;
           const star1Gain = 1+ Math.floor(weaponAtt * 0.02); // +3 for 165 attack
@@ -80,6 +80,10 @@ export default function itemStats(
           } else if (star <= 22) {
             attCount += post15;
             post15 += 1;
+          } else if (star >= 23) {
+            currentStat += wpnStat; 
+            attCount += post15;    
+            post15 += 1;          
           }
         }
       }

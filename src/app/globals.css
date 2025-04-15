@@ -115,6 +115,16 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+  margin-left: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CCCCCC;
+  border-radius: 2px;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -150,12 +160,12 @@ h4 {
 }
 
 h5 {
-  @apply text-[16px] font-semibold leading-[24px]
-      sm:text-[16px] sm:leading-[24px]; /* Mobile size */
+  @apply text-[12px] font-semibold leading-[16px]
+      sm:text-[12px] sm:leading-[16px]; /* Mobile size */
 }
 
 h6 {
-  @apply text-[12px] font-semibold leading-[16px]
+  @apply text-[12px] font-normal leading-[16px]
       sm:text-[12px] sm:leading-[16px]; /* Mobile size */
 }
 
