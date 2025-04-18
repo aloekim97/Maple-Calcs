@@ -45,39 +45,59 @@ export function calculateKMS(
   }
 
   // Get star force statistics
-  const sfStats = starForceAttempts(
-    startStar,
-    endStar,
-    starCatch,
-    safeguard,
-    reducedBooms
-  );
-  // console.log(sfStats)
-  // Calculate costs for the requested star range
-  let kmsCost = getNewCost(
-    sfStats.starAttempts,
-    equipLevel,
-    safeguard,
-    startStar,
-    endStar
-  );
-  kmsCost = applyCostModifiers(kmsCost, discount30, mvpDiscount)
+  const currentStats = startStar === 0 
+    ? null 
+    : starForceAttempts(0, startStar, starCatch, safeguard, reducedBooms);
+  
+  const targetStats = starForceAttempts(0, endStar, starCatch, safeguard, reducedBooms);
 
-  // Calculate additional statistics (optional - remove if not needed)
-  const totalCost = kmsCost;
-  const totalBooms = sfStats.totalBooms;
+  // Calculate cost difference
+  let totalCost: number;
+  if (startStar === 0) {
+    totalCost = getNewCost(
+      targetStats.starAttempts,
+      equipLevel,
+      safeguard,
+      startStar,
+      endStar
+    );
+  } else {
+    const currentTotal = getNewCost(
+      currentStats.starAttempts,
+      equipLevel,
+      safeguard,
+      0,
+      startStar
+    );
+    const targetTotal = getNewCost(
+      targetStats.starAttempts,
+      equipLevel,
+      safeguard,
+      0,
+      endStar
+    );
+    totalCost = targetTotal - currentTotal;
+  }
 
-  // Calculate standard deviation (placeholder - adjust based on your actual variance model)
-  const costPerAttempt = totalCost / sfStats.totalAttempts;
-  const stdDev = Math.sqrt(sfStats.totalAttempts) * costPerAttempt * 0.5; // Adjust multiplier as needed
+  // Apply cost modifiers
+  const modifiedCost = applyCostModifiers(totalCost, discount30, mvpDiscount);
+
+  // Calculate boom statistics
+  const totalBooms = currentStats 
+    ? targetStats.totalBooms - currentStats.totalBooms 
+    : targetStats.totalBooms;
+
+  // Calculate standard deviation (simplified model)
+  const costPerAttempt = modifiedCost / targetStats.totalAttempts;
+  const stdDev = Math.sqrt(targetStats.totalAttempts) * costPerAttempt * 0.5;
 
   // Calculate result metrics
-  const luckyCost = Math.max(0, totalCost - stdDev);
-  const unluckyCost = totalCost + stdDev;
-  const medianCost = totalCost; // For normal distribution, median ≈ mean
+  const luckyCost = Math.max(0, modifiedCost - stdDev);
+  const unluckyCost = modifiedCost + stdDev;
+  const medianCost = modifiedCost;
 
   return {
-    averageCost: Math.round(totalCost).toLocaleString(),
+    averageCost: Math.round(modifiedCost).toLocaleString(),
     averageBooms: totalBooms.toFixed(2),
     luckyCost: Math.round(luckyCost).toLocaleString(),
     unluckyCost: Math.round(unluckyCost).toLocaleString(),

@@ -1,5 +1,8 @@
 'use client';
-import StarForce, { StarForceHandle, StarForceResults } from './inputs/starforceInputs';
+import StarForce, {
+  StarForceHandle,
+  StarForceResults,
+} from './inputs/starforceInputs';
 import Cube, { CubeHandle } from './inputs/cubeInputs';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -13,7 +16,7 @@ import GearRes from './results/gearRes';
 import TotalCost from './totalCost';
 import FdRes from './fdRes';
 import { SetData } from '../../../types/set';
-import sets from "../../../public/sets.json";
+import sets from '../../../public/sets.json';
 import itemStats from '../formulas/sf/itemstats';
 import Link from 'next/link';
 
@@ -49,18 +52,21 @@ export default function GearCalculator() {
   const [setNumber, setSetNumber] = useState<string>('');
   const [setStats, setSetStats] = useState<SetData | null>(null);
 
-  const calculateSFStats = (gear: Item | null, stars: string): SFStats | null => {
+  const calculateSFStats = (
+    gear: Item | null,
+    stars: string
+  ): SFStats | null => {
     if (!gear || !stars) return null;
-    
+
     const starNum = Number(stars);
     if (isNaN(starNum)) return null;
-    
+
     const starCount = gear.Set === 'Genesis' ? 22 : Math.min(starNum, 30);
     const startStars = 0;
     const equipLevel = Number(gear.Level);
     const attackStat = gear.ATK === '' ? gear['M.ATK'] : gear.ATK;
     const weaponAtt = Number(attackStat) || 0;
-    
+
     return itemStats(
       startStars,
       starCount,
@@ -79,14 +85,14 @@ export default function GearCalculator() {
   useEffect(() => {
     if (selectedGear && endStar) {
       const stats = calculateSFStats(selectedGear, endStar);
-      setSfResults(prev => ({
+      setSfResults((prev) => ({
         ...(prev || { cost: null }),
-        stats: stats
+        stats: stats,
       }));
     } else {
-      setSfResults(prev => ({
+      setSfResults((prev) => ({
         ...(prev || { cost: null }),
-        stats: null
+        stats: null,
       }));
     }
   }, [selectedGear, endStar]);
@@ -96,9 +102,8 @@ export default function GearCalculator() {
       const setCount = parseInt(setNumber, 10);
       const isValidSetCount = !isNaN(setCount) && setCount > 0;
       const stats = isValidSetCount
-        ? sets.find(s => 
-            s.Set === selectedGear.Set && 
-            s["Set Count"] === setCount
+        ? sets.find(
+            (s) => s.Set === selectedGear.Set && s['Set Count'] === setCount
           )
         : null;
       setSetStats(stats || null);
@@ -113,9 +118,9 @@ export default function GearCalculator() {
   };
 
   return (
-    <div className="flex flex-col w-[1440px] max-h-[946px] py-[16px] px-[64px] gap-[16px]">
+    <div className="flex flex-col w-[1440px] max-h-[800px] py-[16px] px-[64px] gap-[16px]">
       <div className="flex gap-[8px] h-[64px] w-full justify-between items-center">
-        <div className='w-[196px]'/>
+        <div className="w-[196px]" />
         <Image
           src="image/geardiff.svg"
           width={172}
@@ -123,27 +128,29 @@ export default function GearCalculator() {
           alt="geardiff"
           role="img"
           style={{
-            width: 'auto', 
-            height: 'auto' 
+            width: 'auto',
+            height: 'auto',
           }}
         />
-        <div className='flex gap-[4px]'>
-          <Link href={'/about'} className='flex h-[40px] w-[96px] items-center justify-center opacity-60 hover:opacity-80 hover:cursor-pointer hover:bg-[#00000010] px-[24px] rounded-full'>
-            <p className='leading-[16px] text-[16px] font-semibold'>
-              About
-            </p>
+        <div className="flex gap-[4px]">
+          <Link
+            href={'/about'}
+            className="flex h-[40px] w-[96px] items-center justify-center opacity-60 hover:opacity-80 hover:cursor-pointer hover:bg-[#00000010] px-[24px] rounded-full"
+          >
+            <p className="leading-[16px] text-[16px] font-semibold">About</p>
           </Link>
-          <Link href={'/about'} className='flex h-[40px] w-[96px] items-center justify-center opacity-60 hover:opacity-80 hover:cursor-pointer hover:bg-[#00000010] px-[24px] rounded-full'>
-            <p className='leading-[16px] text-[16px] font-semibold'>
-              Donate
-            </p>
+          <Link
+            href={'/about'}
+            className="flex h-[40px] w-[96px] items-center justify-center opacity-60 hover:opacity-80 hover:cursor-pointer hover:bg-[#00000010] px-[24px] rounded-full"
+          >
+            <p className="leading-[16px] text-[16px] font-semibold">Donate</p>
           </Link>
         </div>
       </div>
       <div className="flex w-full gap-[32px]">
         <div className="flex flex-col w-full gap-[32px]">
           <div className="flex w-full overflow-hidden h-[280px] bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)]">
-            <ItemsPage 
+            <ItemsPage
               setSelectedGear={setSelectedGear}
               setNumber={setNumber}
               setSetNumber={setSetNumber}
@@ -156,9 +163,9 @@ export default function GearCalculator() {
                 setEndStar={(stars) => {
                   setEndStar(stars);
                   if (selectedGear) {
-                    setSfResults(prev => ({
+                    setSfResults((prev) => ({
                       ...prev,
-                      stats: calculateSFStats(selectedGear, stars)
+                      stats: calculateSFStats(selectedGear, stars),
                     }));
                   }
                 }}
@@ -190,7 +197,7 @@ export default function GearCalculator() {
               />
             ) : (
               <div className="flex items-center justify-center w-full h-full">
-                <h4 className='opacity-60'>Select an item to view details</h4>
+                <h4 className="opacity-60">Select an item to view details</h4>
               </div>
             )}
           </div>
@@ -199,31 +206,30 @@ export default function GearCalculator() {
             <CubeCost cubeRes={cubeResults} />
           </div>
           <div className="flex w-full gap-[16px]">
-            <TotalCost 
-            cubeRes={cubeResults} 
-            sfResults={sfResults}
-            />
+            <TotalCost cubeRes={cubeResults} sfResults={sfResults} />
             <div className="flex w-full border rounded-[8px] p-[12px] gap-[16px] border-red-500 bg-red-50  justify-between">
               <div className="flex flex-col justify-between h-full w-full">
                 <h5 className="opacity-60">Average Spares</h5>
-                  <h2 className="flex font-bold w-full justify-end items-end">
-                    40
-                  </h2>
+                <h2 className="flex font-bold w-full justify-end items-end">
+                  40
+                </h2>
               </div>
-              <div className='h-full w-[1px] opacity-20 bg-black'/>
+              <div className="h-full w-[1px] opacity-20 bg-black" />
               <div className="flex flex-col justify-between h-full w-full">
                 <h5 className="opacity-60">Meso/1FD</h5>
-                  <h2 className="flex font-bold w-full justify-end items-end">
-                    ~10B
-                  </h2>
+                <h2 className="flex font-bold w-full justify-end items-end">
+                  ~10B
+                </h2>
               </div>
             </div>
           </div>
-          <FdRes 
-            setStats={setStats} 
-            selectedGear={selectedGear} 
+          <FdRes
+            setStats={setStats}
+            selectedGear={selectedGear}
             potLines={potLines}
-            sfStats={sfResults?.stats || calculateSFStats(selectedGear, endStar)}
+            sfStats={
+              sfResults?.stats || calculateSFStats(selectedGear, endStar)
+            }
           />
         </div>
       </div>

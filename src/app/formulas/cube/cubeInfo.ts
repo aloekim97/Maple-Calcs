@@ -5,14 +5,21 @@ export interface ProbabilityTiers {
   allNonPrime: number;
 }
 
-export interface ItemProbabilities {
-  stat: ProbabilityTiers;
-  cdr?: { [key: number]: number };
-  cd?: { [key: number]: number };
-  dropmeso?: { [key: number]: number };
+export interface SpecialStatProbability {
+  [key: number]: number;
 }
 
-export interface WSE {
+export interface ItemProbabilities {
+  stat: ProbabilityTiers;
+  cdr?: SpecialStatProbability;
+  cd?: SpecialStatProbability;
+  dropmeso?: SpecialStatProbability;
+  att?: ProbabilityTiers;
+  boss?: SpecialStatProbability;
+  ied?: SpecialStatProbability;
+}
+
+export interface WSEProbabilities {
   boss30?: number;
   boss35?: number;
   boss40?: number;
@@ -31,29 +38,26 @@ export interface CubeProbabilities {
   line3: number;
 }
 
-export const CUBE_PROBABILITIES = {
+export interface CubeTypeProbabilities {
+  L: CubeProbabilities;
+  U: CubeProbabilities;
+  cdr?: CubeProbabilities;
+  cd?: CubeProbabilities;
+  dropmeso?: CubeProbabilities;
+  boss?: CubeProbabilities;
+  ied?: CubeProbabilities;
+  att?: CubeProbabilities;
+  any?: CubeProbabilities;
+}
+
+export const CUBE_PROBABILITIES: { [key: string]: CubeTypeProbabilities } = {
   black: {
-    L: { line1: 1, line2: 0.2, line3: 0.05 },
-    U: { line1: 1, line2: 0.8, line3: 0.95 },
-    cdr: { line1: 1, line2: 0.2, line3: 0.05 },
-    cd: { line1: 1, line2: 0.8, line3: 0.95 },
-    dropmeso: { line1: 1, line2: 0.2, line3: 0.05 },
-    boss: { line1: 1, line2: 0.2, line3: 0.05 },
-    ied: { line1: 1, line2: 0.2, line3: 0.05 },
-    att: { line1: 1, line2: 0.2, line3: 0.05 },
-    "": { line1: 1, line2: 1, line3: 1},
+    'L': { line1: 1, line2: 0.2, line3: 0.05 },
+    'U': { line1: 1, line2: 0.8, line3: 0.95 },
   },
   red: {
-    L: { line1: 1, line2: 0.1, line3: 0.01 },
-    U: { line1: 1, line2: 0.9, line3: 0.99 },
-    cdr: { line1: 1, line2: 0.1, line3: 0.01 },
-    cd: { line1: 1, line2: 0.9, line3: 0.99 },
-    dropmeso: { line1: 1, line2: 0.9, line3: 0.99 },
-    boss: { line1: 1, line2: 0.9, line3: 0.99 },
-    ied: { line1: 1, line2: 0.9, line3: 0.99 },
-    att: { line1: 1, line2: 0.9, line3: 0.99 },
-    "": { line1: 1, line2: 1, line3: 1 },
-    
+    'L': { line1: 1, line2: 0.1, line3: 0.01 },
+    'U': { line1: 1, line2: 0.9, line3: 0.99 },
   },
 };
 
@@ -62,17 +66,18 @@ export const CUBE_COST: { [key: string]: number } = {
   red: 12000000,
 };
 
-export const lPrime: { [key: string]: number[] } = {
-  low: [12, 9],
-  high: [13, 10],
+export const PRIME_STAT_VALUES: { [key: string]: { L: number[]; U: number[] } } = {
+  low: {
+    L: [12, 9],
+    U: [9, 6],
+  },
+  high: {
+    L: [13, 10],
+    U: [10, 7],
+  },
 };
 
-export const uPrime: { [key: string]: number[] } = {
-  low: [9, 6],
-  high: [10, 7],
-};
-
-export const WSE_PROBABILITIES: { [key: string]: WSE } = {
+export const WSE_PROBABILITIES: { [key: string]: WSEProbabilities } = {
   Weapon: {
     boss30: 6.66,
     boss35: 9.756,
@@ -80,10 +85,10 @@ export const WSE_PROBABILITIES: { [key: string]: WSE } = {
     ied30: 6.66,
     ied35: 4.878,
     ied40: 4.878,
-    att9: 6.66,  
-    att10: 6.66,   
-    att12: 4.878, 
-    att13: 4.878,  
+    att9: 6.66,
+    att10: 6.66,
+    att12: 4.878,
+    att13: 4.878,
   },
   Emblem: {
     ied30: 7.5,
@@ -145,7 +150,7 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
       allNonPrime: 7.14,
     },
     cd: {
-      1: 10,
+      8: 10,
     },
   },
   Shoes: {
@@ -156,8 +161,23 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
       allNonPrime: 7.69,
     },
   },
-  //Cape, belt, shoulder
   Cape: {
+    stat: {
+      statPrime: 12.12,
+      allPrime: 9.09,
+      statNonPrime: 10.41,
+      allNonPrime: 8.33,
+    },
+  },
+  Belt: {
+    stat: {
+      statPrime: 12.12,
+      allPrime: 9.09,
+      statNonPrime: 10.41,
+      allNonPrime: 8.33,
+    },
+  },
+  Shoulder: {
     stat: {
       statPrime: 12.12,
       allPrime: 9.09,
@@ -173,11 +193,18 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
       allNonPrime: 10,
     },
     dropmeso: {
-      1: 7.69,
+      20: 7.69,
     },
   },
-  //heart and badge
   Heart: {
+    stat: {
+      statPrime: 14.81,
+      allPrime: 11.11,
+      statNonPrime: 12.48,
+      allNonPrime: 33.33,
+    },
+  },
+  Badge: {
     stat: {
       statPrime: 14.81,
       allPrime: 11.11,

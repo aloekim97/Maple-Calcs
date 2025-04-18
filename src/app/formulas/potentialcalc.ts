@@ -28,33 +28,56 @@ export function potCalc(
 } {
   const tier = itemLevel > 150 ? 'high' : 'low';
   const cost = CUBE_COST[cubeType];
-  // Aggregate and validate lines
+
   const addedUpLines = aggregateLines(lines);
-  console.log(addedUpLines)
+  console.log('Aggregated lines:', addedUpLines);
 
   // Generate all valid combinations with permutations
-  const potCombo = potentialPermutations(addedUpLines, tier);
-  console.log(potCombo)
+  const potCombo = potentialPermutations(lines, tier);
+  console.log('Potential combinations:', potCombo);
 
   // Calculate probabilities
   const potProb = findComboProb(potCombo, cubeType, itemType);
+  console.log('Probability results:', potProb);
 
   // Helper function to calculate percentile tries
   const getPercentileTries = (percentile: number): number => {
+    if (potProb.averageTries <= 0) return 0;
     return Math.ceil(
-      Math.log(1 - percentile) / Math.log(1 - 1 / potProb.averageTry)
+      Math.log(1 - percentile) / Math.log(1 - 1 / potProb.averageTries)
     );
   };
 
   // Calculate cost metrics using percentiles
-  const averageTry = potProb.averageTry;
+  const averageTry = potProb.averageTries;
+  const revealMultiplier = { 0: 0, 31: 0.5, 71: 2.5, 121: 20 };
+  function getMultiplier(itemLevel) {
+    // Get all the threshold levels and sort them in descending order
+    const thresholds = Object.keys(revealMultiplier)
+      .map(Number)
+      .sort((a, b) => b - a);
 
+    // Find the first threshold that's <= itemLevel
+    const foundThreshold = thresholds.find(
+      (threshold) => threshold <= itemLevel
+    );
+
+    // Return the corresponding multiplier
+    return revealMultiplier[foundThreshold];
+  }
+
+  const revealCost = (itemLevel) => {
+    const multiplier = getMultiplier(itemLevel);
+    return itemLevel ** 2 * multiplier;
+  };
   const luckyTries = getPercentileTries(0.25); // 25th percentile (lucky)
   const medianTries = getPercentileTries(0.5); // 50th percentile (median)
   const unluckyTries = getPercentileTries(0.75); // 75th percentile (unlucky)
   const veryUnluckyTries = getPercentileTries(0.9); // 90th percentile (very unlucky)
 
-  const averageCost = Math.round(averageTry * cost);
+  const averageCost = Math.round(
+    averageTry * cost + averageTry * revealCost(itemLevel)
+  );
   const luckyCost = Math.round(luckyTries * cost);
   const medianCost = Math.round(medianTries * cost);
   const unluckyCost = Math.round(unluckyTries * cost);

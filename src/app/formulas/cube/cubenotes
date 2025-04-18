@@ -1,0 +1,212 @@
+export interface Combination {
+  lines: [string, string, string];
+  probabilities: [string, string, string];
+}
+
+type PotentialStat = 
+  | 'stat'
+  | 'cdr'
+  | 'cd'
+  | 'boss'
+  | 'ied'
+  | 'att'
+  | 'dropmeso'
+  | 'any';
+type Goal = Partial<Record<PotentialStat, number>>;
+type Tier = 'low' | 'high';
+
+interface StatValue {
+  value: number;
+  isL: boolean;
+  statType: Exclude<PotentialStat, 'any'>;
+}
+
+interface SpecialLineValues {
+  L: number[];
+  U: number[];
+}
+
+const SPECIAL_LINE: Record<
+  Exclude<PotentialStat, 'stat' | 'any'>,
+  SpecialLineValues
+> = {
+  cdr: { L: [1, 2], U: [] },
+  cd: { L: [8], U: [] },
+  boss: { L: [35, 40], U: [30] },
+  ied: { L: [35, 40], U: [30] },
+  dropmeso: { L: [20], U: [] },
+  att: { L: [12, 13], U: [9, 10] },
+};
+
+const STAT_VALUES: Record<Tier, { L: number[]; U: number[] }> = {
+  low: { L: [12, 9], U: [9, 6] },
+  high: { L: [13, 10], U: [10, 7] },
+};
+
+function getLineInfo(line: StatValue, tier: Tier): { text: string; probKey: string } {
+  const { statType, value, isL } = line;
+  const suffix = isL ? 'L' : 'U';
+  
+  switch (statType) {
+    case 'stat':
+      return { text: `${value}% ${suffix}`, probKey: `stat${value}` };
+    case 'att':
+      return { text: `${value}% ATT`, probKey: `att${value}` };
+    case 'boss':
+    case 'ied':
+      return { text: `${value}% ${statType.toUpperCase()} ${suffix}`, probKey: `${statType}${value}` };
+    default:
+      return { text: `${value}% ${statType.toUpperCase()}`, probKey: `${statType}${value}` };
+  }
+}
+
+function getPermutations<T>(arr: T[]): T[][] {
+  if (arr.length <= 1) return [arr];
+  
+  const result: T[][] = [];
+  for (let i = 0; i < arr.length; i++) {
+    const current = arr[i];
+    const remaining = [...arr.slice(0, i), ...arr.slice(i + 1)];
+    const remainingPerms = getPermutations(remaining);
+    
+    for (const perm of remainingPerms) {
+      result.push([current, ...perm]);
+    }
+  }
+  
+  return result;
+}
+
+function filterValidCombinations(combinations: Combination[], goal: Goal): Combination[] {
+  if (!goal) return combinations;
+
+  // Remove duplicates
+  const uniqueCombos = combinations.filter((combo, index, self) =>
+    index === self.findIndex((c) => 
+      c.lines[0] === combo.lines[0] && 
+      c.lines[1] === combo.lines[1] && 
+      c.lines[2] === combo.lines[2]
+    )
+  );
+
+  return uniqueCombos.filter((combo) => {
+    // Check CD requirement
+    if (goal.cd && !combo.lines.some(l => l.includes('CD'))) return false;
+
+    // Check STAT requirement
+    if (goal.stat) {
+      const hasStat = combo.lines.some(l => {
+        const match = l.match(/(\d+)%/);
+        return match && parseInt(match[1]) >= goal.stat!;
+      });
+      if (!hasStat) return false;
+    }
+
+    // Check other stat requirements
+    for (const statType in goal) {
+      if (statType === 'cd' || statType === 'stat' || statType === 'any') continue;
+      
+      const requiredValue = goal[statType as Exclude<PotentialStat, 'cd'|'stat'|'any'>]!;
+      const hasStat = combo.lines.some(l => {
+        if (!l.includes(statType.toUpperCase())) return false;
+        const match = l.match(/(\d+)%/);
+        return match && parseInt(match[1]) >= requiredValue;
+      });
+      
+      if (!hasStat) return false;
+    }
+
+    return true;
+  });
+}
+
+export default function potentialPermutations(goal: Goal, tier: Tier): Combination[] {
+  const combinations: Combination[] = [];
+  const requiredLines: StatValue[] = [];
+
+  // Calculate how many lines each stat needs
+  for (const [statType, goalValue] of Object.entries(goal) as [PotentialStat, number][]) {
+    if (statType === 'any') continue;
+    
+    if (statType === 'cd' || statType === 'dropmeso') {
+      // These stats can't stack - calculate how many lines needed
+      const values = SPECIAL_LINE[statType];
+      const maxValue = Math.max(...values.L, ...values.U);
+      const linesNeeded = Math.ceil(goalValue / maxValue);
+
+      for (let i = 0; i < linesNeeded; i++) {
+        // Add the highest possible value for each required line
+        const maxVal = Math.max(...values.L);
+        requiredLines.push({ statType, value: maxVal, isL: true } as StatValue);
+      }
+    } else if (statType === 'stat') {
+      // Handle stat% differently - include all valid values that meet the requirement
+      const { L: statL, U: statU } = STAT_VALUES[tier];
+      const validLValues = statL.filter(v => v >= goalValue);
+      const validUValues = statU.filter(v => v >= goalValue);
+      
+      if (validLValues.length === 0 && validUValues.length === 0) return []; // Impossible goal
+
+      // For each valid value, create a separate required line
+      for (const val of validLValues) {
+        requiredLines.push({ statType, value: val, isL: true });
+      }
+      for (const val of validUValues) {
+        requiredLines.push({ statType, value: val, isL: false });
+      }
+    } else {
+      // For other stats (boss, ied, att, cdr)
+      const values = SPECIAL_LINE[statType as Exclude<PotentialStat, 'stat'|'any'|'cd'|'dropmeso'>];
+      const possibleValues = [...values.L, ...values.U].filter(v => v >= goalValue);
+      if (possibleValues.length === 0) return []; // Impossible goal
+
+      // Add one line that meets the requirement
+      const maxVal = Math.max(...possibleValues);
+      requiredLines.push({ 
+        statType, 
+        value: maxVal, 
+        isL: values.L.includes(maxVal) 
+      } as StatValue);
+    }
+  }
+
+  // If we need more than 3 lines, it's impossible
+  if (requiredLines.length > 3) return [];
+
+  // Generate all permutations of the required lines
+  const perms = getPermutations(requiredLines);
+  
+  for (const perm of perms) {
+    // Skip if U-line is first
+    if (perm[0] && !perm[0].isL) continue;
+    
+    const comboLines: string[] = [];
+    const comboProbs: string[] = [];
+    
+    // Add required lines
+    for (const line of perm) {
+      const info = getLineInfo(line, tier);
+      comboLines.push(info.text);
+      comboProbs.push(info.probKey);
+    }
+    
+    // Fill remaining slots with ANY
+    while (comboLines.length < 3) {
+      if (comboLines.length === 0) {
+        comboLines.push('1% ANY L');
+        comboProbs.push('anyL');
+      } else {
+        comboLines.push('1% ANY L/U');
+        comboProbs.push('anyLU');
+      }
+    }
+    
+    combinations.push({
+      lines: comboLines.slice(0, 3) as [string, string, string],
+      probabilities: comboProbs.slice(0, 3) as [string, string, string]
+    });
+  }
+
+  // Remove duplicates and return
+  return filterValidCombinations(combinations, goal);
+}

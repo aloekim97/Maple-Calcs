@@ -1,11 +1,11 @@
-interface PotentialStats {
+export interface PotentialStats {
   stat?: number;
   cd?: number;
   cdr?: number;
   att?: number;
   boss?: number;
   ied?: number;
-  any?:number;
+  any?: number;
 }
 
 export default function aggregateLines(lines: {
@@ -17,13 +17,25 @@ export default function aggregateLines(lines: {
   let emptyCount = 0;
 
   for (const line of Object.values(lines)) {
-    if (line === "") {
+    if (!line || line.trim() === "") {
       emptyCount++;
       continue;
     }
-    if (!line) continue;
 
-    const parsed: PotentialStats = JSON.parse(line);
+    let parsed: PotentialStats = {};
+
+    try {
+      // Attempt to parse JSON string input
+      parsed = JSON.parse(line);
+    } catch {
+      // Fallback for text input like "13% stat"
+      const match = line.match(/(\d+)%?\s*(stat|cd|cdr|att|boss|ied)/i);
+      if (match) {
+        const value = parseInt(match[1]);
+        const key = match[2].toLowerCase() as keyof PotentialStats;
+        parsed[key] = value;
+      }
+    }
 
     (Object.keys(parsed) as Array<keyof PotentialStats>).forEach((key) => {
       const value = parsed[key];

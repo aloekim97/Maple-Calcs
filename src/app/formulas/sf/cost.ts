@@ -20,7 +20,7 @@ export default function getNewCost(
     26: 18.6,
     27: 19,
     28: 19.4,
-    29: 9.8,
+    29: 19.8,
   };
   const safeZone: Record<number, number> = {
     15: 0,

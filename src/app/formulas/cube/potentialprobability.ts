@@ -2,322 +2,186 @@ import { Combination } from './potentialpermutations';
 import {
   CUBE_COST,
   CUBE_PROBABILITIES,
-  CubeProbabilities,
+  CubeTypeProbabilities,
   ITEM_PROBABILITIES,
   ProbabilityTiers,
+  SpecialStatProbability,
   WSE_PROBABILITIES,
+  type CubeProbabilities,
+  type ItemProbabilities,
+  type WSEProbabilities,
 } from './cubeInfo';
 import { CubeType } from '@/app/components/inputs/cubeInputs';
 
-interface LineClassification {
-  type: string;
-  value: number;
-}
-
-export interface PotCalcResult {
-  averageCost: string;
-  totalProbability: number;
-  averageTry: number;
-}
-export interface NAPotResult {
-  averageCost: number | null;
-  totalProbability: number | null;
-  averageTry: number | null;
-  luckyCost: number | null;
-  unluckyCost: number | null;
-  medianCost: number | null;
-  veryUnluckyCost: number | null;
-}
-
-const STAT_VALUES = {
-  statPrime: [12, 13],
-  allPrime: [9, 10],
-  statNonPrime: [9, 10],
-  allNonPrime: [6, 7],
-};
-export interface Lines {
-  first: string;
-  second: string;
-  third: string;
-}
-type TierType =
-  | 'L'
-  | 'U'
+// Type Definitions
+type ItemType =
+  | keyof typeof ITEM_PROBABILITIES
+  | keyof typeof WSE_PROBABILITIES;
+type LineType = 'stat' | SpecialLineType;
+type SpecialLineType =
   | 'cdr'
   | 'cd'
   | 'dropmeso'
   | 'boss'
   | 'ied'
   | 'att'
-  | '';
+  | 'any';
+type Tier = 'low' | 'high';
 
-const SPECIAL_LINES = ['cdr', 'cd', 'dropmeso', 'boss', 'ied', 'att', 'any'] as const;
-type SpecialLineType = (typeof SPECIAL_LINES)[number];
-
-function classifyLine(line: string): LineClassification {
-  const attMatch = line.match(/(\d+)% ATT/i);
-  if (attMatch) {
-    return {
-      type: 'att',
-      value: parseInt(attMatch[1]),
-    };
-  }
-
-  // Rest of your existing classification logic...
-  const wseMatch = line.match(/(\d+)% (BOSS|IED)/i);
-  if (wseMatch) {
-    return {
-      type: wseMatch[2].toLowerCase(),
-      value: parseInt(wseMatch[1]),
-    };
-  }
-
-  // Then check for other special lines
-  for (const specialType of SPECIAL_LINES) {
-    if (line.toLowerCase().includes(specialType)) {
-      const valueMatch = line.match(/(\d+)%/);
-      const value = valueMatch ? parseInt(valueMatch[1]) : 0;
-      return { type: specialType, value };
-    }
-  }
-
-  // Handle regular stat lines
-  const match = line.match(/(\d+)% ([LU])/i);
-  if (!match) return { type: 'unknown', value: 0 };
-
-  const value = parseInt(match[1]);
-  const lineType = match[2].toUpperCase();
-  if (lineType === 'L') {
-    if (STAT_VALUES.statPrime.includes(value))
-      return { type: 'statPrime', value };
-    if (STAT_VALUES.allPrime.includes(value))
-      return { type: 'allPrime', value };
-  } else {
-    if (STAT_VALUES.statNonPrime.includes(value))
-      return { type: 'statNonPrime', value };
-    if (STAT_VALUES.allNonPrime.includes(value))
-      return { type: 'allNonPrime', value };
-  }
-
-  return { type: 'unknown', value };
+interface LineClassification {
+  type: LineType;
+  value: number;
+  tier: 'L' | 'U' | 'L/U';
 }
 
-function getLineProbability(
-  lineInfo: LineClassification,
-  lineNumber: 1 | 2 | 3,
-  cubeProb: CubeProbabilities,
-  itemProb: any
-): number {
-  const cubeLineProb = cubeProb[`line${lineNumber}`];
-  let itemLineProb = 0;
-
-  // Handle WSE items differently
-  if (lineInfo.type === 'att') {
-    const attKey = `att${lineInfo.value}` as keyof typeof itemProb;
-    if (attKey in itemProb) {
-      return (cubeLineProb * itemProb[attKey]) / 100;
-    }
-    return 0; // If the ATT value isn't found in probabilities
-  }
-
-  // Handle other WSE lines (BOSS, IED)
-  if (lineInfo.type === 'boss' || lineInfo.type === 'ied') {
-    const key = `${lineInfo.type}${lineInfo.value}` as keyof typeof itemProb;
-    return (cubeLineProb * (itemProb[key] || 0)) / 100;
-  }
-  // Handle regular items
-  else {
-    // Handle special lines
-    if (SPECIAL_LINES.includes(lineInfo.type as SpecialLineType)) {
-      const probTable = itemProb[lineInfo.type as SpecialLineType];
-      if (probTable && typeof probTable === 'object') {
-        itemLineProb =
-          (probTable as Record<number, number>)[lineInfo.value] || 0;
-      }
-    }
-    // Handle stat lines
-    else if (itemProb.stat && lineInfo.type in itemProb.stat) {
-      itemLineProb =
-        itemProb.stat[lineInfo.type as keyof ProbabilityTiers] || 0;
-    }
-  }
-
-  return (cubeLineProb * itemLineProb) / 100;
+export interface PotCalcResult {
+  averageCost: string;
+  totalProbability: number;
+  averageTries: number;
+  luckyCost: string;
+  unluckyCost: string;
 }
 
-function calculateWSEProbability(
-  combinations: Combination[],
-  cubeType: CubeType,
-  itemType: 'Weapon' | 'Secondary' | 'Emblem'
-): number {
-  const cubeProbabilities = CUBE_PROBABILITIES[cubeType];
-  const itemProb = WSE_PROBABILITIES[itemType];
+// Constants
+const SPECIAL_LINE: Record<SpecialLineType, { L: number[]; U: number[] }> = {
+  cdr: { L: [1, 2], U: [] },
+  cd: { L: [8], U: [] },
+  boss: { L: [35, 40], U: [30] },
+  ied: { L: [35, 40], U: [30] },
+  dropmeso: { L: [20], U: [] },
+  att: { L: [12, 13], U: [9, 10] },
+  any: { L: [1], U: [1] },
+};
 
-  let totalProbability = 0;
+const STAT_VALUES: Record<Tier, { L: number[]; U: number[] }> = {
+  low: { L: [12, 9], U: [9, 6] },
+  high: { L: [13, 10], U: [10, 7] },
+};
 
-  for (const combo of combinations) {
-    const line1Info = classifyLine(combo.lines[0]);
-    const line2Info = classifyLine(combo.lines[1]);
-    const line3Info = classifyLine(combo.lines[2]);
-
-    // Helper function to determine tier based on line type and value
-    const getTier = (lineInfo: LineClassification): TierType => {
-      if (lineInfo.type === 'boss') {
-        return lineInfo.value === 30 ? 'U' : 'L';
-      }
-      if (lineInfo.type === 'ied') {
-        return lineInfo.value === 30 ? 'U' : 'L';
-      }
-      if (lineInfo.type === 'att') {
-        return lineInfo.value <= 10 ? 'U' : 'L'; // 9,10 = U; 12,13 = L
-      }
-      return lineInfo.value <= 10 ? 'U' : 'L'; // Fallback for other cases
-    };
-
-    const tier1 = getTier(line1Info);
-    const tier2 = getTier(line2Info);
-    const tier3 = getTier(line3Info);
-
-    const cubeProb1 = cubeProbabilities[tier1];
-    const cubeProb2 = cubeProbabilities[tier2];
-    const cubeProb3 = cubeProbabilities[tier3];
-
-    const line1Prob = getLineProbability(line1Info, 1, cubeProb1, itemProb);
-    const line2Prob = getLineProbability(line2Info, 2, cubeProb2, itemProb);
-    const line3Prob = getLineProbability(line3Info, 3, cubeProb3, itemProb);
-
-    totalProbability += line1Prob * line2Prob * line3Prob;
-  }
-
-  return totalProbability;
-}
-
-function calculateRegularItemProbability(
-  combinations: Combination[],
-  cubeType: CubeType,
-  itemType: string
-): number {
-  const cubeProbabilities = CUBE_PROBABILITIES[cubeType];
-  const itemProb = ITEM_PROBABILITIES[itemType];
-
-  if (!itemProb) {
-    return 0;
-  }
-
-  let totalProbability = 0;
-
-  for (const combo of combinations) {
-    let tier1: TierType = '';
-    let tier2: TierType = '';
-    let tier3: TierType = '';
-
-    // Determine tiers based on item type and line content
-    if (itemType === 'Hat') {
-      tier1 = combo.lines[0].includes('CDR')
-        ? 'cdr'
-        : combo.lines[0].endsWith('L')
-        ? 'L'
-        : 'U';
-      tier2 = combo.lines[1].includes('CDR')
-        ? 'cdr'
-        : combo.lines[1].endsWith('L')
-        ? 'L'
-        : 'U';
-      tier3 = combo.lines[2].includes('CDR')
-        ? 'cdr'
-        : combo.lines[2].endsWith('L')
-        ? 'L'
-        : 'U';
-    } else if (itemType === 'Gloves') {
-      tier1 = combo.lines[0].includes('CD')
-        ? 'cd'
-        : combo.lines[0].endsWith('L')
-        ? 'L'
-        : 'U';
-      tier2 = combo.lines[1].includes('CD')
-        ? 'cd'
-        : combo.lines[1].endsWith('L')
-        ? 'L'
-        : 'U';
-      tier3 = combo.lines[2].includes('CD')
-        ? 'cd'
-        : combo.lines[2].endsWith('L')
-        ? 'L'
-        : 'U';
-    } else if (itemType === 'Accessory') {
-      tier1 = combo.lines[0].includes('DROPMESO')
-        ? 'dropmeso'
-        : combo.lines[0].endsWith('L')
-        ? 'L'
-        : 'U';
-      tier2 = combo.lines[1].includes('DROPMESO')
-        ? 'dropmeso'
-        : combo.lines[1].endsWith('L')
-        ? 'L'
-        : 'U';
-      tier3 = combo.lines[2].includes('DROPMESO')
-        ? 'dropmeso'
-        : combo.lines[2].endsWith('L')
-        ? 'L'
-        : 'U';
-    } else {
-      tier1 = combo.lines[0].endsWith('L') ? 'L' : 'U';
-      tier2 = combo.lines[1].endsWith('L') ? 'L' : 'U';
-      tier3 = combo.lines[2].endsWith('L') ? 'L' : 'U';
-    }
-
-    const cubeProb1 = cubeProbabilities[tier1];
-    const cubeProb2 = cubeProbabilities[tier2];
-    const cubeProb3 = cubeProbabilities[tier3];
-
-    const line1Info = classifyLine(combo.lines[0]);
-    const line2Info = classifyLine(combo.lines[1]);
-    const line3Info = classifyLine(combo.lines[2]);
-
-    const line1Prob = getLineProbability(line1Info, 1, cubeProb1, itemProb);
-    const line2Prob = getLineProbability(line2Info, 2, cubeProb2, itemProb);
-    const line3Prob = getLineProbability(line3Info, 3, cubeProb3, itemProb);
-
-    totalProbability += line1Prob * line2Prob * line3Prob;
-  }
-
-  return totalProbability;
-}
-
+// Public Interface
 export function findComboProb(
   combinations: Combination[],
   cubeType: CubeType,
-  itemType: string
+  itemType: string,
+  currentTier: Tier = 'high'
 ): PotCalcResult {
-  let totalProbability: number;
+  const totalProbability = calculateTotalProbability(
+    combinations,
+    cubeType,
+    itemType as ItemType,
+    currentTier
+  );
 
-  if (
-    itemType === 'Weapon' ||
-    itemType === 'Secondary' ||
-    itemType === 'Emblem'
-  ) {
-    totalProbability = calculateWSEProbability(
-      combinations,
-      cubeType,
-      itemType as 'Weapon' | 'Secondary' | 'Emblem'
-    );
-  } else {
-    totalProbability = calculateRegularItemProbability(
-      combinations,
-      cubeType,
-      itemType
-    );
-  }
+  // Calculate cost metrics
+  const averageTries = totalProbability > 0 ? 1 / totalProbability : Infinity;
+  const cubeCost = CUBE_COST[cubeType];
 
-  const averageTry = totalProbability > 0 ? 1 / totalProbability : Infinity;
-  const averageCost =
-    averageTry !== Infinity
-      ? (averageTry * CUBE_COST[cubeType]).toLocaleString()
-      : '∞';
+  const format = (cost: number) =>
+    Number.isFinite(cost) ? Math.round(cost).toLocaleString() : '∞';
 
   return {
-    averageCost,
+    averageCost: format(averageTries * cubeCost),
     totalProbability,
-    averageTry,
+    averageTries,
+    luckyCost: format(0.25 * averageTries * cubeCost),
+    unluckyCost: format(1.5 * averageTries * cubeCost),
   };
+}
+
+function calculateTotalProbability(
+  combinations: Combination[],
+  cubeType: CubeType,
+  itemType: ItemType,
+  potTier: Tier
+): number {
+  let totalProbability = 0;
+  combinations.forEach((combination) => {
+    console.log(combination);
+    let combinationProbability = 1;
+    combination.lines.forEach((line, lineIndex) => {
+      const lineProb = getPotProbability(
+        combination,
+        potTier,
+        lineIndex,
+        cubeType,
+        itemType
+      );
+      console.log('lineProp', lineProb);
+      combinationProbability *= lineProb;
+    });
+    console.log(typeof combinationProbability);
+
+    totalProbability += combinationProbability;
+    console.log(totalProbability);
+  });
+  return totalProbability;
+}
+
+function getPotProbability(
+  combination: { lines: string[] },
+  tier: Tier,
+  index: number,
+  cubeType: CubeType,
+  itemType: ItemType
+): number {
+  const lineParts = combination.lines[index].split(' ');
+  if (lineParts.length < 3) return 0; // Invalid line format
+
+  const lineAmount = Number(lineParts[0]);
+  const lineTier = lineParts[1];
+  const lineType = lineParts[2] as LineType;
+
+  // Get the cube's line rate for this tier and position
+  const cubeLineRate =
+    CUBE_PROBABILITIES[cubeType]?.[lineTier]?.[`line${index + 1}`] || 0;
+  if (cubeLineRate === 0) return 1;
+  if(lineType == 'any') return 1
+  // Handle special line types (non-stat)
+  if (lineType !== 'stat') {
+    // Check if it's a WSE (Weapon, Secondary, Emblem) item
+    const isWSE = ['Weapon', 'Secondary', 'Emblem'].includes(itemType);
+
+    if (isWSE) {
+      // Handle WSE-specific probabilities
+      const wseProbs =
+        WSE_PROBABILITIES[itemType as keyof typeof WSE_PROBABILITIES];
+      if (!wseProbs) return 0;
+
+      const lineKey = `${lineType}${lineAmount}` as keyof typeof wseProbs;
+      const lineProb = wseProbs[lineKey] || 0;
+      return (lineProb / 100) * cubeLineRate; // Convert percentage to decimal
+    } else {
+      // Handle regular equipment special lines
+      const itemProbs =
+        ITEM_PROBABILITIES[itemType as keyof typeof ITEM_PROBABILITIES];
+      if (!itemProbs) return 0;
+
+      const specialLineProbs = itemProbs[
+        lineType as keyof ItemProbabilities
+      ] as SpecialStatProbability | undefined;
+      if (!specialLineProbs) return 0;
+
+      const lineProb = specialLineProbs[lineAmount] || 0;
+      return (lineProb / 100) * cubeLineRate; // Convert percentage to decimal
+    }
+  }
+
+  // Handle stat lines
+  const itemProbs =
+    ITEM_PROBABILITIES[itemType as keyof typeof ITEM_PROBABILITIES]?.stat;
+  if (!itemProbs) return 1;
+
+  // Determine which probability tier to use
+  let probTier: keyof ProbabilityTiers = 'allNonPrime';
+  if (lineTier === 'L') {
+    if (lineAmount === 13 || lineAmount === 12) probTier = 'statPrime';
+    else if (lineAmount === 10 || lineAmount === 9) probTier = 'allPrime';
+  } else if (lineTier === 'U') {
+    if (lineAmount === 10 || lineAmount === 9) probTier = 'statNonPrime';
+    else if (lineAmount === 7 || lineAmount === 6) probTier = 'allNonPrime';
+  }
+
+  const potProb =((itemProbs[probTier])/100 || 1);
+  console.log(potProb, cubeLineRate, lineTier)
+  return potProb * cubeLineRate;
 }

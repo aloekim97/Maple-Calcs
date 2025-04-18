@@ -46,10 +46,6 @@ export default function calculateStarForceStats(
 
   // Validate input
   if (
-    startStar < 0 ||
-    startStar > 29 ||
-    endStar < 0 ||
-    endStar > 31 ||
     startStar >= endStar
   ) {
     throw new Error('Invalid star range');
@@ -78,7 +74,10 @@ export default function calculateStarForceStats(
       fail = 100 - success - boom;
     }
 
-    if (safeguard && (currentStar === 15 || currentStar === 16 || currentStar === 17)) {
+    if (
+      safeguard &&
+      (currentStar === 15 || currentStar === 16 || currentStar === 17)
+    ) {
       boom = 0; // 0% boom rate for 15-17 when safeguard is on
       fail = 100 - success; // Adjust fail rate
     }
@@ -101,7 +100,8 @@ export default function calculateStarForceStats(
     const boomProbabilityPerAttempt = boom;
 
     // Expected booms while attempting this star
-    const expectedBoomsAtThisStar = attemptsForThisStar * boomProbabilityPerAttempt;
+    const expectedBoomsAtThisStar =
+      attemptsForThisStar * boomProbabilityPerAttempt;
 
     // If we boom, we have to redo from 15, so we need to account for that
     if (boom > 0 && currentStar > 15) {
@@ -112,8 +112,12 @@ export default function calculateStarForceStats(
         safeguard,
         reducedBooms
       );
-      totalAttempts += attemptsForThisStar + expectedBoomsAtThisStar * recoveryAttempts.attempts;
-      totalBooms += expectedBoomsAtThisStar + expectedBoomsAtThisStar * recoveryAttempts.booms;
+      totalAttempts +=
+        attemptsForThisStar +
+        expectedBoomsAtThisStar * recoveryAttempts.attempts;
+      totalBooms +=
+        expectedBoomsAtThisStar +
+        expectedBoomsAtThisStar * recoveryAttempts.booms;
     } else {
       // No boom risk or already at/above 15 (booming doesn't set us back further)
       totalAttempts += attemptsForThisStar;

@@ -47,7 +47,7 @@ export default function FdRes({
   const [sfResults, setSfResults] = useState<SFResults | null>(null);
 
   useEffect(() => {
-    console.log("SFResults updated:", sfResults);
+    // console.log("SFResults updated:", sfResults);
   }, [sfResults])
 
   useEffect(() => {
@@ -119,8 +119,8 @@ export default function FdRes({
         
         if (parsed.stat) {
           potFD += parsed.stat / MULTIPLIERS.PERCENTMAINSTAT;
-          console.log('parsed stat:', parsed.stat)
-          console.log('potFDfuck:', potFD)
+          // console.log('parsed stat:', parsed.stat)
+          // console.log('potFDfuck:', potFD)
         }
         if (parsed.att) {
           potFD += parsed.att / MULTIPLIERS.PERCENTATK;
