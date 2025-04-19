@@ -129,8 +129,9 @@ const ItemsPage = ({
           <Input
             type="number"
             placeholder="Set#"
-            value={setNumber} // Use prop value
+            value={setNumber} 
             onChange={changeNum}
+            min={1}
           />
         </div>
       </div>
