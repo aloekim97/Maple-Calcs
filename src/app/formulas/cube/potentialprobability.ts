@@ -96,7 +96,6 @@ function calculateTotalProbability(
 ): number {
   let totalProbability = 0;
   combinations.forEach((combination) => {
-    console.log(combination);
     let combinationProbability = 1;
     combination.lines.forEach((line, lineIndex) => {
       const lineProb = getPotProbability(
@@ -106,13 +105,10 @@ function calculateTotalProbability(
         cubeType,
         itemType
       );
-      console.log('lineProp', lineProb);
       combinationProbability *= lineProb;
     });
-    console.log(typeof combinationProbability);
 
     totalProbability += combinationProbability;
-    console.log(totalProbability);
   });
   return totalProbability;
 }
@@ -182,6 +178,5 @@ function getPotProbability(
   }
 
   const potProb =((itemProbs[probTier])/100 || 1);
-  console.log(potProb, cubeLineRate, lineTier)
   return potProb * cubeLineRate;
 }

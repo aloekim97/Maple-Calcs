@@ -10,7 +10,7 @@ export default function SfCost({ sfResults }: SfCost) {
   ): string => {
     const num = Number(costString?.replace(/,/g, ''));
 
-    if (isNaN(num)) return 'NA';
+    if (isNaN(num)) return '0';
     if (num === Infinity) return '∞';
 
     let transformed: number;
@@ -32,7 +32,7 @@ export default function SfCost({ sfResults }: SfCost) {
       return num.toLocaleString();
     }
 
-    return transformed.toFixed(2).replace(/\.?0+$/, '') + suffix;
+    return transformed.toFixed(1).replace(/\.?0+$/, '') + suffix;
   };
 
   const averageCostDisplay = transformAndFormat(sfResults?.averageCost);

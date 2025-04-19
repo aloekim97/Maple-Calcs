@@ -1,15 +1,12 @@
 'use client';
-import StarForce, {
-  StarForceHandle,
-  StarForceResults,
-} from './inputs/starforceInputs';
+import StarForce from './inputs/starforceInputs';
 import Cube, { CubeHandle } from './inputs/cubeInputs';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import ItemsPage from './itemlist';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Item } from '../../../types/item';
-import { Lines, PotCalcResult } from '../formulas/cube/potentialprobability';
+import { PotCalcResult } from '../formulas/cube/potentialprobability';
 import CubeCost from './results/cubeRes';
 import SfCost from './starForceRes';
 import GearRes from './results/gearRes';
@@ -27,61 +24,130 @@ interface SFStats {
     stat: number;
     att: number;
   };
+  cost?: number;
 }
-
-const getMaxStars = (level: number): number => {
-  if (level >= 138) return 30;
-  else if (level >= 128) return 20;
-  else if (level >= 118) return 15;
-  else if (level >= 108) return 10;
-  else if (level >= 95) return 8;
-  else return 5;
-};
+export interface Lines {
+  first: string;
+  second: string;
+  third: string;
+}
+// const getMaxStars = (level: number): number => {
+//   if (level >= 138) return 30;
+//   else if (level >= 128) return 20;
+//   else if (level >= 118) return 15;
+//   else if (level >= 108) return 10;
+//   else if (level >= 95) return 8;
+//   else return 5;
+// };
 
 export default function GearCalculator() {
   const [selectedGear, setSelectedGear] = useState<Item | null>(null);
+  const [potLines, setPotLines] = useState<Lines | null>(null);
+  const [endStar, setEndStar] = useState<string>('');
   const [cubeResults, setCubeResults] = useState<PotCalcResult | null>(null);
   const [sfResults, setSfResults] = useState<{
-    cost: any;
+    cost: number;
     stats: SFStats | null;
   } | null>(null);
-  const [potLines, setPotLines] = useState<Lines | null>(null);
-  const [endStar, setEndStar] = useState('');
-  const starForceRef = useRef<StarForceHandle>(null);
-  const cubeRef = useRef<CubeHandle>(null);
   const [setNumber, setSetNumber] = useState<string>('');
   const [setStats, setSetStats] = useState<SetData | null>(null);
+
+  // Load all saved data from localStorage on component mount
+  useEffect(() => {
+    try {
+      const savedGear = localStorage.getItem('selectedGear');
+      if (savedGear) setSelectedGear(JSON.parse(savedGear));
+
+      const savedPotLines = localStorage.getItem('potLines');
+      if (savedPotLines) setPotLines(JSON.parse(savedPotLines));
+
+      const savedEndStar = localStorage.getItem('endStar');
+      if (savedEndStar) {
+        const starNum = Number(savedEndStar);
+        if (!isNaN(starNum)) {
+          setEndStar(savedEndStar);
+        }
+      }
+
+      const savedSetNumber = localStorage.getItem('setNumber');
+      if (savedSetNumber) setSetNumber(savedSetNumber);
+    } catch (error) {
+      console.error('Failed to load from localStorage:', error);
+    }
+  }, []);
+
+  // Save states to localStorage when they change
+  useEffect(() => {
+    if (selectedGear !== null) {
+      localStorage.setItem('selectedGear', JSON.stringify(selectedGear));
+    }
+  }, [selectedGear]);
+
+  useEffect(() => {
+    if (endStar) {
+      localStorage.setItem('endStar', endStar);
+    }
+  }, [endStar]);
+
+  useEffect(() => {
+    if (setNumber) {
+      localStorage.setItem('setNumber', setNumber);
+    }
+  }, [setNumber]);
+
+  // Validate endStar when gear changes
+  useEffect(() => {
+    if (selectedGear && endStar) {
+      const starNum = Number(endStar);
+      if (!isNaN(starNum)) {
+        const maxStars = selectedGear.Set === 'Genesis' ? 22 : 30;
+        if (starNum > maxStars) {
+          setEndStar(maxStars.toString());
+        }
+      }
+    }
+  }, [selectedGear, endStar]);
 
   const calculateSFStats = (
     gear: Item | null,
     stars: string
   ): SFStats | null => {
-    if (!gear || !stars) return null;
+    if (!gear || !stars || !gear.Level) return null;
 
     const starNum = Number(stars);
     if (isNaN(starNum)) return null;
 
-    const starCount = gear.Set === 'Genesis' ? 22 : Math.min(starNum, 30);
-    const startStars = 0;
-    const equipLevel = Number(gear.Level);
-    const attackStat = gear.ATK === '' ? gear['M.ATK'] : gear.ATK;
-    const weaponAtt = Number(attackStat) || 0;
+    try {
+      const starCount =
+        gear.Set === 'Genesis' ? Math.min(starNum, 22) : Math.min(starNum, 30);
+      const startStars = 0;
+      const equipLevel = Number(gear.Level);
+      const attackStat = gear.ATK || gear['M.ATK'] || '0';
+      const weaponAtt = Number(attackStat) || 0;
 
-    return itemStats(
-      startStars,
-      starCount,
-      equipLevel,
-      weaponAtt,
-      gear.Type === 'Weapon' ? 'Weapon' : undefined
-    );
+      return itemStats(
+        startStars,
+        starCount,
+        equipLevel,
+        weaponAtt,
+        gear.Type === 'Weapon' ? 'Weapon' : undefined
+      );
+    } catch (error) {
+      console.error('Error calculating SF stats:', error);
+      return null;
+    }
   };
 
+  // Reset related states when gear changes
   useEffect(() => {
     setSfResults(null);
     setCubeResults(null);
-    setEndStar('');
+    if (!selectedGear) {
+      setEndStar('');
+    }
   }, [selectedGear]);
 
+  // Calculate SF stats when gear or endStar changes
   useEffect(() => {
     if (selectedGear && endStar) {
       const stats = calculateSFStats(selectedGear, endStar);
@@ -97,6 +163,7 @@ export default function GearCalculator() {
     }
   }, [selectedGear, endStar]);
 
+  // Calculate set stats
   useEffect(() => {
     if (selectedGear?.Set && setNumber) {
       const setCount = parseInt(setNumber, 10);
@@ -111,11 +178,6 @@ export default function GearCalculator() {
       setSetStats(null);
     }
   }, [selectedGear, setNumber]);
-
-  const handleCalculate = () => {
-    starForceRef.current?.calculate();
-    cubeRef.current?.calculate();
-  };
 
   return (
     <div className="flex flex-col w-[1440px] max-h-[800px] py-[16px] px-[64px] gap-[16px]">
@@ -170,7 +232,6 @@ export default function GearCalculator() {
                   }
                 }}
                 setSfRes={setSfResults}
-                ref={starForceRef}
               />
             </div>
             <div className="w-full">
@@ -178,11 +239,9 @@ export default function GearCalculator() {
                 selectedGear={selectedGear}
                 setCubeResults={setCubeResults}
                 setPotLines={setPotLines}
-                ref={cubeRef}
               />
             </div>
           </div>
-          <Button onClick={handleCalculate}>Calculate</Button>
         </div>
         <div className="flex flex-col w-full bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] p-[16px] gap-[16px]">
           <div className="flex w-full gap-[16px] rounded-[8px] border grow">
@@ -207,21 +266,6 @@ export default function GearCalculator() {
           </div>
           <div className="flex w-full gap-[16px]">
             <TotalCost cubeRes={cubeResults} sfResults={sfResults} />
-            <div className="flex w-full border rounded-[8px] p-[12px] gap-[16px] border-red-500 bg-red-50  justify-between">
-              <div className="flex flex-col justify-between h-full w-full">
-                <h5 className="opacity-60">Average Spares</h5>
-                <h2 className="flex font-bold w-full justify-end items-end">
-                  40
-                </h2>
-              </div>
-              <div className="h-full w-[1px] opacity-20 bg-black" />
-              <div className="flex flex-col justify-between h-full w-full">
-                <h5 className="opacity-60">Meso/1FD</h5>
-                <h2 className="flex font-bold w-full justify-end items-end">
-                  ~10B
-                </h2>
-              </div>
-            </div>
           </div>
           <FdRes
             setStats={setStats}

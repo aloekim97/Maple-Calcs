@@ -1,6 +1,5 @@
 import { findComboProb, PotCalcResult } from './cube/potentialprobability';
 import potentialPermutations from './cube/potentialpermutations';
-import aggregateLines from './cube/simplifypotential';
 import { CUBE_COST } from './cube/cubeInfo';
 import { CubeType } from '../components/inputs/cubeInputs';
 
@@ -29,16 +28,11 @@ export function potCalc(
   const tier = itemLevel > 150 ? 'high' : 'low';
   const cost = CUBE_COST[cubeType];
 
-  const addedUpLines = aggregateLines(lines);
-  console.log('Aggregated lines:', addedUpLines);
-
   // Generate all valid combinations with permutations
   const potCombo = potentialPermutations(lines, tier);
-  console.log('Potential combinations:', potCombo);
 
   // Calculate probabilities
   const potProb = findComboProb(potCombo, cubeType, itemType);
-  console.log('Probability results:', potProb);
 
   // Helper function to calculate percentile tries
   const getPercentileTries = (percentile: number): number => {

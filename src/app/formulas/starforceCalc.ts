@@ -39,10 +39,6 @@ export function calculateKMS(
   unluckyCost: string;
   medianCost: string;
 } {
-  // Validate input
-  if (startStar >= endStar) {
-    throw new Error('startStar must be less than endStar');
-  }
 
   // Get star force statistics
   const currentStats = startStar === 0 

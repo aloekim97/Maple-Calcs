@@ -135,8 +135,8 @@ export default function itemStats(
 
   return {
     difference: {
-      stat: additionalStats.stat - currentStats.stat,
-      att: additionalStats.att - currentStats.att,
+      stat: additionalStats.stat ,
+      att: additionalStats.att,
     },
   };
 }

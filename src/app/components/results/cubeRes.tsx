@@ -1,18 +1,21 @@
-import { PotCalcResult } from "@/app/formulas/cube/potentialprobability";
-
+import { PotCalcResult } from '@/app/formulas/cube/potentialprobability';
 
 interface CubeRes {
-  cubeRes: (PotCalcResult & {
-    luckyCost?: string;
-    unluckyCost?: string;
-    medianCost?: string;
-  }) | null;
+  cubeRes:
+    | (PotCalcResult & {
+        luckyCost?: string;
+        unluckyCost?: string;
+        medianCost?: string;
+      })
+    | null;
 }
 
 export default function CubeCost({ cubeRes }: CubeRes) {
-  const transformAndFormat = (costString: string | null | undefined): string => {
+  const transformAndFormat = (
+    costString: string | null | undefined
+  ): string => {
     if (!costString) return 'NA';
-    
+
     const num = Number(costString.replace(/,/g, ''));
 
     if (isNaN(num)) return 'NA';
@@ -34,7 +37,7 @@ export default function CubeCost({ cubeRes }: CubeRes) {
       return num.toLocaleString();
     }
 
-    return transformed.toFixed(2).replace(/\.?0+$/, '') + suffix;
+    return transformed.toFixed(1).replace(/\.?0+$/, '') + suffix;
   };
 
   const averageCostDisplay = transformAndFormat(cubeRes?.averageCost);
@@ -63,7 +66,7 @@ export default function CubeCost({ cubeRes }: CubeRes) {
             Average:
           </h4>
           <p className="font-normal flex justify-end h-full w-full items-center">
-            {averageCostDisplay}
+            {median === '0' ? '0' : averageCostDisplay}
           </p>
           <h4 className="flex justify-start h-full w-full items-center">
             Lower:
