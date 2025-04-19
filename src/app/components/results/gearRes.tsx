@@ -256,6 +256,12 @@ export default function GearRes({
                     <h6>+{setStats["Crit Damage"]}</h6>
                   </div>
                 }
+                {setStats["Final Damage"] && 
+                  <div className='flex w-full justify-between'>
+                    <h5>Final Damage:</h5>
+                    <h6>+{setStats["Final Damage"]}</h6>
+                  </div>
+                }
               </div>
             ) : (
             <div className='flex flex-col w-full gap-[4px]'> 
@@ -279,7 +285,7 @@ export default function GearRes({
         <div className='flex flex-col h-full w-full gap-[6px] justify-between'>
           <div className="flex justify-between gap-[4px]">
             <h4>Type:</h4>
-            <p>{selectedGear.Type}</p>
+            <p>{selectedGear['Sub-Type']}</p>
           </div>
           <div className="flex justify-between gap-[4px]">
             <h4>Lvl:</h4>

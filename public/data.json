@@ -14,7 +14,9 @@
     "M.ATK": 5,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Aquatic_Letter_Eye_Accessory",
@@ -31,7 +33,9 @@
     "M.ATK": 1,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Black_Bean_Mark",
@@ -48,7 +52,9 @@
     "M.ATK": 1,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Papulatus_Mark",
@@ -65,7 +71,9 @@
     "M.ATK": 1,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Dea_Sidus_Earrings",
@@ -82,7 +90,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Will_o_The_Wisp_Earrings",
@@ -99,7 +109,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Silver_Blossom_Ring",
@@ -116,7 +128,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Noble_Ifia's_Ring",
@@ -125,15 +139,17 @@
     "Type": "Accessory",
     "Sub-Type": "Ring",
     "Level": 120,
-    "Main Stat": 5,
-    "Sub Stat": 5,
+    "Main Stat": "",
+    "Sub Stat": "",
     "HP": "",
     "MP": "",
     "ATK": "",
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Guardian_Angel_Ring",
@@ -150,7 +166,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Horntail_Necklace",
@@ -167,7 +185,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Chaos_Horntail_Necklace",
@@ -184,7 +204,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Mechanator_Necklace",
@@ -201,7 +223,9 @@
     "M.ATK": 1,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Dominator_Necklace",
@@ -218,7 +242,9 @@
     "M.ATK": 3,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Golden_Clover_Belt",
@@ -235,7 +261,9 @@
     "M.ATK": 1,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Royal_Black_Metal_Shoulder",
@@ -252,7 +280,9 @@
     "M.ATK": 6,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Enraged_Zakum_Belt",
@@ -269,7 +299,9 @@
     "M.ATK": 1,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Stone_Of_Eternal_Life",
@@ -286,7 +318,9 @@
     "M.ATK": 3,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Pinky_Holy_Cup",
@@ -303,7 +337,9 @@
     "M.ATK": 5,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Crystal_Ventus_Badge",
@@ -320,7 +356,9 @@
     "M.ATK": 5,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Kanna's_Treasure",
@@ -337,7 +375,9 @@
     "M.ATK": 1,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Twilight_Mark",
@@ -354,7 +394,9 @@
     "M.ATK": 5,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Estella_Earrings",
@@ -371,7 +413,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "D._Guardian_Angel_Ring",
@@ -388,7 +432,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Daybreak_Pendant",
@@ -405,7 +451,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "R._Gollux_Earrings",
@@ -422,7 +470,9 @@
     "M.ATK": 6,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "R._Gollux_Ring",
@@ -439,7 +489,9 @@
     "M.ATK": 5,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "R._Gollux_Pendant",
@@ -456,7 +508,9 @@
     "M.ATK": 3,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "R._Gollux_Belt",
@@ -473,7 +527,9 @@
     "M.ATK": 20,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "S._Gollux_Earrings",
@@ -490,7 +546,9 @@
     "M.ATK": 10,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "S._Gollux_Ring",
@@ -507,7 +565,9 @@
     "M.ATK": 8,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "S._Gollux_Pendant",
@@ -524,7 +584,9 @@
     "M.ATK": 5,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "S._Gollux_Belt",
@@ -541,7 +603,9 @@
     "M.ATK": 35,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Beserked",
@@ -558,7 +622,9 @@
     "M.ATK": 10,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Magic_Eyepatch",
@@ -575,7 +641,9 @@
     "M.ATK": 3,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Commanding_Force_Earrings",
@@ -592,7 +660,9 @@
     "M.ATK": 5,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Endless_Terror",
@@ -609,7 +679,9 @@
     "M.ATK": 4,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Source_Of_Suffering",
@@ -626,7 +698,9 @@
     "M.ATK": 3,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Dreamy_Belt",
@@ -643,7 +717,9 @@
     "M.ATK": 6,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Cursed_Spellbook",
@@ -660,7 +736,9 @@
     "M.ATK": 10,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Black_Heart",
@@ -677,7 +755,9 @@
     "M.ATK": 77,
     "IED": 30,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Total_Control",
@@ -694,7 +774,9 @@
     "M.ATK": 15,
     "IED": 30,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Genesis_Badge",
@@ -711,7 +793,9 @@
     "M.ATK": 10,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Mitra's_Rage",
@@ -728,7 +812,9 @@
     "M.ATK": 5,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.374,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Royal_Warrior_Hat",
@@ -745,7 +831,9 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "EagleEye_Warrior_Shirt",
@@ -762,7 +850,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Trixter_Warrior_Pants",
@@ -779,7 +869,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Absolab_Warrior_Shoes",
@@ -796,7 +888,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Absolab_Warrior_Gloves",
@@ -813,7 +907,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Absolab_Warrior_Cape",
@@ -830,7 +926,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Absolab_Warrior_Shoulder",
@@ -847,7 +945,9 @@
     "M.ATK": 10,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Arcane_Warrior_Hat",
@@ -864,7 +964,9 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Arcane_Warrior_Shoes",
@@ -881,7 +983,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Arcane_Warrior_Gloves",
@@ -898,7 +1002,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Arcane_Warrior_Cape",
@@ -915,7 +1021,9 @@
     "M.ATK": 6,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Arcane_Warrior_Shoulder",
@@ -932,7 +1040,9 @@
     "M.ATK": 20,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Eternal_Warrior_Hat",
@@ -949,7 +1059,9 @@
     "M.ATK": "",
     "IED": 15,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Eternal_Warrior_Shirt",
@@ -966,7 +1078,9 @@
     "M.ATK": "",
     "IED": 5,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Eternal_Warrior_Pants",
@@ -983,7 +1097,9 @@
     "M.ATK": "",
     "IED": 5,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Eternal_Warrior_Shoes",
@@ -1000,7 +1116,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Eternal_Warrior_Gloves",
@@ -1017,7 +1135,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Eternal_Warrior_Cape",
@@ -1034,7 +1154,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Eternal_Warrior_Shoulder",
@@ -1051,14 +1173,16 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.373,
+    "ADJ Std": 1.121732026
   },
   {
     "Item Name": "Fafnir_OH_Sword",
     "Job": "Warrior",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "One-Handed Sword",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -1068,14 +1192,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.24,
+    "ADJ Std": 1.033333333
   },
   {
     "Item Name": "Fafnir_TH_Sword",
     "Job": "Warrior",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Two-Handed Sword",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -1085,14 +1211,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
     "Item Name": "Fafnir_OH_Axe",
     "Job": "Warrior",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "One-Handed Axe",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -1102,14 +1230,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Fafnir_TH_Axe",
     "Job": "Warrior",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Two-Handed Axe",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -1119,14 +1249,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
-    "Item Name": "Fafnir_OH_Blunt_Wep",
+    "Item Name": "Fafnir_OH_Blunt_Weapon",
     "Job": "Warrior",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "One-Handed Blunt Weapon",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -1136,14 +1268,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Fafnir_TH_Blunt_Weapon",
     "Job": "Warrior",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Two-Handed Blunt Weapon",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -1153,14 +1287,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
     "Item Name": "Fafnir_Spear",
     "Job": "Warrior",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Spear",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -1170,14 +1306,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.49,
+    "ADJ Std": 1.241666667
   },
   {
     "Item Name": "Fafnir_Polearm",
     "Job": "Warrior",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Polearm",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -1187,14 +1325,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.49,
+    "ADJ Std": 1.241666667
   },
   {
     "Item Name": "Fafnir_Bladecaster",
     "Job": "Warrior",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Bladecaster",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -1204,14 +1344,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Fafnir_Katana",
     "Job": "Warrior",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Katana",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -1221,14 +1363,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.25,
+    "ADJ Std": 1.041666667
   },
   {
     "Item Name": "Fafnir_Arm_Cannon",
     "Job": "Warrior",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Arm Cannon",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -1238,14 +1382,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.7,
+    "ADJ Std": 1.416666667
   },
   {
     "Item Name": "Fafnir_Desperado",
     "Job": "Warrior",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Desperado",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": "",
@@ -1255,14 +1401,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Absolab_OH_Sword",
     "Job": "Warrior",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "One-Handed Sword",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -1272,14 +1420,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.24,
+    "ADJ Std": 1.033333333
   },
   {
     "Item Name": "Absolab_TH_Sword",
     "Job": "Warrior",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Two-Handed Sword",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -1289,14 +1439,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
     "Item Name": "Absolab_OH_Axe",
     "Job": "Warrior",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "One-Handed Axe",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -1306,14 +1458,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Absolab_TH_Axe",
     "Job": "Warrior",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Two-Handed Axe",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -1323,14 +1477,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
-    "Item Name": "Absolab_OH_Blunt_Wep",
+    "Item Name": "Absolab_OH_Blunt_Weapon",
     "Job": "Warrior",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "One-Handed Blunt Weapon",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -1340,14 +1496,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Absolab_TH_Blunt_Weapon",
     "Job": "Warrior",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Two-Handed Blunt Weapon",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -1357,14 +1515,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
     "Item Name": "Absolab_Spear",
     "Job": "Warrior",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Spear",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -1374,14 +1534,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.49,
+    "ADJ Std": 1.241666667
   },
   {
     "Item Name": "Absolab_Polearm",
     "Job": "Warrior",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Polearm",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -1391,14 +1553,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.49,
+    "ADJ Std": 1.241666667
   },
   {
     "Item Name": "Absolab_Bladecaster",
     "Job": "Warrior",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Bladecaster",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -1408,14 +1572,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Absolab_Katana",
     "Job": "Warrior",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Katana",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -1425,14 +1591,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.25,
+    "ADJ Std": 1.041666667
   },
   {
     "Item Name": "Absolab_Arm_Cannon",
     "Job": "Warrior",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Arm Cannon",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -1442,14 +1610,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.7,
+    "ADJ Std": 1.416666667
   },
   {
     "Item Name": "Absolab_Desperado",
     "Job": "Warrior",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Desperado",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": "",
@@ -1459,14 +1629,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Arcane_OH_Sword",
     "Job": "Warrior",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "One-Handed Sword",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -1476,14 +1648,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.24,
+    "ADJ Std": 1.033333333
   },
   {
     "Item Name": "Arcane_TH_Sword",
     "Job": "Warrior",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Two-Handed Sword",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -1493,14 +1667,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
     "Item Name": "Arcane_OH_Axe",
     "Job": "Warrior",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "One-Handed Axe",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -1510,14 +1686,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Arcane_TH_Axe",
     "Job": "Warrior",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Two-Handed Axe",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -1527,14 +1705,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
-    "Item Name": "Arcane_OH_Blunt_Wep",
+    "Item Name": "Arcane_OH_Blunt_Weapon",
     "Job": "Warrior",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "One-Handed Blunt Weapon",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -1544,14 +1724,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Arcane_TH_Blunt_Weapon",
     "Job": "Warrior",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Two-Handed Blunt Weapon",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -1561,14 +1743,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
     "Item Name": "Arcane_Spear",
     "Job": "Warrior",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Spear",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -1578,14 +1762,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.49,
+    "ADJ Std": 1.241666667
   },
   {
     "Item Name": "Arcane_Polearm",
     "Job": "Warrior",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Polearm",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -1595,14 +1781,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.49,
+    "ADJ Std": 1.241666667
   },
   {
     "Item Name": "Arcane_Bladecaster",
     "Job": "Warrior",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Bladecaster",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -1612,14 +1800,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Arcane_Katana",
     "Job": "Warrior",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Katana",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -1629,14 +1819,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.25,
+    "ADJ Std": 1.041666667
   },
   {
     "Item Name": "Arcane_Arm_Cannon",
     "Job": "Warrior",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Arm Cannon",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -1646,14 +1838,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.7,
+    "ADJ Std": 1.416666667
   },
   {
     "Item Name": "Arcane_Desperado",
     "Job": "Warrior",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Desperado",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": "",
@@ -1663,14 +1857,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Genesis_OH_Sword",
     "Job": "Warrior",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "One-Handed Sword",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -1680,14 +1876,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.24,
+    "ADJ Std": 1.033333333
   },
   {
     "Item Name": "Genesis_TH_Sword",
     "Job": "Warrior",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Two-Handed Sword",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -1697,14 +1895,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
     "Item Name": "Genesis_OH_Axe",
     "Job": "Warrior",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "One-Handed Axe",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -1714,14 +1914,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Genesis_TH_Axe",
     "Job": "Warrior",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Two-Handed Axe",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -1731,14 +1933,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
-    "Item Name": "Genesis_OH_Blunt_Wep",
+    "Item Name": "Genesis_OH_Blunt_Weapon",
     "Job": "Warrior",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "One-Handed Blunt Weapon",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -1748,14 +1952,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Genesis_TH_Blunt_Weapon",
     "Job": "Warrior",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Two-Handed Blunt Weapon",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -1765,14 +1971,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
     "Item Name": "Genesis_Spear",
     "Job": "Warrior",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Spear",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -1782,14 +1990,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.49,
+    "ADJ Std": 1.241666667
   },
   {
     "Item Name": "Genesis_Polearm",
     "Job": "Warrior",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Polearm",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -1799,14 +2009,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.49,
+    "ADJ Std": 1.241666667
   },
   {
     "Item Name": "Genesis_Bladecaster",
     "Job": "Warrior",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Bladecaster",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -1816,14 +2028,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Genesis_Katana",
     "Job": "Warrior",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Katana",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -1833,14 +2047,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.25,
+    "ADJ Std": 1.041666667
   },
   {
     "Item Name": "Genesis_Arm_Cannon",
     "Job": "Warrior",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Arm Cannon",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -1850,14 +2066,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.7,
+    "ADJ Std": 1.416666667
   },
   {
     "Item Name": "Genesis_Desperado",
     "Job": "Warrior",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Desperado",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": "",
@@ -1867,7 +2085,9 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Royal_Dunwitch_Hat",
@@ -1884,7 +2104,9 @@
     "M.ATK": 2,
     "IED": 10,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "EagleEye_Dunwitch_Shirt",
@@ -1901,7 +2123,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Trixter_Dunwitch_Pants",
@@ -1918,7 +2142,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Absolab_Mage_Shoes",
@@ -1935,7 +2161,9 @@
     "M.ATK": 5,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Absolab_Mage_Gloves",
@@ -1952,7 +2180,9 @@
     "M.ATK": 5,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Absolab_Mage_Cape",
@@ -1969,7 +2199,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Absolab_Mage_Shoulder",
@@ -1986,7 +2218,9 @@
     "M.ATK": 10,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Arcane_Mage_Hat",
@@ -2003,7 +2237,9 @@
     "M.ATK": 3,
     "IED": 10,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Arcane_Mage_Shoes",
@@ -2020,7 +2256,9 @@
     "M.ATK": 9,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Arcane_Mage_Gloves",
@@ -2037,7 +2275,9 @@
     "M.ATK": 9,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Arcane_Mage_Cape",
@@ -2054,7 +2294,9 @@
     "M.ATK": 6,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Arcane_Mage_Shoulder",
@@ -2071,7 +2313,9 @@
     "M.ATK": 20,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Eternal_Mage_Hat",
@@ -2088,7 +2332,9 @@
     "M.ATK": 10,
     "IED": 15,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Eternal_Mage_Shirt",
@@ -2105,7 +2351,9 @@
     "M.ATK": 6,
     "IED": 5,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Eternal_Mage_Pants",
@@ -2122,7 +2370,9 @@
     "M.ATK": 6,
     "IED": 5,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Eternal_Mage_Shoes",
@@ -2139,7 +2389,9 @@
     "M.ATK": 12,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Eternal_Mage_Gloves",
@@ -2156,7 +2408,9 @@
     "M.ATK": 12,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Eternal_Mage_Cape",
@@ -2173,7 +2427,9 @@
     "M.ATK": 9,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Eternal_Mage_Shoulder",
@@ -2190,14 +2446,16 @@
     "M.ATK": 28,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.224,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Fafnir_Wand",
     "Job": "Mage",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Wand",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -2207,14 +2465,16 @@
     "M.ATK": 201,
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Fafnir_Staff",
     "Job": "Mage",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Staff",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -2224,14 +2484,16 @@
     "M.ATK": 204,
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Fafnir_Shining_Rod",
     "Job": "Mage",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Shining Rod",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -2241,14 +2503,16 @@
     "M.ATK": 201,
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Fafnir_Psy-Limiter",
     "Job": "Mage",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Psy-Limiter",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -2258,14 +2522,16 @@
     "M.ATK": 201,
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Fafnir_Fan",
     "Job": "Mage",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Fan",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -2275,14 +2541,16 @@
     "M.ATK": 204,
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.35,
+    "ADJ Std": 1.125
   },
   {
     "Item Name": "Fafnir_Lucent_Gauntlet",
     "Job": "Mage",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Lucent Gauntlet",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -2292,14 +2560,16 @@
     "M.ATK": 201,
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Fafnir_Memorial_Staff",
     "Job": "Mage",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon", 
+    "Sub-Type": "Memorial Staff",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -2309,14 +2579,16 @@
     "M.ATK": 201,
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
     "Item Name": "Absolab_Wand",
     "Job": "Mage",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Wand",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -2326,14 +2598,16 @@
     "M.ATK": 241,
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Absolab_Staff",
     "Job": "Mage",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Staff",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -2343,14 +2617,16 @@
     "M.ATK": 245,
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Absolab_Shining_Rod",
     "Job": "Mage",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Shining Rod",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -2360,14 +2636,16 @@
     "M.ATK": 241,
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Absolab_Psy-Limiter",
     "Job": "Mage",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Psy-Limiter",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -2377,14 +2655,16 @@
     "M.ATK": 241,
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Absolab_Fan",
     "Job": "Mage",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Fan",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -2394,14 +2674,16 @@
     "M.ATK": 241,
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.35,
+    "ADJ Std": 1.125
   },
   {
     "Item Name": "Absolab_Lucent_Gauntlet",
     "Job": "Mage",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Lucent Gauntlet",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -2411,14 +2693,16 @@
     "M.ATK": 241,
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Absolab_Memorial_Staff",
     "Job": "Mage",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Memorial Staff",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -2428,14 +2712,16 @@
     "M.ATK": 241,
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
     "Item Name": "Arcane_Wand",
     "Job": "Mage",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Wand",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -2445,14 +2731,16 @@
     "M.ATK": 347,
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Arcane_Staff",
     "Job": "Mage",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Staff",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -2462,14 +2750,16 @@
     "M.ATK": 353,
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Arcane_Shining_Rod",
     "Job": "Mage",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Shining Rod",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -2479,14 +2769,16 @@
     "M.ATK": 347,
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Arcane_Psy-Limiter",
     "Job": "Mage",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Psy-Limiter",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -2496,14 +2788,16 @@
     "M.ATK": 347,
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Arcane_Fan",
     "Job": "Mage",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Fan",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -2513,14 +2807,16 @@
     "M.ATK": 347,
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.35,
+    "ADJ Std": 1.125
   },
   {
     "Item Name": "Arcane_Lucent_Gauntlet",
     "Job": "Mage",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Lucent Gauntlet",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -2530,14 +2826,16 @@
     "M.ATK": 347,
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Arcane_Memorial_Staff",
     "Job": "Mage",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Memorial Staff",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -2547,14 +2845,16 @@
     "M.ATK": 347,
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
     "Item Name": "Genesis_Wand",
     "Job": "Mage",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Wand",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -2564,14 +2864,16 @@
     "M.ATK": 400,
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Genesis_Staff",
     "Job": "Mage",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Staff",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -2581,14 +2883,16 @@
     "M.ATK": 406,
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Genesis_Shining_Rod",
     "Job": "Mage",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Shining Rod",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -2598,14 +2902,16 @@
     "M.ATK": 400,
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Genesis_Psy-Limiter",
     "Job": "Mage",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Psy-Limiter",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -2615,14 +2921,16 @@
     "M.ATK": 400,
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Genesis_Fan",
     "Job": "Mage",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Fan",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -2632,14 +2940,16 @@
     "M.ATK": 400,
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.35,
+    "ADJ Std": 1.125
   },
   {
     "Item Name": "Genesis_Lucent_Gauntlet",
     "Job": "Mage",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Lucent Gauntlet",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -2649,14 +2959,16 @@
     "M.ATK": 400,
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.2,
+    "ADJ Std": 1
   },
   {
     "Item Name": "Genesis_Memorial_Staff",
     "Job": "Mage",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Memorial Staff",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -2666,7 +2978,9 @@
     "M.ATK": 400,
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.34,
+    "ADJ Std": 1.116666667
   },
   {
     "Item Name": "Royal_Ranger_Hat",
@@ -2683,7 +2997,9 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "EagleEye_Ranger_Shirt",
@@ -2700,7 +3016,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Trixter_Ranger_Pants",
@@ -2717,7 +3035,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Absolab_Bowman_Shoes",
@@ -2734,7 +3054,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Absolab_Bowman_Gloves",
@@ -2751,7 +3073,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Absolab_Bowman_Cape",
@@ -2768,7 +3092,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Absolab_Bowman_Shoulder",
@@ -2785,7 +3111,9 @@
     "M.ATK": 10,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Arcane_Bowman_Hat",
@@ -2802,7 +3130,9 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Arcane_Bowman_Shoes",
@@ -2819,7 +3149,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Arcane_Bowman_Gloves",
@@ -2836,7 +3168,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Arcane_Bowman_Cape",
@@ -2853,7 +3187,9 @@
     "M.ATK": 6,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Arcane_Bowman_Shoulder",
@@ -2870,7 +3206,9 @@
     "M.ATK": 20,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Eternal_Bowman_Hat",
@@ -2887,7 +3225,9 @@
     "M.ATK": "",
     "IED": 15,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Eternal_Bowman_Shirt",
@@ -2904,7 +3244,9 @@
     "M.ATK": "",
     "IED": 5,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Eternal_Bowman_Pants",
@@ -2921,7 +3263,9 @@
     "M.ATK": "",
     "IED": 5,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Eternal_Bowman_Shoes",
@@ -2938,7 +3282,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Eternal_Bowman_Gloves",
@@ -2955,7 +3301,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Eternal_Bowman_Cape",
@@ -2972,7 +3320,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Eternal_Bowman_Shoulder",
@@ -2989,14 +3339,16 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.314,
+    "ADJ Std": 1.073529412
   },
   {
     "Item Name": "Fafnir_Bow",
     "Job": "Bowman",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Bow",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -3006,14 +3358,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Fafnir_Crossbow",
     "Job": "Bowman",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Crossbow",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -3023,14 +3377,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.35,
+    "ADJ Std": 1.125
   },
   {
     "Item Name": "Fafnir_Dual_Bowguns",
     "Job": "Bowman",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Dual Bowguns",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -3040,14 +3396,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Fafnir_Whispershot",
     "Job": "Bowman",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Whispershot",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -3057,14 +3415,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Fafnir_Ancient_Bow",
     "Job": "Bowman",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Ancient Bow",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -3074,14 +3434,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Absolab_Bow",
     "Job": "Bowman",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Bow",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -3091,14 +3453,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Absolab_Crossbow",
     "Job": "Bowman",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Crossbow",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -3108,14 +3472,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.35,
+    "ADJ Std": 1.125
   },
   {
     "Item Name": "Absolab_Dual_Bowguns",
     "Job": "Bowman",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Dual Bowguns",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -3125,14 +3491,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Absolab_Whispershot",
     "Job": "Bowman",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Whispershot",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -3142,14 +3510,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Absolab_Ancient_Bow",
     "Job": "Bowman",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Ancient Bow",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -3159,14 +3529,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Arcane_Bow",
     "Job": "Bowman",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Bow",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -3176,14 +3548,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Arcane_Crossbow",
     "Job": "Bowman",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Crossbow",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -3193,14 +3567,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.35,
+    "ADJ Std": 1.125
   },
   {
     "Item Name": "Arcane_Dual_Bowguns",
     "Job": "Bowman",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Dual Bowguns",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -3210,14 +3586,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Arcane_Whispershot",
     "Job": "Bowman",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Whispershot",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -3227,14 +3605,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Arcane_Ancient_Bow",
     "Job": "Bowman",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Ancient Bow",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -3244,14 +3624,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Genesis_Bow",
     "Job": "Bowman",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Bow",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -3261,14 +3643,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Genesis_Crossbow",
     "Job": "Bowman",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Crossbow",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -3278,14 +3662,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.35,
+    "ADJ Std": 1.125
   },
   {
     "Item Name": "Genesis_Dual_Bowguns",
     "Job": "Bowman",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Dual Bowguns",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -3295,14 +3681,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Genesis_Whispershot",
     "Job": "Bowman",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Whispershot",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -3312,14 +3700,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Genesis_Ancient_Bow",
     "Job": "Bowman",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Ancient Bow",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -3329,7 +3719,9 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Royal_Assassin_Hat",
@@ -3346,7 +3738,9 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "EagleEye_Assassin_Shirt",
@@ -3363,7 +3757,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Trixter_Assassin_Pants",
@@ -3380,7 +3776,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Absolab_Thief_Shoes",
@@ -3397,7 +3795,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Absolab_Thief_Gloves",
@@ -3414,7 +3814,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Absolab_Thief_Cape",
@@ -3431,7 +3833,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Absolab_Thief_Shoulder",
@@ -3448,7 +3852,9 @@
     "M.ATK": 10,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Arcane_Thief_Hat",
@@ -3465,7 +3871,9 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Arcane_Thief_Shoes",
@@ -3482,7 +3890,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Arcane_Thief_Gloves",
@@ -3499,7 +3909,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Arcane_Thief_Cape",
@@ -3516,7 +3928,9 @@
     "M.ATK": 6,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Arcane_Thief_Shoulder",
@@ -3533,7 +3947,9 @@
     "M.ATK": 20,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Eternal_Thief_Hat",
@@ -3550,7 +3966,9 @@
     "M.ATK": "",
     "IED": 15,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Eternal_Thief_Shirt",
@@ -3567,7 +3985,9 @@
     "M.ATK": "",
     "IED": 5,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Eternal_Thief_Pants",
@@ -3584,7 +4004,9 @@
     "M.ATK": "",
     "IED": 5,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Eternal_Thief_Shoes",
@@ -3601,7 +4023,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Eternal_Thief_Gloves",
@@ -3618,7 +4042,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Eternal_Thief_Cape",
@@ -3635,7 +4061,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Eternal_Thief_Shoulder",
@@ -3652,14 +4080,16 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.401,
+    "ADJ Std": 1.144607843
   },
   {
     "Item Name": "Fafnir_Dagger",
     "Job": "Thief",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Dagger",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -3669,14 +4099,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Fafnir_Claw",
     "Job": "Thief",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Claw",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -3686,14 +4118,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.75,
+    "ADJ Std": 1.458333333
   },
   {
     "Item Name": "Fafnir_Cane",
     "Job": "Thief",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Cane",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -3703,14 +4137,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Fafnir_Chakram",
     "Job": "Thief",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Chakram",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -3720,14 +4156,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Fafnir_Whipblade",
     "Job": "Thief",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Whipblade",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -3737,14 +4175,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3125,
+    "ADJ Std": 1.09375
   },
   {
     "Item Name": "Fafnir_Chain",
     "Job": "Thief",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Chain",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -3754,14 +4194,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Fafnir_Ritual_Fan",
     "Job": "Thief",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Ritual Fan",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -3771,14 +4213,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Absolab_Dagger",
     "Job": "Thief",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Dagger",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -3788,14 +4232,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Absolab_Claw",
     "Job": "Thief",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Claw",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -3805,14 +4251,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.75,
+    "ADJ Std": 1.458333333
   },
   {
     "Item Name": "Absolab_Cane",
     "Job": "Thief",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Cane",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -3822,14 +4270,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Absolab_Chakram",
     "Job": "Thief",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Chakram",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -3839,14 +4289,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Absolab_Whipblade",
     "Job": "Thief",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Whipblade",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -3856,14 +4308,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3125,
+    "ADJ Std": 1.09375
   },
   {
     "Item Name": "Absolab_Chain",
     "Job": "Thief",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Chain",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -3873,14 +4327,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Absolab_Ritual_Fan",
     "Job": "Thief",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Ritual Fan",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -3890,14 +4346,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Arcane_Dagger",
     "Job": "Thief",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Dagger",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -3907,14 +4365,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Arcane_Claw",
     "Job": "Thief",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Claw",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -3924,14 +4384,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.75,
+    "ADJ Std": 1.458333333
   },
   {
     "Item Name": "Arcane_Cane",
     "Job": "Thief",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Cane",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -3941,14 +4403,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Arcane_Chakram",
     "Job": "Thief",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Chakram",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -3958,14 +4422,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Arcane_Whipblade",
     "Job": "Thief",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Whipblade",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -3975,14 +4441,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3125,
+    "ADJ Std": 1.09375
   },
   {
     "Item Name": "Arcane_Chain",
     "Job": "Thief",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Chain",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -3992,14 +4460,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Arcane_Ritual_Fan",
     "Job": "Thief",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Ritual Fan",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -4009,14 +4479,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Genesis_Dagger",
     "Job": "Thief",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Dagger",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -4026,14 +4498,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Genesis_Claw",
     "Job": "Thief",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Claw",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -4043,14 +4517,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.75,
+    "ADJ Std": 1.458333333
   },
   {
     "Item Name": "Genesis_Cane",
     "Job": "Thief",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Cane",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -4060,14 +4536,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Genesis_Chakram",
     "Job": "Thief",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Chakram",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -4077,14 +4555,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Genesis_Whipblade",
     "Job": "Thief",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Whipblade",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -4094,14 +4574,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3125,
+    "ADJ Std": 1.09375
   },
   {
     "Item Name": "Genesis_Chain",
     "Job": "Thief",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Chain",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -4111,14 +4593,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Genesis_Ritual_Fan",
     "Job": "Thief",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Ritual Fan",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -4128,7 +4612,9 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.3,
+    "ADJ Std": 1.083333333
   },
   {
     "Item Name": "Royal_Wanderer_Hat",
@@ -4145,7 +4631,9 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "EagleEye_Wanderer_Shirt",
@@ -4162,7 +4650,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Trixter_Wanderer_Pants",
@@ -4179,7 +4669,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Absolab_Pirate_Shoes",
@@ -4196,7 +4688,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Absolab_Pirate_Gloves",
@@ -4213,7 +4707,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Absolab_Pirate_Cape",
@@ -4230,7 +4726,9 @@
     "M.ATK": 2,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Absolab_Pirate_Shoulder",
@@ -4247,7 +4745,9 @@
     "M.ATK": 10,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Arcane_Pirate_Hat",
@@ -4264,7 +4764,9 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Arcane_Pirate_Shoes",
@@ -4281,7 +4783,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Arcane_Pirate_Gloves",
@@ -4298,7 +4802,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Arcane_Pirate_Cape",
@@ -4315,7 +4821,9 @@
     "M.ATK": 6,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Arcane_Pirate_Shoulder",
@@ -4332,7 +4840,9 @@
     "M.ATK": 20,
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Eternal_Pirate_Hat",
@@ -4349,7 +4859,9 @@
     "M.ATK": "",
     "IED": 15,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Eternal_Pirate_Shirt",
@@ -4366,7 +4878,9 @@
     "M.ATK": "",
     "IED": 5,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Eternal_Pirate_Pants",
@@ -4383,7 +4897,9 @@
     "M.ATK": "",
     "IED": 5,
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Eternal_Pirate_Shoes",
@@ -4400,7 +4916,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Eternal_Pirate_Gloves",
@@ -4417,7 +4935,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Eternal_Pirate_Cape",
@@ -4434,7 +4954,9 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Eternal_Pirate_Shoulder",
@@ -4451,14 +4973,16 @@
     "M.ATK": "",
     "IED": "",
     "Boss Damage": "",
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.625,
+    "ADJ Std": 1.327614379
   },
   {
     "Item Name": "Fafnir_Knuckle",
     "Job": "Pirate",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Knuckle",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -4468,14 +4992,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.7,
+    "ADJ Std": 1.416666667
   },
   {
     "Item Name": "Fafnir_Gun",
     "Job": "Pirate",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Gun",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -4485,14 +5011,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.5,
+    "ADJ Std": 1.25
   },
   {
     "Item Name": "Fafnir_Hand_Cannon",
     "Job": "Pirate",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Hand Cannon",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -4502,14 +5030,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.5,
+    "ADJ Std": 1.25
   },
   {
     "Item Name": "Fafnir_Soul_Shooter",
     "Job": "Pirate",
     "Set": "CRA",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Soul Shooter",
     "Level": 150,
     "Main Stat": 40,
     "Sub Stat": 40,
@@ -4519,14 +5049,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.7,
+    "ADJ Std": 1.416666667
   },
   {
     "Item Name": "Absolab_Knuckle",
     "Job": "Pirate",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Knuckle",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -4536,14 +5068,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.7,
+    "ADJ Std": 1.416666667
   },
   {
     "Item Name": "Absolab_Gun",
     "Job": "Pirate",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Gun",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -4553,14 +5087,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.5,
+    "ADJ Std": 1.25
   },
   {
     "Item Name": "Absolab_Hand_Cannon",
     "Job": "Pirate",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Hand Cannon",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -4570,14 +5106,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.5,
+    "ADJ Std": 1.25
   },
   {
     "Item Name": "Absolab_Soul_Shooter",
     "Job": "Pirate",
     "Set": "Absolab",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Soul Shooter",
     "Level": 160,
     "Main Stat": 60,
     "Sub Stat": 60,
@@ -4587,14 +5125,16 @@
     "M.ATK": "",
     "IED": 10,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.7,
+    "ADJ Std": 1.416666667
   },
   {
     "Item Name": "Arcane_Knuckle",
     "Job": "Pirate",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Knuckle",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -4604,14 +5144,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.7,
+    "ADJ Std": 1.416666667
   },
   {
     "Item Name": "Arcane_Gun",
     "Job": "Pirate",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Gun",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -4621,14 +5163,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.5,
+    "ADJ Std": 1.25
   },
   {
     "Item Name": "Arcane_Hand_Cannon",
     "Job": "Pirate",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Hand Cannon",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -4638,14 +5182,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.5,
+    "ADJ Std": 1.25
   },
   {
     "Item Name": "Arcane_Soul_Shooter",
     "Job": "Pirate",
     "Set": "Arcane",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Soul Shooter",
     "Level": 200,
     "Main Stat": 100,
     "Sub Stat": 100,
@@ -4655,14 +5201,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.7,
+    "ADJ Std": 1.416666667
   },
   {
     "Item Name": "Genesis_Knuckle",
     "Job": "Pirate",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Knuckle",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -4672,14 +5220,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.7,
+    "ADJ Std": 1.416666667
   },
   {
     "Item Name": "Genesis_Gun",
     "Job": "Pirate",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Gun",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -4689,14 +5239,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.5,
+    "ADJ Std": 1.25
   },
   {
     "Item Name": "Genesis_Hand_Cannon",
     "Job": "Pirate",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Hand Cannon",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -4706,14 +5258,16 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.5,
+    "ADJ Std": 1.25
   },
   {
     "Item Name": "Genesis_Soul_Shooter",
     "Job": "Pirate",
-    "Set": "Eternal",
+    "Set": "Genesis",
     "Type": "Weapon",
-    "Sub-Type": "Weapon",
+    "Sub-Type": "Soul Shooter",
     "Level": 200,
     "Main Stat": 150,
     "Sub Stat": 150,
@@ -4723,6 +5277,8 @@
     "M.ATK": "",
     "IED": 20,
     "Boss Damage": 30,
-    "Damage": ""
+    "Damage": "",
+    "ADJ Multiplier": 1.7,
+    "ADJ Std": 1.416666667
   }
 ]

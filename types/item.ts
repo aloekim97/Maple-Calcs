@@ -14,4 +14,5 @@ export interface Item {
   IED: number | string;
   "Boss Damage": string;
   DAMAGE: string;
+  "ADJ Std": number;
 }

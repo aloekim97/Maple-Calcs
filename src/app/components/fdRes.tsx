@@ -89,6 +89,7 @@ export default function FdRes({
     const subStatBase = toNumber(selectedGear['Sub Stat']);
     const attackStat = selectedGear.ATK === '' ? selectedGear['M.ATK'] : selectedGear.ATK;
     const atkBase = toNumber(attackStat);
+    const bossdamageBase = toNumber(selectedGear['Boss Damage'])
 
     // Starforce bonuses
     const statBonus = sfResults?.difference.stat || 0;
@@ -98,11 +99,25 @@ export default function FdRes({
     const mainStatTotal = mainStatBase + statBonus;
     const subStatTotal = subStatBase + statBonus;  // Assuming same bonus for sub stat
     const atkTotal = atkBase + attBonus;
-
-    // FD calculations
-    return (mainStatTotal / MULTIPLIERS.MAINSTAT) +
-           (subStatTotal / MULTIPLIERS.SUBSTAT) +
-           (atkTotal / MULTIPLIERS.ATK);
+    
+    if (selectedGear.Set === "Genesis") {
+      // Genesis calculations
+      return ((
+        mainStatTotal / MULTIPLIERS.MAINSTAT +
+        subStatTotal  / MULTIPLIERS.SUBSTAT +
+        (atkTotal     / MULTIPLIERS.ATK) * toNumber(selectedGear["ADJ Std"]) +
+        bossdamageBase / MULTIPLIERS.BOSS_DAMAGE
+      ) + 10
+      );
+    } else {
+      // FD calculations
+      return (
+        mainStatTotal / MULTIPLIERS.MAINSTAT +
+        subStatTotal  / MULTIPLIERS.SUBSTAT +
+        (atkTotal     / MULTIPLIERS.ATK) * toNumber(selectedGear["ADJ Std"])+
+        bossdamageBase / MULTIPLIERS.BOSS_DAMAGE
+      );
+    }
   }, [selectedGear, sfResults]);
 
   const calculatePotFD = useCallback(() => {

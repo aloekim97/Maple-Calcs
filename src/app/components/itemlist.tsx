@@ -151,8 +151,9 @@ const ItemsPage = ({ setSelectedGear, setNumber, setSetNumber }: ItemsPageProps)
           <Input
             type="number"
             placeholder="Set#"
-            value={setNumber}  // Use prop value
+            value={setNumber} 
             onChange={changeNum}
+            min={1}
           />
         </div>
       </div>
