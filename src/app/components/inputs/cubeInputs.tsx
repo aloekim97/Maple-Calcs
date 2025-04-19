@@ -29,7 +29,11 @@ export interface CubeHandle {
   calculate: () => { error?: string; success?: boolean };
 }
 
-export default function Cube({ selectedGear, setCubeResults }: CubeProps) {
+export default function Cube({
+  selectedGear,
+  setCubeResults,
+  setPotLines,
+}: CubeProps) {
   const [inputs, setInputs] = useState({
     itemType: selectedGear?.Type || '',
     startingTier: 'rare',
@@ -39,23 +43,6 @@ export default function Cube({ selectedGear, setCubeResults }: CubeProps) {
   });
 
   // Load saved potlines from localStorage
-  const [lines, setLines] = useState({
-    line1: '',
-    line2: '',
-    line3: '',
-  });
-
-  const [events, setEvents] = useState({
-    canCube: true,
-  });
-
-  // Save potlines to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem('potLine1', lines.line1);
-    localStorage.setItem('potLine2', lines.line2);
-    localStorage.setItem('potLine3', lines.line3);
-  }, [lines.line1, lines.line2, lines.line3]);
-
   const lineOptions = useMemo(() => {
     if (!inputs.itemType || !inputs.itemLevel)
       return { line1: {}, line2: {}, line3: {} };
@@ -67,6 +54,24 @@ export default function Cube({ selectedGear, setCubeResults }: CubeProps) {
     };
   }, [inputs.itemType, inputs.itemLevel]);
 
+  const [lines, setLines] = useState({
+    line1: '',
+    line2: '',
+    line3: '',
+  });
+
+  const handleLineChange = (line: keyof typeof lines, value: string) => {
+    setLines((prev) => ({ ...prev, [line]: value }));
+    setPotLines((prev) => ({ ...prev, [line]: value }))
+  };
+
+  // Save potlines to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('potLine1', lines.line1);
+    localStorage.setItem('potLine2', lines.line2);
+    localStorage.setItem('potLine3', lines.line3);
+  }, [lines.line1, lines.line2, lines.line3]);
+
   useEffect(() => {
     if (selectedGear) {
       setInputs((prev) => ({
@@ -74,15 +79,12 @@ export default function Cube({ selectedGear, setCubeResults }: CubeProps) {
         itemType: selectedGear.Type,
         itemLevel: selectedGear.Level,
       }));
-      localStorage.setItem('potLine1', 'any');
-      localStorage.setItem('potLine2', 'any');
-      localStorage.setItem('potLine3', 'any');
     }
   }, [selectedGear]);
 
-  const handleLineChange = (line: keyof typeof lines, value: string) => {
-    setLines((prev) => ({ ...prev, [line]: value }));
-  };
+  const [events, setEvents] = useState({
+    canCube: true,
+  });
 
   const handleEventToggle = (eventName: keyof typeof events) => {
     setEvents((prev) => ({
@@ -229,7 +231,7 @@ export default function Cube({ selectedGear, setCubeResults }: CubeProps) {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Primary Line Options</SelectLabel>
-                <SelectItem value={'any: 1'}>Any</SelectItem>
+                <SelectItem value={'{"any": 1}'}>Any</SelectItem>
                 {Object.entries(lineOptions.line1).map(([label, value]) => (
                   <SelectItem key={label} value={JSON.stringify(value)}>
                     {label}
@@ -253,7 +255,7 @@ export default function Cube({ selectedGear, setCubeResults }: CubeProps) {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Secondary Line Options</SelectLabel>
-                <SelectItem value={'any: 1'}>Any</SelectItem>
+                <SelectItem value={'{"any": 1}'}>Any</SelectItem>
                 {Object.entries(lineOptions.line2).map(([label, value]) => (
                   <SelectItem key={label} value={JSON.stringify(value)}>
                     {label}
@@ -278,7 +280,7 @@ export default function Cube({ selectedGear, setCubeResults }: CubeProps) {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Secondary Line Options</SelectLabel>
-                <SelectItem value={'any: 1'}>Any</SelectItem>
+                <SelectItem value={'{"any": 1}'}>Any</SelectItem>
                 {Object.entries(lineOptions.line3).map(([label, value]) => (
                   <SelectItem key={label} value={JSON.stringify(value)}>
                     {label}

@@ -38,7 +38,7 @@ const ItemsPage = ({
   const changeNum = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     // Update parent state directly
-    setSetNumber(value || ''); // Default to '2' if empty
+    setSetNumber(value || '1'); // Default to '2' if empty
   };
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value.toLowerCase());

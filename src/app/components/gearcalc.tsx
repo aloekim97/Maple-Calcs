@@ -31,6 +31,11 @@ export interface Lines {
   second: string;
   third: string;
 }
+export interface potLines {
+  line1: string;
+  line2: string;
+  line3: string;
+}
 // const getMaxStars = (level: number): number => {
 //   if (level >= 138) return 30;
 //   else if (level >= 128) return 20;
@@ -51,6 +56,7 @@ export default function GearCalculator() {
   } | null>(null);
   const [setNumber, setSetNumber] = useState<string>('');
   const [setStats, setSetStats] = useState<SetData | null>(null);
+  console.log(potLines)
 
   // Load all saved data from localStorage on component mount
   useEffect(() => {

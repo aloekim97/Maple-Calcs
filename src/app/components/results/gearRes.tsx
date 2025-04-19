@@ -62,17 +62,14 @@ export default function GearRes({
   setNumber,
   setStats,
 }: GearProps) {
-  const [endStar, setEndStar] = useState<string>('');
-  const [lines, setLines] = useState({
-    line1: localStorage.getItem('potLine1') || '',
-    line2: localStorage.getItem('potLine2') || '',
-    line3: localStorage.getItem('potLine3') || '',
-  });
-  const [potValues, setPotValues] = useState<PotValues>({
+  const [endStar, setEndStar] = useState(null);
+
+  const [potValues, setPotValues] = useState({
     first: { value: 0, stat: '' },
     second: { value: 0, stat: '' },
     third: { value: 0, stat: '' },
   });
+
 
   useEffect(() => {
     const savedEndStar = localStorage.getItem('endStar');
@@ -294,7 +291,6 @@ export default function GearRes({
               <div className="flex flex-col w-full gap-[4px]">
                 <div className="flex gap-[4px]">
                   <h5 className="opacity-60">Set</h5>
-                  <h5 className="opacity-60">(1)</h5>
                 </div>
                 <div className="flex gap-[4px]">
                   <h5 className="opacity-80">{`Input a valid value for "Set Number" to see the respective set bonuses.`}</h5>
