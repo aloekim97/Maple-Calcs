@@ -43,6 +43,7 @@ export default function GearCalculator() {
   const [cubeResults, setCubeResults] = useState<PotCalcResult | null>(null);
   const [sfResults, setSfResults] = useState<StarForceResults | null>(null);
   const [setNumber, setSetNumber] = useState<string>('');
+  const [weeklyIncome, setWeeklyIncome] = useState<string>('');
   const [setStats, setSetStats] = useState<SetData | null>(null);
 
   const currentSfStats = useMemo(() => {
@@ -114,6 +115,12 @@ export default function GearCalculator() {
   }, [setNumber]);
 
   useEffect(() => {
+    if (weeklyIncome) {
+      localStorage.setItem('weeklyIncome', weeklyIncome);
+    }
+  }, [weeklyIncome]);
+
+  useEffect(() => {
     if (selectedGear && endStar) {
       const starNum = Number(endStar);
       if (!isNaN(starNum)) {
@@ -176,16 +183,18 @@ export default function GearCalculator() {
   );
 
   return (
-    <div className="flex flex-col w-[1440px] max-h-[800px] py-4 px-16 gap-4">
-      <Header />
+    <div className="flex flex-col w-[1440px] max-h-[screen] py-4 px-16 gap-4">
+      <Header/>
 
       <div className="flex w-full gap-8">
-        <div className="flex flex-col w-full gap-8">
+        <div className="flex grow flex-col w-full gap-8">
           <ItemsContainer>
             <ItemsPage
               setSelectedGear={handleGearChange}
               setNumber={setNumber}
               setSetNumber={setSetNumber}
+              setWeeklyIncome={setWeeklyIncome}
+              weeklyIncome={weeklyIncome}
             />
           </ItemsContainer>
 
@@ -217,6 +226,7 @@ export default function GearCalculator() {
           setStats={setStats}
           cubeResults={cubeResults}
           currentSfStats={currentSfStats}
+          weeklyIncome={weeklyIncome}
         />
       </div>
     </div>
@@ -251,7 +261,7 @@ const NavLink = ({ href, label }: { href: string; label: string }) => (
 );
 
 const ItemsContainer = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex w-full overflow-hidden h-[280px] bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)]">
+  <div className="flex grow w-full overflow-hidden h-[280px] bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)]">
     {children}
   </div>
 );
@@ -273,6 +283,7 @@ interface ResultsPanelProps {
   setStats: SetData | null;
   cubeResults: PotCalcResult | null;
   currentSfStats: SFStats | null;
+  weeklyIncome: string | null;
 }
 
 const ResultsPanel = ({
@@ -284,6 +295,7 @@ const ResultsPanel = ({
   setStats,
   cubeResults,
   currentSfStats,
+  weeklyIncome,
 }: ResultsPanelProps) => (
   <div className="flex flex-col w-full bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] p-4 gap-4">
     <GearResultsContainer selectedGear={selectedGear}>
@@ -308,7 +320,7 @@ const ResultsPanel = ({
     </div>
 
     <div className="flex w-full gap-4">
-      <TotalCost cubeRes={cubeResults} sfResults={sfResults} />
+      <TotalCost cubeRes={cubeResults} sfResults={sfResults} weeklyIncome={weeklyIncome} />
     </div>
 
     <FdRes

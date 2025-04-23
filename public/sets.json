@@ -278,5 +278,17 @@
     "Set": "Genesis",
     "Set Count": 1,
     "Final Damage": 10
+  },
+  {
+    "Set": "Ruin Force Shield",
+    "Set Count": 1,
+    "Final Damage": 10,
+    "Damage Taken": 25,
+    "Max DF": 100
+  },
+  {
+    "Set": "Seven Days",
+    "Set Count": 2,
+    "IED": 10
   }
 ]

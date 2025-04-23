@@ -20,11 +20,14 @@ interface ItemsPageProps {
   setSelectedGear: Dispatch<SetStateAction<Item | null>>;
   setNumber: string;
   setSetNumber: Dispatch<SetStateAction<string>>;
+  setWeeklyIncome: Dispatch<SetStateAction<string>>;
+  weeklyIncome: string;
 }
 
 // Constants for better maintainability
 const ITEM_TYPES = [
   'Weapon',
+  'Secondary',
   'Emblem',
   'Hat',
   'Top',
@@ -46,6 +49,8 @@ const ItemsPage = ({
   setSelectedGear,
   setNumber,
   setSetNumber,
+  weeklyIncome,
+  setWeeklyIncome,
 }: ItemsPageProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [itemType, setItemType] = useState<string | null>(null);
@@ -73,6 +78,14 @@ const ItemsPage = ({
     [setSetNumber]
   );
 
+  const handleWeeklyIncomeChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setWeeklyIncome(value);
+    },
+    [setWeeklyIncome]
+  );
+
   const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   }, []);
@@ -93,7 +106,7 @@ const ItemsPage = ({
   );
 
   return (
-    <div className="p-4 flex flex-col gap-2">
+    <div className="p-4 flex flex-col gap-2 grow">
       <div className="flex gap-2">
         <FilterSection label="Search Items">
           <Input2
@@ -142,7 +155,17 @@ const ItemsPage = ({
             </SelectContent>
           </Select>
         </FilterSection>
-
+        <div className="flex w-px rounded-full h-full bg-black opacity-20" />
+        {/* Set Number Input */}
+        <FilterSection label="Weekly Income">
+          <Input
+            type="number"
+            placeholder="B/Week"
+            value={weeklyIncome}
+            onChange={handleWeeklyIncomeChange}
+            min={1}
+          />
+        </FilterSection>
         {/* Divider */}
         <div className="flex w-px rounded-full h-full bg-black opacity-20" />
 

@@ -219,9 +219,9 @@ export default function FdRes({
       <div className="flex flex-col justify-between h-full w-full">
         <h5 className="opacity-60">Total FD</h5>
         <div className="flex">
-          <h2 className="flex font-bold w-full justify-end items-end">
+          <h3 className="flex font-bold w-full justify-end items-end">
             ~{totalFD.toFixed(2)}
-          </h2>
+          </h3>
           <h4 className="h-full flex justify-end items-end ml-[4px] pb-[4px]">
             %
           </h4>
