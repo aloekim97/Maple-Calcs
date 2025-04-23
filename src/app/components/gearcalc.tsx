@@ -15,6 +15,8 @@ import FdRes from './fdRes';
 import { SetData } from '../../../types/set';
 import sets from '../../../public/sets.json';
 import itemStats from '../formulas/sf/itemstats';
+import { Button } from '@/components/ui/button';
+import { MultiplierSettings } from './multiplierSettings';
 
 // Type definitions
 export interface SFStats {
@@ -43,7 +45,21 @@ export default function GearCalculator() {
   const [cubeResults, setCubeResults] = useState<PotCalcResult | null>(null);
   const [sfResults, setSfResults] = useState<StarForceResults | null>(null);
   const [setNumber, setSetNumber] = useState<string>('');
+  const [weeklyIncome, setWeeklyIncome] = useState<string>('');
   const [setStats, setSetStats] = useState<SetData | null>(null);
+
+  const [multipliers, setMultipliers] = useState({
+    ALLSTAT: 92,
+    ATK: 30,
+    DAMAGE: 10,
+    BOSS_DAMAGE: 10,
+    CRIT_DAMAGE: 3,
+    MAINSTAT: 100,
+    SUBSTAT: 1200,
+    PERCENTALLSTAT: 10,
+    PERCENTMAINSTAT: 12,
+    PERCENTATK: 3,
+  });
 
   const currentSfStats = useMemo(() => {
     if (!selectedGear || !endStar || !selectedGear.Level) return null;
@@ -114,6 +130,12 @@ export default function GearCalculator() {
   }, [setNumber]);
 
   useEffect(() => {
+    if (weeklyIncome) {
+      localStorage.setItem('weeklyIncome', weeklyIncome);
+    }
+  }, [weeklyIncome]);
+
+  useEffect(() => {
     if (selectedGear && endStar) {
       const starNum = Number(endStar);
       if (!isNaN(starNum)) {
@@ -153,6 +175,21 @@ export default function GearCalculator() {
     setSetStats(stats || null);
   }, [selectedGear, setNumber]);
 
+  useEffect(() => {
+    const savedMultipliers = localStorage.getItem('fdMultipliers');
+    if (savedMultipliers) {
+      try {
+        setMultipliers(JSON.parse(savedMultipliers));
+      } catch (error) {
+        console.error('Failed to parse saved multipliers', error);
+      }
+    }
+  }, []);
+  
+  useEffect(() => {
+    localStorage.setItem('fdMultipliers', JSON.stringify(multipliers));
+  }, [multipliers]);
+
   const handleGearChange = useCallback((gear: Item | null) => {
     setSelectedGear(gear);
     setSfResults(null);
@@ -176,16 +213,21 @@ export default function GearCalculator() {
   );
 
   return (
-    <div className="flex flex-col w-[1440px] max-h-[800px] py-4 px-16 gap-4">
-      <Header />
+    <div className="flex flex-col w-[1440px] max-h-[screen] py-4 px-16 gap-4">
+      <Header 
+        multipliers={multipliers}
+        setMultipliers={setMultipliers}
+      />
 
       <div className="flex w-full gap-8">
-        <div className="flex flex-col w-full gap-8">
+        <div className="flex grow flex-col w-full gap-8">
           <ItemsContainer>
             <ItemsPage
               setSelectedGear={handleGearChange}
               setNumber={setNumber}
               setSetNumber={setSetNumber}
+              setWeeklyIncome={setWeeklyIncome}
+              weeklyIncome={weeklyIncome}
             />
           </ItemsContainer>
 
@@ -217,24 +259,38 @@ export default function GearCalculator() {
           setStats={setStats}
           cubeResults={cubeResults}
           currentSfStats={currentSfStats}
+          weeklyIncome={weeklyIncome}
+          multipliers={multipliers}
         />
       </div>
     </div>
   );
 }
 
-const Header = () => (
-  <div className="flex gap-2 h-16 w-full justify-between items-center">
-    <div className="w-[196px]" />
-    <Image
-      src="image/geardiff.svg"
-      width={172}
-      height={32}
-      alt="geardiff"
-      role="img"
-      style={{ width: 'auto', height: 'auto' }}
-    />
-    <div className="flex gap-1">
+interface HeaderProps {
+  multipliers: Record<string, number>;
+  setMultipliers: (newMultipliers: Record<string, number>) => void;
+}
+
+const Header = ({ multipliers, setMultipliers }: HeaderProps) => (
+  <div className="flex flex-cols-3 gap-2 h-16 w-full justify-between items-center">
+    <div className="flex gap-1 w-full justify-start">
+      <MultiplierSettings 
+        multipliers={multipliers}
+        onMultipliersChange={setMultipliers}
+      />
+    </div>
+    <div className='flex w-full items-center justify-center'>
+      <Image
+        src="image/geardiff.svg"
+        width={172}
+        height={32}
+        alt="geardiff"
+        role="img"
+        style={{ width: 'auto', height: 'auto' }}
+      />
+    </div>
+    <div className="flex w-full gap-1 justify-end">
       <NavLink href="/about" label="About" />
       <NavLink href="/about" label="Donate" />
     </div>
@@ -244,14 +300,14 @@ const Header = () => (
 const NavLink = ({ href, label }: { href: string; label: string }) => (
   <Link
     href={href}
-    className="flex h-10 w-24 items-center justify-center opacity-60 hover:opacity-80 hover:cursor-pointer hover:bg-[#00000010] px-6 rounded-full"
+    className="flex h-[32px] w-24 items-center justify-center opacity-60 hover:opacity-80 hover:cursor-pointer hover:bg-[#00000010] px-6 rounded-full"
   >
     <p className="leading-4 text-base font-semibold">{label}</p>
   </Link>
 );
 
 const ItemsContainer = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex w-full overflow-hidden h-[280px] bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)]">
+  <div className="flex grow w-full overflow-hidden h-[280px] bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)]">
     {children}
   </div>
 );
@@ -273,6 +329,8 @@ interface ResultsPanelProps {
   setStats: SetData | null;
   cubeResults: PotCalcResult | null;
   currentSfStats: SFStats | null;
+  weeklyIncome: string | null;
+  multipliers: Record<string, number>;
 }
 
 const ResultsPanel = ({
@@ -284,8 +342,10 @@ const ResultsPanel = ({
   setStats,
   cubeResults,
   currentSfStats,
+  weeklyIncome,  
+  multipliers,
 }: ResultsPanelProps) => (
-  <div className="flex flex-col w-full bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] p-4 gap-4">
+  <div className="flex flex-col w-full bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] p-[16px] gap-4">
     <GearResultsContainer selectedGear={selectedGear}>
       {selectedGear ? (
         <GearRes
@@ -308,7 +368,7 @@ const ResultsPanel = ({
     </div>
 
     <div className="flex w-full gap-4">
-      <TotalCost cubeRes={cubeResults} sfResults={sfResults} />
+      <TotalCost cubeRes={cubeResults} sfResults={sfResults} weeklyIncome={weeklyIncome} />
     </div>
 
     <FdRes
@@ -316,6 +376,7 @@ const ResultsPanel = ({
       selectedGear={selectedGear}
       sfStats={sfResults?.stats || currentSfStats}
       potLines={potLines}
+      multipliers={multipliers}
     />
   </div>
 );

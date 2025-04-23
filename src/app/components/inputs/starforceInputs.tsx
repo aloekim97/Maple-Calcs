@@ -320,11 +320,11 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
 
   return (
     <div
-      className={`flex flex-col grow bg-white p-4 rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] h-full w-full justify-between ${
+      className={`flex flex-col grow bg-white p-[16px] rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] h-full w-full justify-between ${
         disabledState.isDisabled ? 'opacity-50' : ''
       }`}
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-[8px]">
         <div className="flex w-full justify-between items-center">
           <div className="flex gap-2 items-center">
             <Image
@@ -345,8 +345,8 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
           )}
         </div>
 
-        <div className="flex flex-col gap-4">
-          <div className="flex gap-4 w-full">
+        <div className="flex flex-col gap-[8px]">
+          <div className="flex gap-[8px] w-full">
             <div className="w-full">
               <p className="p3">MVP Discount</p>
               <Select
@@ -371,7 +371,7 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
             </div>
           </div>
 
-          <div className="flex gap-4 w-full">
+          <div className="flex gap-[8px] w-full">
             <InputField
               label="Start Star"
               name="startStar"
@@ -394,9 +394,9 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
 
       <div className="w-full h-[1px] rounded-full bg-black opacity-20" />
 
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-4">
-          <Label htmlFor="Events">Events</Label>
+      <div className="flex flex-col gap-[8px]">
+        <div className="flex flex-col gap-[16px]">
+          <h5>Events</h5>
           <EventSwitch
             id="Star-Catching"
             checked={events.starCatch}

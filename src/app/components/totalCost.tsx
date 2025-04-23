@@ -11,9 +11,10 @@ interface TotalCostProps {
       })
     | null;
   sfResults?: StarForceResults | null;
+  weeklyIncome?: string;
 }
 
-export default function TotalCost({ cubeRes, sfResults }: TotalCostProps) {
+export default function TotalCost({ cubeRes, sfResults, weeklyIncome }: TotalCostProps) {
   const transformAndFormat = (
     costString: string | null | undefined
   ): string => {
@@ -61,76 +62,58 @@ export default function TotalCost({ cubeRes, sfResults }: TotalCostProps) {
     return (num1 + num2).toLocaleString('en-US');
   };
 
+  
   // Calculate combined costs
   const combinedAverageCost = sumCosts(
     cubeRes?.averageCost,
     sfResults?.averageCost
   );
-  const combinedUnluckyCost = sumCosts(
-    cubeRes?.unluckyCost,
-    sfResults?.unluckyCost
-  );
-  const combinedLuckyCost = sumCosts(cubeRes?.luckyCost, sfResults?.luckyCost);
-  const combinedMedianCost = sumCosts(
-    cubeRes?.medianCost,
-    sfResults?.medianCost
-  );
 
+  const calculateWeeks = () => {
+    if (!combinedAverageCost || !weeklyIncome) return 'NA';
+    
+    const totalCost = Number(combinedAverageCost.replace(/,/g, ''));
+    const income = Number(weeklyIncome.replace(/,/g, ''));
+    const incomeinB = income * 1000000000
+
+    if (isNaN(totalCost) || isNaN(incomeinB) || income === 0) return 'NA';
+    
+    const weeks = totalCost / incomeinB;
+    return weeks.toFixed(1);
+  };
+
+  const weeksNeeded = calculateWeeks();
+  
   // Format the combined costs
   const averageCostDisplay = transformAndFormat(combinedAverageCost);
-  const unlucky = transformAndFormat(combinedUnluckyCost);
-  const lucky = transformAndFormat(combinedLuckyCost);
-  const median = transformAndFormat(combinedMedianCost);
-  const [totalBooms, setTotalBooms] = useState(sfResults?.averageBooms || 0);
-
+  const [totalBooms, setTotalBooms] = useState(sfResults?.averageBooms || 1);
+  
   useEffect(() => {
     setTotalBooms(sfResults?.averageBooms);
   }, [sfResults]);
 
   return (
-    <div className="flex w-full gap-[16px]">
-      <div className="flex w-full flex-col border border-purple-500 bg-purple-50 rounded-[8px] p-[12px] gap-[4px]">
-        <h5 className="opacity-60">Total Cost</h5>
-        <div className="flex flex-col w-full h-full">
-          <div className="grid grid-cols-4 w-full h-full gap-x-[16px] gap-y-[4px] items-center">
-            <h4 className="flex justify-start h-full w-full items-center">
-              Median:
-            </h4>
-            <p className="font-normal flex justify-end h-full w-full items-center">
-              {median}
-            </p>
-            <h4 className="flex justify-start h-full w-full items-center">
-              Upper:
-            </h4>
-            <p className="font-normal flex justify-end h-full w-full items-center">
-              {unlucky}
-            </p>
-            <h4 className="flex justify-start h-full w-full items-center">
-              Average:
-            </h4>
-            <p className="font-normal flex justify-end h-full w-full items-center">
-              {averageCostDisplay}
-            </p>
-            <h4 className="flex justify-start h-full w-full items-center">
-              Lower:
-            </h4>
-            <p className="font-normal flex justify-end h-full w-full items-center">
-              {lucky}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="flex w-full border rounded-[8px] p-[12px] gap-[16px] border-red-500 bg-red-50  justify-between">
+    <div className="flex w-full">
+      <div className="flex w-full border rounded-[8px] p-[12px] gap-[16px] border-red-500 bg-red-50 justify-between">
         <div className="flex flex-col justify-between h-full w-full">
-          <h5 className="opacity-60">Average Spares</h5>
-          <h2 className="flex font-bold w-full justify-end items-end">
-            {totalBooms}
-          </h2>
+          <h5 className="opacity-60">Total Average Cost</h5>
+          <h3 className="flex font-bold w-full justify-end items-end">
+            {averageCostDisplay}
+          </h3>
         </div>
         <div className="h-full w-[1px] opacity-20 bg-black" />
         <div className="flex flex-col justify-between h-full w-full">
-          <h5 className="opacity-60">Meso/1FD</h5>
-          <h2 className="flex font-bold w-full justify-end items-end">~10B</h2>
+          <h5 className="opacity-60">Average Spares</h5>
+          <h3 className="flex font-bold w-full justify-end items-end">
+            {totalBooms}
+          </h3>
+        </div>
+        <div className="h-full w-[1px] opacity-20 bg-black" />
+        <div className="flex flex-col justify-between h-full w-full">
+          <h5 className="opacity-60">weeks</h5>
+          <h3 className="flex font-bold w-full justify-end items-end">
+            {weeksNeeded}
+          </h3>
         </div>
       </div>
     </div>

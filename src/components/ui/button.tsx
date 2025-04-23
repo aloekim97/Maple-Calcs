@@ -18,8 +18,8 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
+          "flex h-10 w-24 items-center justify-center opacity-60 hover:opacity-80 hover:cursor-pointer hover:bg-[#00000010] px-6 rounded-full text-black",
+        link: "flex h-10 w-24 items-center justify-center opacity-60 hover:opacity-80 hover:cursor-pointer hover:bg-[#00000010] px-6 rounded-full text-black",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
@@ -50,7 +50,7 @@ function Button({
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }), "w-full rounded-full text-white h-[40px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)]")}
+      className={cn(buttonVariants({ variant, size, className }), "w-full rounded-full h-[40px]")}
       {...props}
     />
   )
