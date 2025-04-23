@@ -130,7 +130,7 @@ export default function itemStats(
     };
   };
 
-  const currentStats = calculateStatsUpTo(start);
+  // const currentStats = calculateStatsUpTo(start);
   const additionalStats = calculateStatsUpTo(end);
 
   return {

@@ -9,7 +9,6 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
-      console.log('Precaching core assets');
 
       // Cache each asset with individual error handling
       await Promise.all(
@@ -33,7 +32,6 @@ self.addEventListener('activate', (event) => {
       await Promise.all(
         cacheNames.map((cacheName) => {
           if (![CACHE_NAME, IMAGE_CACHE_NAME].includes(cacheName)) {
-            console.log('Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -59,7 +57,6 @@ self.addEventListener('fetch', (event) => {
             cacheName: IMAGE_CACHE_NAME,
           });
           if (cached) {
-            console.log('Serving image from cache:', url.pathname);
             return cached;
           }
 
@@ -69,7 +66,6 @@ self.addEventListener('fetch', (event) => {
           // Cache successful responses
           if (response.ok) {
             const cache = await caches.open(IMAGE_CACHE_NAME);
-            console.log('Caching new image:', url.pathname);
             await cache.put(event.request, response.clone());
           }
 

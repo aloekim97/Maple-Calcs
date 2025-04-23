@@ -85,6 +85,13 @@ export default function Cube({
         reason: defaultState,
       });
     }
+    const newLines = DEFAULT_LINES;
+    setLines(newLines);
+    ['potLine1', 'potLine2', 'potLine3'].forEach((key, i) => {
+      localStorage.setItem(key, Object.values(newLines)[i]);
+    });
+    updateParentPotLines(newLines);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedGear]);
 
   // Reset lines when disabled state changes
@@ -110,6 +117,7 @@ export default function Cube({
       setLines(savedLines);
       updateParentPotLines(savedLines);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [disabledState.reason]);
 
   // Update inputs when selectedGear changes
@@ -136,6 +144,7 @@ export default function Cube({
       localStorage.setItem(`potLine${line.slice(-1)}`, value);
       updateParentPotLines(newLines);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [disabledState.isDisabled, lines]
   );
 

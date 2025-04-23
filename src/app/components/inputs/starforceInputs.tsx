@@ -106,6 +106,7 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
     if (
       NON_SF_TYPES.has(selectedGear['Item Name']) ||
       selectedGear.Set === 'Genesis' ||
+      selectedGear.Set === 'Ruin Force Shield' ||
       selectedGear['Item Name'].startsWith('P.No')
     ) {
       return { isDisabled: true, reason: 'hard' };

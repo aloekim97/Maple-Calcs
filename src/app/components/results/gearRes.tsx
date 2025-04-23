@@ -95,7 +95,6 @@ export default function GearRes({
     return result;
   }, [potLines, selectedGear?.Job]);
 
-
   // Effect for localStorage synchronization
   useEffect(() => {
     let savedEndStar;
@@ -173,7 +172,7 @@ export default function GearRes({
   const NON_SF_TYPES = new Set([
     'Black_Heart',
     'Genesis_Badge',
-    `Mitra's_Rage`,
+    "Mitra's_Rage",
     `Crystal_Ventus_Badge`,
     'Cursed_Spellbook',
     'Stone_Of_Eternal_Life',
@@ -190,7 +189,13 @@ export default function GearRes({
   ]);
   const shouldShowStars = () => {
     const itemName = selectedGear?.['Item Name'];
-    return !NON_SF_TYPES.has(itemName) && !itemName?.startsWith('P.No');
+    if (!itemName) return false;
+
+    return !(
+      NON_SF_TYPES.has(itemName) ||
+      itemName.startsWith('P.No') ||
+      itemName === 'Ruin_Force_Shield'
+    );
   };
   return (
     <>

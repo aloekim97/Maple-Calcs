@@ -39,7 +39,6 @@ export default function FdRes({
 }: FdResProps) {
   const [sfResults, setSfResults] = useState<SFResults | null>(null);
   useEffect(() => {
-    // console.log("SFResults updated:", sfResults);
   }, [sfResults]);
 
   useEffect(() => {
@@ -114,6 +113,7 @@ export default function FdRes({
         bossdamageBase / multipliers.BOSS_DAMAGE
       );
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedGear, sfResults]);
 
   const calculatePotFD = useCallback(() => {
@@ -131,8 +131,6 @@ export default function FdRes({
 
         if (parsed.stat) {
           potFD += parsed.stat / multipliers.PERCENTMAINSTAT;
-          // console.log('parsed stat:', parsed.stat)
-          // console.log('potFDfuck:', potFD)
         }
         if (parsed.att) {
           potFD += parsed.att / multipliers.PERCENTATK;
@@ -154,10 +152,12 @@ export default function FdRes({
     processLine(potLines.line3);
 
     return potFD;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [potLines]);
 
   const potFD = useMemo(() => calculatePotFD(), [calculatePotFD]);
   const itemFD = useMemo(() => calculateItemFD(), [calculateItemFD]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const setFD = useMemo(() => calculateSetFD(), [setStats]);
   const totalFD = useMemo(() => itemFD + setFD + potFD, [itemFD, setFD, potFD]);
 

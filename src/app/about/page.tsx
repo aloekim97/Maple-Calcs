@@ -41,13 +41,13 @@ export default function About(){
             Gear diff is a small project aimed at giving guidance to players in confusing decisions. We realized that we often found ourselves unsure what decisions to make when it came to progression of items. With the infinite micro variations that can be made when it comes to gear, we realized we were often unsure if going one way or the other was better. 
           </p>  
           <p>
-            Want to swap Eternal shoulder? Sure it should be ~0.5 FD though, so it's really not a priority. When new content came out, making decisions like these was a far easier task. Most of the people who even had access to such gear already had something near bis to swap off from, but what if your current shoulder is fake three line and 21? It's not as clear what the FD to meso efficiency is anymore without pulling up multiple websites and using them in unison. (Shout out to MathBro)
+            {`Want to swap Eternal shoulder? Sure it should be ~0.5 FD though, so it's really not a priority. When new content came out, making decisions like these was a far easier task. Most of the people who even had access to such gear already had something near bis to swap off from, but what if your current shoulder is fake three line and 21? It's not as clear what the FD to meso efficiency is anymore without pulling up multiple websites and using them in unison. (Shout out to MathBro)`}
           </p>
           <p>
             New players can actually make better decisions in terms of investing their meso now that their options in progression are laid out already. This is what we hope to ease with gear diff.
           </p>
           <p>
-            Now a word of caution, Maplestory is a far more complicated game than the 2D aspect would imply, and we found ourselves struggling to keep this app simple and intuitive for new users without making too many comprimises on accuracy. Every character's stats and place in the game is extremely unique, we found that the hard way (seriously this game is a real mess of old systems built upon each other). So our approximations on FD are just that, an approximation. The <b>table</b> to the right shows these assumptions we made.
+           {` Now a word of caution, Maplestory is a far more complicated game than the 2D aspect would imply, and we found ourselves struggling to keep this app simple and intuitive for new users without making too many comprimises on accuracy. Every character's stats and place in the game is extremely unique, we found that the hard way (seriously this game is a real mess of old systems built upon each other). So our approximations on FD are just that, an approximation. The <b>table</b> to the right shows these assumptions we made.`}
           </p>
         </div>
         <div className="flex h-full w-full items-center justify-center">

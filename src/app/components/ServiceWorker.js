@@ -21,7 +21,6 @@ export default function ServiceWorker() {
 
           // Handle controller change (when new SW takes over)
           navigator.serviceWorker.addEventListener('controllerchange', () => {
-            console.log('Controller changed - reloading page');
             window.location.reload();
           });
 
@@ -31,12 +30,10 @@ export default function ServiceWorker() {
             if (!newWorker) return;
 
             newWorker.addEventListener('statechange', () => {
-              console.log('New worker state:', newWorker.state);
 
               if (newWorker.state === 'installed') {
                 // Only show update if there's an existing controller (not first install)
                 if (navigator.serviceWorker.controller) {
-                  console.log('New update available!');
                   // Here you could show a UI prompt to refresh
                   showUpdateNotification();
                 }
