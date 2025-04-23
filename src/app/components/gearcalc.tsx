@@ -15,7 +15,6 @@ import FdRes from './fdRes';
 import { SetData } from '../../../types/set';
 import sets from '../../../public/sets.json';
 import itemStats from '../formulas/sf/itemstats';
-import { Button } from '@/components/ui/button';
 import { MultiplierSettings } from './multiplierSettings';
 
 // Type definitions
@@ -185,7 +184,7 @@ export default function GearCalculator() {
       }
     }
   }, []);
-  
+
   useEffect(() => {
     localStorage.setItem('fdMultipliers', JSON.stringify(multipliers));
   }, [multipliers]);
@@ -213,11 +212,8 @@ export default function GearCalculator() {
   );
 
   return (
-    <div className="flex flex-col w-[1440px] max-h-[screen] py-4 px-16 gap-4">
-      <Header 
-        multipliers={multipliers}
-        setMultipliers={setMultipliers}
-      />
+    <div className="flex flex-col w-[1440px] max-h-[screen] py-4 px-16 gap-4 scale-on-medium-height">
+      <Header multipliers={multipliers} setMultipliers={setMultipliers} />
 
       <div className="flex w-full gap-8">
         <div className="flex grow flex-col w-full gap-8">
@@ -269,18 +265,18 @@ export default function GearCalculator() {
 
 interface HeaderProps {
   multipliers: Record<string, number>;
-  setMultipliers: (newMultipliers: Record<string, number>) => void;
+  setMultipliers: React.Dispatch<React.SetStateAction<Record<string, number>>>;
 }
 
 const Header = ({ multipliers, setMultipliers }: HeaderProps) => (
   <div className="flex flex-cols-3 gap-2 h-16 w-full justify-between items-center">
     <div className="flex gap-1 w-full justify-start">
-      <MultiplierSettings 
+      <MultiplierSettings
         multipliers={multipliers}
-        onMultipliersChange={setMultipliers}
+        setMultipliers={setMultipliers}
       />
     </div>
-    <div className='flex w-full items-center justify-center'>
+    <div className="flex w-full items-center justify-center">
       <Image
         src="image/geardiff.svg"
         width={172}
@@ -342,7 +338,7 @@ const ResultsPanel = ({
   setStats,
   cubeResults,
   currentSfStats,
-  weeklyIncome,  
+  weeklyIncome,
   multipliers,
 }: ResultsPanelProps) => (
   <div className="flex flex-col w-full bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] p-[16px] gap-4">
@@ -368,7 +364,11 @@ const ResultsPanel = ({
     </div>
 
     <div className="flex w-full gap-4">
-      <TotalCost cubeRes={cubeResults} sfResults={sfResults} weeklyIncome={weeklyIncome} />
+      <TotalCost
+        cubeRes={cubeResults}
+        sfResults={sfResults}
+        weeklyIncome={weeklyIncome}
+      />
     </div>
 
     <FdRes

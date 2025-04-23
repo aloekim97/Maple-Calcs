@@ -40,6 +40,7 @@ const NON_CUBE_TYPES = new Set([
   'Cursed_Spellbook',
   'Stone_Of_Eternal_Life',
   'Pinky_Holy_Cup',
+  'Seven_Days_Badge',
 ]);
 
 export default function Cube({
@@ -190,9 +191,8 @@ export default function Cube({
             second: lines.line2,
             third: lines.line3,
           },
-          inputs.itemType
+          inputs.itemType === 'Cape/Belt/Shoulder' ? 'Cape' : inputs.itemType
         );
-        console.log(potentialResult);
         setCubeResults(potentialResult);
       }
     } catch (error) {
@@ -207,12 +207,41 @@ export default function Cube({
       return { line1: {}, line2: {}, line3: {} };
     }
 
-    return {
+    // Get base options
+    const options = {
       line1: getGoalOptions(inputs.itemType, inputs.itemLevel, 1),
       line2: getGoalOptions(inputs.itemType, inputs.itemLevel, 2),
       line3: getGoalOptions(inputs.itemType, inputs.itemLevel, 3),
     };
-  }, [inputs.itemType, inputs.itemLevel, disabledState.isDisabled]);
+
+    // Special case for Mage weapons
+    if (selectedGear?.Type === 'Weapon' && selectedGear.Job === 'Mage') {
+      const transformAttToMagicAtt = (line: Record<string, number>) => {
+        if (!line) return line;
+
+        return Object.fromEntries(
+          Object.entries(line).map(([key, value]) => {
+            // Handle both 'ATT' and 'att' cases
+            const newKey = key.replace(/ATT/g, 'Magic ATT'); // Any remaining 'ATT'
+            return [newKey, value];
+          })
+        );
+      };
+
+      return {
+        line1: transformAttToMagicAtt(options.line1),
+        line2: transformAttToMagicAtt(options.line2),
+        line3: transformAttToMagicAtt(options.line3),
+      };
+    }
+
+    return options;
+  }, [
+    inputs.itemType,
+    inputs.itemLevel,
+    disabledState.isDisabled,
+    selectedGear,
+  ]);
 
   return (
     <div

@@ -9,6 +9,7 @@ const config: Config = {
 	variants: {
     extend: {
         display: ["group-hover"],
+				scale: ['responsive'],
     },
 	},
   theme: {

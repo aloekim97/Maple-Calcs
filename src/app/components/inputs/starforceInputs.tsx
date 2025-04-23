@@ -74,6 +74,7 @@ const NON_SF_TYPES = new Set([
   'Cursed_Spellbook',
   'Stone_Of_Eternal_Life',
   'Pinky_Holy_Cup',
+  'Seven_Days_Badge',
 ]);
 
 export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
@@ -102,7 +103,11 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
     if (!selectedGear) return { isDisabled: false, reason: 'none' };
 
     // Hard disabled check
-    if (NON_SF_TYPES.has(selectedGear['Item Name'])) {
+    if (
+      NON_SF_TYPES.has(selectedGear['Item Name']) ||
+      selectedGear.Set === 'Genesis' ||
+      selectedGear['Item Name'].startsWith('P.No')
+    ) {
       return { isDisabled: true, reason: 'hard' };
     }
 
@@ -172,11 +177,16 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
 
     const cannotStarforce =
       NON_SF_TYPES.has(selectedGear['Item Name']) ||
-      selectedGear.Set === 'Genesis';
+      selectedGear.Set === 'Genesis' ||
+      selectedGear['Item Name'].startsWith('P.No');
 
     setInputs((prev) => {
       let currentEndStar;
-      if (NON_SF_TYPES.has(selectedGear['Item Name'])) currentEndStar = 0;
+      if (
+        NON_SF_TYPES.has(selectedGear['Item Name']) ||
+        selectedGear['Item Name'].startsWith('P.No')
+      )
+        currentEndStar = 0;
       else if (selectedGear.Set === 'Genesis') currentEndStar = 22;
       else currentEndStar = localStorage.getItem('endStar') || '0';
       return {
@@ -375,7 +385,7 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
             <InputField
               label="Start Star"
               name="startStar"
-              value={inputs.startStar}
+              value={inputs.startStar ?? ''}
               onChange={handleInputChange}
               placeholder="e.g. 0"
               disabled={disabledState.isDisabled}
@@ -383,7 +393,7 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
             <InputField
               label="End Star"
               name="endStar"
-              value={inputs.endStar}
+              value={inputs.endStar ?? ''}
               onChange={handleInputChange}
               placeholder="e.g. 15"
               disabled={disabledState.isDisabled}

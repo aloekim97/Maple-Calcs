@@ -78,7 +78,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --default-font-family: var(--font-inter);
-  --default-mono-font-family: var(--font-inter)
+  --default-mono-font-family: var(--font-inter);
 }
 
 .dark {
@@ -121,8 +121,21 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CCCCCC;
+  background: #cccccc;
   border-radius: 2px;
+}
+
+.container::-webkit-scrollbar {
+  width: thin;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: #cccccc;
+  border-radius: 4px;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background: #cccccc;
 }
 
 @layer base {
@@ -170,29 +183,37 @@ h6 {
 }
 
 p {
-  @apply text-[16px] font-medium leading-[24px]
+  @apply text-[16px] font-medium leading-[24px];
 }
 
 .p1 {
-  @apply text-[16px] font-[600] leading-[24px]
+  @apply text-[16px] font-[600] leading-[24px];
 }
 
 .p2 {
-  @apply text-[16px] font-[600] leading-[24px]
+  @apply text-[16px] font-[600] leading-[24px];
 }
 
 .p3 {
-  @apply text-[12px] leading-[24px]
+  @apply text-[12px] leading-[24px];
 }
 
 li {
-  @apply text-[16px] font-medium leading-[24px] tracking-[.05rem] ml-[24px] pl-[8px]
+  @apply text-[16px] font-medium leading-[24px] tracking-[.05rem] ml-[24px] pl-[8px];
 }
 
 ul {
-  @apply flex flex-col gap-[16px] list-disc ml-[24px] pl-[8px]
+  @apply flex flex-col gap-[16px] list-disc ml-[24px] pl-[8px];
 }
 
 ol {
-  @apply flex flex-col gap-[16px] list-decimal
+  @apply flex flex-col gap-[16px] list-decimal;
+}
+
+.scale-on-medium-height {
+  transform: scale(0.85);
+  transform-origin: 0 0;
+  width: 117.65%;
+  height: 117.65vh;
+  overflow: hidden;
 }

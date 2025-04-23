@@ -95,7 +95,6 @@ export default function GearRes({
     return result;
   }, [potLines, selectedGear?.Job]);
 
-  console.log(lineData);
 
   // Effect for localStorage synchronization
   useEffect(() => {
@@ -179,6 +178,7 @@ export default function GearRes({
     'Cursed_Spellbook',
     'Stone_Of_Eternal_Life',
     'Pinky_Holy_Cup',
+    'Seven_Days_Badge',
   ]);
   const NON_CUBE_TYPES = new Set([
     'Black_Heart',
@@ -188,11 +188,15 @@ export default function GearRes({
     'Stone_Of_Eternal_Life',
     'Pinky_Holy_Cup',
   ]);
+  const shouldShowStars = () => {
+    const itemName = selectedGear?.['Item Name'];
+    return !NON_SF_TYPES.has(itemName) && !itemName?.startsWith('P.No');
+  };
   return (
     <>
       <div className="flex flex-col justify-between items-center w-full p-[12px]">
         {/* Starforce Section */}
-        {!NON_SF_TYPES.has(selectedGear?.['Item Name'] ?? '') ? (
+        {shouldShowStars() ? (
           <div className="grid grid-cols-3 w-full gap-[8px]">
             {renderStars()}
           </div>
