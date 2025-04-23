@@ -29,8 +29,8 @@ export default function TotalCost({ cubeRes, sfResults }: TotalCostProps) {
 
     if (num >= 1_000_000_000_000_000) {
       transformed = num / 1_000_000_000_000_000;
-      suffix = 'Q';}
-    else if (num >= 1_000_000_000_000) {
+      suffix = 'Q';
+    } else if (num >= 1_000_000_000_000) {
       transformed = num / 1_000_000_000_000;
       suffix = 'T';
     } else if (num >= 1_000_000_000) {
@@ -81,12 +81,11 @@ export default function TotalCost({ cubeRes, sfResults }: TotalCostProps) {
   const unlucky = transformAndFormat(combinedUnluckyCost);
   const lucky = transformAndFormat(combinedLuckyCost);
   const median = transformAndFormat(combinedMedianCost);
-  const [totalBooms, setTotalBooms] = useState(sfResults?.averageBooms || 0)
+  const [totalBooms, setTotalBooms] = useState(sfResults?.averageBooms || 0);
 
   useEffect(() => {
-    setTotalBooms(sfResults?.averageBooms)
-  },[sfResults])
-
+    setTotalBooms(sfResults?.averageBooms);
+  }, [sfResults]);
 
   return (
     <div className="flex w-full gap-[16px]">
@@ -122,20 +121,18 @@ export default function TotalCost({ cubeRes, sfResults }: TotalCostProps) {
         </div>
       </div>
       <div className="flex w-full border rounded-[8px] p-[12px] gap-[16px] border-red-500 bg-red-50  justify-between">
-              <div className="flex flex-col justify-between h-full w-full">
-                <h5 className="opacity-60">Average Spares</h5>
-                <h2 className="flex font-bold w-full justify-end items-end">
-                  {totalBooms}
-                </h2>
-              </div>
-              <div className="h-full w-[1px] opacity-20 bg-black" />
-              <div className="flex flex-col justify-between h-full w-full">
-                <h5 className="opacity-60">Meso/1FD</h5>
-                <h2 className="flex font-bold w-full justify-end items-end">
-                  ~10B
-                </h2>
-              </div>
-            </div>
+        <div className="flex flex-col justify-between h-full w-full">
+          <h5 className="opacity-60">Average Spares</h5>
+          <h2 className="flex font-bold w-full justify-end items-end">
+            {totalBooms}
+          </h2>
+        </div>
+        <div className="h-full w-[1px] opacity-20 bg-black" />
+        <div className="flex flex-col justify-between h-full w-full">
+          <h5 className="opacity-60">Meso/1FD</h5>
+          <h2 className="flex font-bold w-full justify-end items-end">~10B</h2>
+        </div>
+      </div>
     </div>
   );
 }

@@ -48,7 +48,7 @@ export default function GearRes({
     line2: '',
     line3: '',
   });
-  
+
   // Memoized SF results calculation
   const sfResults = useMemo(() => {
     const att = selectedGear.ATK || selectedGear['M.ATK'] || '';
@@ -95,7 +95,7 @@ export default function GearRes({
     return result;
   }, [potLines, selectedGear?.Job]);
 
-  console.log(lineData)
+  console.log(lineData);
 
   // Effect for localStorage synchronization
   useEffect(() => {

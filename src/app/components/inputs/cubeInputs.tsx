@@ -38,7 +38,7 @@ export default function Cube({
     cubeType: 'black' as CubeType,
     itemLevel: selectedGear?.Level || 0,
   });
-    const [events, setEvents] = useState({
+  const [events, setEvents] = useState({
     canCube: true,
   });
 
@@ -60,20 +60,20 @@ export default function Cube({
       ]),
     []
   );
-    const disabledState = useMemo(() => {
-      if (!selectedGear) return { isDisabled: false, reason: 'none' };
-  
-      // Hard disabled check
-      if (NON_CUBE_TYPES.has(selectedGear['Item Name'])) {
-        return { isDisabled: true, reason: 'hard' };
-      }
-  
-      // User toggled disabled
-      if (!events.canCube) {
-        return { isDisabled: true, reason: 'soft' };
-      }
-      return { isDisabled: false, reason: 'none' };
-    }, [selectedGear, NON_CUBE_TYPES, events.canCube]);
+  const disabledState = useMemo(() => {
+    if (!selectedGear) return { isDisabled: false, reason: 'none' };
+
+    // Hard disabled check
+    if (NON_CUBE_TYPES.has(selectedGear['Item Name'])) {
+      return { isDisabled: true, reason: 'hard' };
+    }
+
+    // User toggled disabled
+    if (!events.canCube) {
+      return { isDisabled: true, reason: 'soft' };
+    }
+    return { isDisabled: false, reason: 'none' };
+  }, [selectedGear, NON_CUBE_TYPES, events.canCube]);
 
   useEffect(() => {
     if (!selectedGear) return;
@@ -100,7 +100,8 @@ export default function Cube({
         line1: '{"any": 1}',
         line2: '{"any": 1}',
         line3: '{"any": 1}',
-      })};
+      });
+    }
     if (disabledState.reason === 'soft') {
       setLines({
         line1: '{"any": 1}',
@@ -111,7 +112,8 @@ export default function Cube({
         line1: '{"any": 1}',
         line2: '{"any": 1}',
         line3: '{"any": 1}',
-      })};
+      });
+    }
     if (disabledState.reason === 'none') {
       setLines({
         line1: localStorage.getItem('potline1'),
@@ -123,14 +125,13 @@ export default function Cube({
         line2: localStorage.getItem('potline2'),
         line3: localStorage.getItem('potline3'),
       });
-      
     }
 
     setEvents((prev) => ({
       ...prev,
       canCube: !cannotCube,
     }));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedGear, NON_CUBE_TYPES]);
 
   useEffect(() => {
@@ -269,12 +270,12 @@ export default function Cube({
           <h4>Potential Calculator</h4>
         </div>
         {disabledState.reason !== 'hard' && (
-        <Switch
-          id="Can-Starforce"
-          checked={events.canCube}
-          onCheckedChange={() => handleEventToggle('canCube')}
-          disabled={disabledState.reason === 'hard'}
-        />
+          <Switch
+            id="Can-Starforce"
+            checked={events.canCube}
+            onCheckedChange={() => handleEventToggle('canCube')}
+            disabled={disabledState.reason === 'hard'}
+          />
         )}
       </div>
 

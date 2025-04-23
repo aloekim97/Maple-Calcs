@@ -35,16 +35,10 @@ const ITEM_TYPES = [
   'Accessory',
   'Pocket',
   'Badge',
-  'Heart'
+  'Heart',
 ];
 
-const JOB_TYPES = [
-  'Warrior',
-  'Mage',
-  'Bowman',
-  'Thief',
-  'Pirate'
-];
+const JOB_TYPES = ['Warrior', 'Mage', 'Bowman', 'Thief', 'Pirate'];
 
 const itemList = items as Item[];
 
@@ -60,7 +54,9 @@ const ItemsPage = ({
 
   const filteredItems = useMemo(() => {
     return itemList.filter((item) => {
-      const matchesSearch = item['Item Name'].toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearch = item['Item Name']
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
       const matchesType = itemType ? item.Type === itemType : true;
       const matchesSet = itemSet ? item.Set === itemSet : true;
       const matchesJob = jobFilter ? item.Job === jobFilter : true;
@@ -69,10 +65,13 @@ const ItemsPage = ({
     });
   }, [searchTerm, itemType, itemSet, jobFilter]);
 
-  const handleSetNumberChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSetNumber(value || '1'); 
-  }, [setSetNumber]);
+  const handleSetNumberChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setSetNumber(value || '1');
+    },
+    [setSetNumber]
+  );
 
   const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -86,9 +85,12 @@ const ItemsPage = ({
     setJobFilter(val === 'all' ? null : val);
   }, []);
 
-  const handleItemSelect = useCallback((item: Item) => {
-    setSelectedGear(item);
-  }, [setSelectedGear]);
+  const handleItemSelect = useCallback(
+    (item: Item) => {
+      setSelectedGear(item);
+    },
+    [setSelectedGear]
+  );
 
   return (
     <div className="p-4 flex flex-col gap-2">
@@ -103,10 +105,7 @@ const ItemsPage = ({
         </FilterSection>
 
         <FilterSection label="Filter by Type">
-          <Select
-            value={itemType || 'all'}
-            onValueChange={handleTypeFilter}
-          >
+          <Select value={itemType || 'all'} onValueChange={handleTypeFilter}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Filter by Type" />
             </SelectTrigger>
@@ -126,10 +125,7 @@ const ItemsPage = ({
 
         {/* Job Filter */}
         <FilterSection label="Filter by Job">
-          <Select
-            value={jobFilter || 'all'}
-            onValueChange={handleJobFilter}
-          >
+          <Select value={jobFilter || 'all'} onValueChange={handleJobFilter}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Filter by Job" />
             </SelectTrigger>
@@ -177,12 +173,12 @@ const ItemsPage = ({
 };
 
 // Helper component for filter sections
-const FilterSection = ({ 
-  label, 
-  children 
-}: { 
-  label: string; 
-  children: React.ReactNode 
+const FilterSection = ({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
 }) => (
   <div className="flex-1 flex-col gap-1">
     <p className="p3 opacity-60">{label}</p>

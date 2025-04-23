@@ -47,18 +47,19 @@ export default function GearCalculator() {
 
   const currentSfStats = useMemo(() => {
     if (!selectedGear || !endStar || !selectedGear.Level) return null;
-    
+
     const starNum = Number(endStar);
     if (isNaN(starNum)) return null;
 
     try {
-      const maxStars = selectedGear.Set === 'Genesis' ? MAX_STARS_GENESIS : MAX_STARS_REGULAR;
+      const maxStars =
+        selectedGear.Set === 'Genesis' ? MAX_STARS_GENESIS : MAX_STARS_REGULAR;
       const starCount = Math.min(starNum, maxStars);
       const attackStat = selectedGear.ATK || selectedGear['M.ATK'] || '0';
       const weaponAtt = Number(attackStat) || 0;
 
       return itemStats(
-        0, 
+        0,
         starCount,
         Number(selectedGear.Level),
         weaponAtt,
@@ -116,7 +117,10 @@ export default function GearCalculator() {
     if (selectedGear && endStar) {
       const starNum = Number(endStar);
       if (!isNaN(starNum)) {
-        const maxStars = selectedGear.Set === 'Genesis' ? MAX_STARS_GENESIS : MAX_STARS_REGULAR;
+        const maxStars =
+          selectedGear.Set === 'Genesis'
+            ? MAX_STARS_GENESIS
+            : MAX_STARS_REGULAR;
         if (starNum > maxStars) {
           setEndStar(maxStars.toString());
         }
@@ -125,7 +129,7 @@ export default function GearCalculator() {
   }, [selectedGear, endStar]);
 
   useEffect(() => {
-    setSfResults(prev => ({
+    setSfResults((prev) => ({
       ...(prev || { cost: null }),
       stats: currentSfStats,
     }));
@@ -144,7 +148,7 @@ export default function GearCalculator() {
     }
 
     const stats = sets.find(
-      s => s.Set === selectedGear.Set && s['Set Count'] === setCount
+      (s) => s.Set === selectedGear.Set && s['Set Count'] === setCount
     );
     setSetStats(stats || null);
   }, [selectedGear, setNumber]);
@@ -158,20 +162,23 @@ export default function GearCalculator() {
     }
   }, []);
 
-  const handleStarChange = useCallback((stars: string) => {
-    setEndStar(stars);
-    if (selectedGear) {
-      setSfResults(prev => ({
-        ...prev,
-        stats: currentSfStats,
-      }));
-    }
-  }, [selectedGear, currentSfStats]);
+  const handleStarChange = useCallback(
+    (stars: string) => {
+      setEndStar(stars);
+      if (selectedGear) {
+        setSfResults((prev) => ({
+          ...prev,
+          stats: currentSfStats,
+        }));
+      }
+    },
+    [selectedGear, currentSfStats]
+  );
 
   return (
     <div className="flex flex-col w-[1440px] max-h-[800px] py-4 px-16 gap-4">
       <Header />
-      
+
       <div className="flex w-full gap-8">
         <div className="flex flex-col w-full gap-8">
           <ItemsContainer>
@@ -181,7 +188,7 @@ export default function GearCalculator() {
               setSetNumber={setSetNumber}
             />
           </ItemsContainer>
-          
+
           <div className="flex w-full gap-8">
             <StarForceContainer>
               <StarForce
@@ -190,7 +197,7 @@ export default function GearCalculator() {
                 setSfRes={setSfResults}
               />
             </StarForceContainer>
-            
+
             <CubeContainer>
               <Cube
                 selectedGear={selectedGear}
@@ -200,7 +207,7 @@ export default function GearCalculator() {
             </CubeContainer>
           </div>
         </div>
-        
+
         <ResultsPanel
           selectedGear={selectedGear}
           endStar={endStar}
@@ -294,16 +301,16 @@ const ResultsPanel = ({
         <EmptyState message="Select an item to view details" />
       )}
     </GearResultsContainer>
-    
+
     <div className="flex w-full gap-4">
       <SfCost sfResults={sfResults} />
       <CubeCost cubeRes={cubeResults} />
     </div>
-    
+
     <div className="flex w-full gap-4">
       <TotalCost cubeRes={cubeResults} sfResults={sfResults} />
     </div>
-    
+
     <FdRes
       setStats={setStats}
       selectedGear={selectedGear}
@@ -313,14 +320,18 @@ const ResultsPanel = ({
   </div>
 );
 
-const GearResultsContainer = ({ 
-  selectedGear, 
-  children 
-}: { 
-  selectedGear: Item | null; 
-  children: React.ReactNode 
+const GearResultsContainer = ({
+  selectedGear,
+  children,
+}: {
+  selectedGear: Item | null;
+  children: React.ReactNode;
 }) => (
-  <div className={`flex w-full gap-4 rounded-[8px] border grow ${!selectedGear ? 'items-center justify-center' : ''}`}>
+  <div
+    className={`flex w-full gap-4 rounded-[8px] border grow ${
+      !selectedGear ? 'items-center justify-center' : ''
+    }`}
+  >
     {children}
   </div>
 );

@@ -8,10 +8,13 @@ export default function ServiceWorker() {
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
       const registerSW = async () => {
         try {
-          const registration = await navigator.serviceWorker.register('/sw.js', {
-            scope: '/',
-            updateViaCache: 'none'
-          });
+          const registration = await navigator.serviceWorker.register(
+            '/sw.js',
+            {
+              scope: '/',
+              updateViaCache: 'none',
+            }
+          );
 
           // Immediate update check
           registration.update();
@@ -29,7 +32,7 @@ export default function ServiceWorker() {
 
             newWorker.addEventListener('statechange', () => {
               console.log('New worker state:', newWorker.state);
-              
+
               if (newWorker.state === 'installed') {
                 // Only show update if there's an existing controller (not first install)
                 if (navigator.serviceWorker.controller) {
@@ -47,7 +50,6 @@ export default function ServiceWorker() {
           }, 24 * 60 * 60 * 1000);
 
           return () => clearInterval(updateInterval);
-
         } catch (error) {
           console.error('Service Worker registration failed:', error);
         }
@@ -55,7 +57,7 @@ export default function ServiceWorker() {
 
       // Delay registration slightly to avoid impacting initial load
       const timer = setTimeout(registerSW, 1000);
-      
+
       return () => clearTimeout(timer);
     }
   }, []);
@@ -82,11 +84,11 @@ function showUpdateNotification() {
       Refresh
     </button>
   `;
-  
+
   const button = notification.querySelector('button');
   button?.addEventListener('click', () => {
     window.location.reload();
   });
-  
+
   document.body.appendChild(notification);
 }
