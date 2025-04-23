@@ -13,6 +13,7 @@ interface FdResProps {
     difference: { stat: number; att: number };
   };
   potLines: PotLines;
+  multipliers: Record<string, number>;
 }
 
 export interface SFResults {
@@ -24,19 +25,6 @@ export interface SFResults {
   };
 }
 
-const MULTIPLIERS = {
-  ALLSTAT: 92,
-  ATK: 30,
-  DAMAGE: 10,
-  BOSS_DAMAGE: 10,
-  CRIT_DAMAGE: 3,
-  MAINSTAT: 100,
-  SUBSTAT: 1200,
-  PERCENTALLSTAT: 10,
-  PERCENTMAINSTAT: 12,
-  PERCENTATK: 3,
-};
-
 const toNumber = (value: string | number | undefined): number => {
   if (value === undefined) return 0;
   return typeof value === 'string' ? parseFloat(value) || 0 : value;
@@ -47,6 +35,7 @@ export default function FdRes({
   selectedGear,
   sfStats,
   potLines,
+  multipliers,
 }: FdResProps) {
   const [sfResults, setSfResults] = useState<SFResults | null>(null);
   useEffect(() => {
@@ -80,10 +69,10 @@ export default function FdRes({
     const critDamage = toNumber(setStats['Crit Damage']);
 
     return (
-      stat / MULTIPLIERS.ALLSTAT +
-      atk / MULTIPLIERS.ATK +
-      bossDamage / MULTIPLIERS.BOSS_DAMAGE +
-      critDamage / MULTIPLIERS.CRIT_DAMAGE
+      stat / multipliers.ALLSTAT +
+      atk / multipliers.ATK +
+      bossDamage / multipliers.BOSS_DAMAGE +
+      critDamage / multipliers.CRIT_DAMAGE
     );
   };
 
@@ -110,19 +99,19 @@ export default function FdRes({
     if (selectedGear.Set === 'Genesis') {
       // Genesis calculations
       return (
-        mainStatTotal / MULTIPLIERS.MAINSTAT +
-        subStatTotal / MULTIPLIERS.SUBSTAT +
-        (atkTotal / MULTIPLIERS.ATK) * toNumber(selectedGear['ADJ Std']) +
-        bossdamageBase / MULTIPLIERS.BOSS_DAMAGE +
+        mainStatTotal / multipliers.MAINSTAT +
+        subStatTotal / multipliers.SUBSTAT +
+        (atkTotal / multipliers.ATK) * toNumber(selectedGear['ADJ Std']) +
+        bossdamageBase / multipliers.BOSS_DAMAGE +
         10
       );
     } else {
       // FD calculations
       return (
-        mainStatTotal / MULTIPLIERS.MAINSTAT +
-        subStatTotal / MULTIPLIERS.SUBSTAT +
-        (atkTotal / MULTIPLIERS.ATK) * toNumber(selectedGear['ADJ Std']) +
-        bossdamageBase / MULTIPLIERS.BOSS_DAMAGE
+        mainStatTotal / multipliers.MAINSTAT +
+        subStatTotal / multipliers.SUBSTAT +
+        (atkTotal / multipliers.ATK) * toNumber(selectedGear['ADJ Std']) +
+        bossdamageBase / multipliers.BOSS_DAMAGE
       );
     }
   }, [selectedGear, sfResults]);
@@ -141,18 +130,18 @@ export default function FdRes({
           typeof potLines === 'string' ? JSON.parse(potLines) : potLines;
 
         if (parsed.stat) {
-          potFD += parsed.stat / MULTIPLIERS.PERCENTMAINSTAT;
+          potFD += parsed.stat / multipliers.PERCENTMAINSTAT;
           // console.log('parsed stat:', parsed.stat)
           // console.log('potFDfuck:', potFD)
         }
         if (parsed.att) {
-          potFD += parsed.att / MULTIPLIERS.PERCENTATK;
+          potFD += parsed.att / multipliers.PERCENTATK;
         }
         if (parsed.boss) {
-          potFD += parsed.boss / MULTIPLIERS.BOSS_DAMAGE;
+          potFD += parsed.boss / multipliers.BOSS_DAMAGE;
         }
         if (parsed.cd) {
-          potFD += parsed.cd / MULTIPLIERS.CRIT_DAMAGE;
+          potFD += parsed.cd / multipliers.CRIT_DAMAGE;
         }
       } catch (error) {
         console.error('Error parsing potential line:', error);
