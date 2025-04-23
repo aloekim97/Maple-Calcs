@@ -1,150 +1,131 @@
 import Image from 'next/image';
 import { Item } from '../../../../types/item';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import itemStats from '@/app/formulas/sf/itemstats';
 import { SetData } from '../../../../types/set';
-import sets from '../../../../public/sets.json';
+import { PotLines } from '../gearcalc';
+import { SFResults } from '../fdRes';
+import { StarForceResults } from '../inputs/starforceInputs';
 
 interface GearProps {
   selectedGear: Item;
   endStar: string;
-  potLines: {
-    first?: string | PotentialLine;
-    second?: string | PotentialLine;
-    third?: string | PotentialLine;
-  };
+  potLines: PotLines;
   sfStats?: SFResults;
+  setNumber?: string;
+  setStats?: SetData;
+  sfRes?: StarForceResults;
 }
 
-interface SFResults {
-  hp?: number;
-  endStar?: number;
-  difference: {
-    stat: number;
-    att: number;
-  };
+interface LineData {
+  itemStat: Record<string, string>;
+  statValue: Record<string, number>;
 }
 
-interface PotValue {
-  value: number;
-  stat: string;
-}
+const classStatMap: Record<string, string> = {
+  Mage: 'INT',
+  Thief: 'LUK',
+  Bowman: 'DEX',
+  Warrior: 'STR',
+};
 
-interface PotentialLine {
-  stat?: number;
-  att?: number;
-  boss?: number;
-  ied?: number;
-  cd?: number;
-  cdr?: number;
-  dropmeso?: number;
-  str?: number;
-  dex?: number;
-  int?: number;
-  luk?: number;
-}
-
-interface PotLine {
-  value: number;
-  stat: string | number;
-}
-
-interface PotValues {
-  first: PotLine;
-  second: PotLine;
-  third: PotLine;
-}
+const toNumber = (value: string | number | undefined): number => {
+  if (value === undefined) return 0;
+  return typeof value === 'string' ? parseFloat(value) || 0 : value;
+};
 
 export default function GearRes({
   selectedGear,
   potLines,
   sfStats,
-  setNumber,
   setStats,
+  sfRes,
 }: GearProps) {
-  const [endStar, setEndStar] = useState(null);
-
-  const [potValues, setPotValues] = useState({
-    first: { value: 0, stat: '' },
-    second: { value: 0, stat: '' },
-    third: { value: 0, stat: '' },
+  const [endStar, setEndStar] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [lines, setLines] = useState({
+    line1: '',
+    line2: '',
+    line3: '',
   });
-
-
-  useEffect(() => {
-    const savedEndStar = localStorage.getItem('endStar');
-    if (savedEndStar) {
-      setEndStar(savedEndStar);
-    }
-  }, []);
-  const [sfResults, setSfResults] = useState<SFResults | null>(null);
-
-  const getPotValueAndStat = (
-    potLine: string | PotentialLine | undefined
-  ): PotValue => {
-    if (!potLine) return { value: 0, stat: '' };
-
-    try {
-      const parsed =
-        typeof potLine === 'string' ? JSON.parse(potLine) : potLine;
-
-      const statMap: { key: keyof PotentialLine; label: string }[] = [
-        { key: 'stat', label: 'STAT' },
-        {
-          key: 'att',
-          label: selectedGear.Job === 'Mage' ? 'MAGIC ATT' : 'ATT',
-        },
-        { key: 'boss', label: 'BOSS' },
-        { key: 'ied', label: 'IED' },
-        { key: 'cd', label: 'CRIT DMG' },
-        { key: 'cdr', label: 'COOLDOWN' },
-        { key: 'dropmeso', label: 'DROP/MESO' },
-        { key: 'str', label: 'STR' },
-        { key: 'dex', label: 'DEX' },
-        { key: 'int', label: 'INT' },
-        { key: 'luk', label: 'LUK' },
-      ];
-
-      for (const { key, label } of statMap) {
-        if (parsed[key] !== undefined) {
-          return { value: Number(parsed[key]), stat: label };
-        }
-      }
-
-      return { value: 0, stat: '' };
-    } catch (error) {
-      console.error('Error parsing potential line:', error);
-      return { value: 0, stat: '' };
-    }
-  };
-
-  useEffect(() => {
-    const att =
-      selectedGear.ATK === '' ? selectedGear['M.ATK'] : selectedGear.ATK;
+  
+  // Memoized SF results calculation
+  const sfResults = useMemo(() => {
+    const att = selectedGear.ATK || selectedGear['M.ATK'] || '';
     if (selectedGear.Set === 'Genesis') {
-      const gene = itemStats(0, 22, 200, Number(att), selectedGear.Type);
-      setSfResults(gene);
-    } else {
-      setSfResults(sfStats || null);
+      return itemStats(0, 22, 200, toNumber(att), selectedGear.Type);
     }
+    return sfStats || null;
   }, [selectedGear, sfStats]);
 
-  useEffect(() => {
-    if (!potLines) return;
-    setPotValues({
-      first: getPotValueAndStat(potLines.first),
-      second: getPotValueAndStat(potLines.second),
-      third: getPotValueAndStat(potLines.third),
+  // Memoized line data parsing
+  const lineData = useMemo(() => {
+    const result: LineData = {
+      itemStat: {},
+      statValue: {},
+    };
+
+    (['line1', 'line2', 'line3'] as const).forEach((lineKey) => {
+      const lineValue = potLines[lineKey];
+      if (!lineValue) return;
+
+      try {
+        const parsed =
+          typeof lineValue === 'string' ? JSON.parse(lineValue) : lineValue;
+        const numericEntry = Object.entries(parsed).find(
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          ([_, value]) => typeof value === 'number'
+        );
+
+        if (!numericEntry) return;
+
+        const [statKey, statValue] = numericEntry;
+        const resolvedStatKey =
+          statKey === 'stat'
+            ? classStatMap[selectedGear?.Job] || statKey
+            : statKey;
+
+        result.itemStat[lineKey] = resolvedStatKey;
+        result.statValue[lineKey] = statValue as number;
+      } catch (error) {
+        console.error(`Error parsing ${lineKey}:`, error);
+      }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedGear.Job, potLines]);
 
-  const toNumber = (value: string | number | undefined): number => {
-    if (value === undefined) return 0;
-    return typeof value === 'string' ? parseFloat(value) || 0 : value;
-  };
+    return result;
+  }, [potLines, selectedGear?.Job]);
 
-  const renderStars = () => {
+  console.log(lineData)
+
+  // Effect for localStorage synchronization
+  useEffect(() => {
+    let savedEndStar;
+    if (sfRes === null) savedEndStar = '0';
+    else savedEndStar = localStorage.getItem('endStar');
+    if (savedEndStar) setEndStar(savedEndStar);
+
+    const updateFromLocalStorage = () => {
+      setLines({
+        line1: localStorage.getItem('potLine1') || '',
+        line2: localStorage.getItem('potLine2') || '',
+        line3: localStorage.getItem('potLine3') || '',
+      });
+    };
+
+    updateFromLocalStorage();
+
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key && ['potLine1', 'potLine2', 'potLine3'].includes(e.key)) {
+        updateFromLocalStorage();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, [sfRes]);
+
+  // Memoized star rendering
+  const renderStars = useCallback(() => {
     const totalStars = selectedGear.Set === 'Genesis' ? 22 : Number(endStar);
     const starRows = [];
 
@@ -152,11 +133,14 @@ export default function GearRes({
       const starsInRow = [];
       for (let col = 0; col < 5; col++) {
         const starIndex = row * 5 + col;
-        const isFilled = starIndex < totalStars;
         starsInRow.push(
           <Image
             key={starIndex}
-            src={isFilled ? '/image/Star_Icon.svg' : '/image/No_Star_Icon.svg'}
+            src={
+              starIndex < totalStars
+                ? '/image/Star_Icon.svg'
+                : '/image/No_Star_Icon.svg'
+            }
             width={16}
             height={16}
             alt="star"
@@ -172,7 +156,7 @@ export default function GearRes({
     }
 
     return starRows;
-  };
+  }, [endStar, selectedGear.Set]);
 
   const renderStatWithBonus = (
     baseValue: number | string | undefined,
@@ -183,118 +167,116 @@ export default function GearRes({
     return `${base + bonus} (${base} + ${bonus})`;
   };
 
+  const itemName = selectedGear['Item Name'].replace(/_/g, ' ');
+  const mainStatValue = selectedGear['Main Stat'];
+  const subStatValue = selectedGear['Sub Stat'];
+  const atkValue = selectedGear.ATK || selectedGear['M.ATK'];
+  const NON_SF_TYPES = new Set([
+    'Black_Heart',
+    'Genesis_Badge',
+    `Mitra's_Rage`,
+    `Crystal_Ventus_Badge`,
+    'Cursed_Spellbook',
+    'Stone_Of_Eternal_Life',
+    'Pinky_Holy_Cup',
+  ]);
+  const NON_CUBE_TYPES = new Set([
+    'Black_Heart',
+    'Genesis_Badge',
+    'Crystal_Ventus_Badge',
+    'Cursed_Spellbook',
+    'Stone_Of_Eternal_Life',
+    'Pinky_Holy_Cup',
+  ]);
   return (
     <>
       <div className="flex flex-col justify-between items-center w-full p-[12px]">
-        <div className="grid grid-cols-3 w-full gap-[8px]">{renderStars()}</div>
+        {/* Starforce Section */}
+        {!NON_SF_TYPES.has(selectedGear?.['Item Name'] ?? '') ? (
+          <div className="grid grid-cols-3 w-full gap-[8px]">
+            {renderStars()}
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 w-full gap-[8px]"></div>
+        )}
 
+        {/* Item Image */}
         <Image
           src={`/image/items/${selectedGear['Item Name']}.png`}
           width={184}
           height={184}
-          alt={selectedGear['Item Name'].replace(/_/g, ' ')}
+          alt={itemName}
           className="p-[4px]"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = '/image/items/fallback.png';
+          }}
         />
 
+        {/* Stats Section */}
         <div className="flex w-full">
-          {potLines ? (
+          {/* Potential Stats */}
+          {!NON_CUBE_TYPES.has(selectedGear?.['Item Name'] ?? '') &&
+          !(
+            lineData?.statValue?.line1 === 1 &&
+            lineData?.statValue?.line2 === 1 &&
+            lineData?.statValue?.line3 === 1
+          ) ? (
             <div className="flex flex-col gap-[4px] w-full mr-[16px]">
-              {potLines?.first && potValues.first.stat && (
-                <div className="flex flex-col gap-[4px] w-full">
-                  <h5 className="opacity-60 text-[#00B188]">Potential:</h5>
-                  <div className="flex justify-between w-full">
-                    <h5 className="text-[#00B188]">{potValues.first.stat}:</h5>
+              <h5 className="opacity-60 text-[#00B188]">Potential:</h5>
+              {Object.entries(lineData?.itemStat ?? {}).map(
+                ([lineKey, statName]) => (
+                  <div key={lineKey} className="flex justify-between w-full">
+                    <h5 className="text-[#00B188]">
+                      {statName?.toString().toUpperCase()}:
+                    </h5>
                     <h6 className="text-[#00B188]">
-                      +{potValues.first.value}%
+                      +{lineData?.statValue?.[lineKey] ?? 0}%
                     </h6>
                   </div>
-                </div>
-              )}
-              {potLines?.second && potValues.second.stat && (
-                <div className="flex justify-between w-full">
-                  <h5 className="text-[#00B188]">{potValues.second.stat}:</h5>
-                  <h6 className="text-[#00B188]">+{potValues.second.value}%</h6>
-                </div>
-              )}
-              {potLines?.third && potValues.third.stat && (
-                <div className="flex justify-between w-full">
-                  <h5 className="text-[#00B188]">{potValues.third.stat}:</h5>
-                  <h6 className="text-[#00B188]">+{potValues.third.value}%</h6>
-                </div>
+                )
               )}
             </div>
-          ) : (
-            <div />
-          )}
+          ) : null}
+
+          {/* Set Stats */}
           <div className="w-full">
             {setStats ? (
               <div className="flex flex-col gap-[4px]">
-                <div className="flex w-full gap-[4px] justify-start items-center">
-                  {/* <h5 className='opacity-60'>Set Bonus:</h5> */}
-                  <div className="flex gap-[4px]">
-                    {setStats['Set'] && (
-                      <h5 className="opacity-60 h-full border-white border">
-                        {setStats['Set']}
-                      </h5>
-                    )}
-                    {setStats['Set Count'] && (
-                      <h5 className="opacity-60 bg-gray-200 rounded-full border border-gray-400 px-[2px]">
-                        {setStats['Set Count']}
-                      </h5>
-                    )}
-                  </div>
+                <div className="flex gap-[4px] items-center">
+                  {setStats.Set && (
+                    <h5 className="opacity-60 border-white border">
+                      {setStats.Set}
+                    </h5>
+                  )}
+                  {setStats['Set Count'] && (
+                    <h5 className="opacity-60 bg-gray-200 rounded-full border border-gray-400 px-[2px]">
+                      {setStats['Set Count']}
+                    </h5>
+                  )}
                 </div>
-                {setStats.Stat && (
-                  <div className="flex w-full justify-between">
-                    <h5>All Stat:</h5>
-                    <h6>+{setStats.Stat}</h6>
-                  </div>
-                )}
-                {setStats.Att && (
-                  <div className="flex w-full justify-between">
-                    <h5>ATT:</h5>
-                    <h6>+{setStats.Att}</h6>
-                  </div>
-                )}
-                {setStats['HP&MP'] && (
-                  <div className="flex w-full justify-between">
-                    <h5>HP/MP:</h5>
-                    <h6>+{setStats['HP&MP']}</h6>
-                  </div>
-                )}
-                {setStats['Boss Damage'] && (
-                  <div className="flex w-full justify-between">
-                    <h5>Boss:</h5>
-                    <h6>+{setStats['Boss Damage']}</h6>
-                  </div>
-                )}
-                {setStats.IED && (
-                  <div className="flex w-full justify-between">
-                    <h5>IED:</h5>
-                    <h6>+{setStats.IED}</h6>
-                  </div>
-                )}
-                {setStats['Crit Damage'] && (
-                  <div className="flex w-full justify-between">
-                    <h5>Crit Damage:</h5>
-                    <h6>+{setStats['Crit Damage']}</h6>
-                  </div>
-                )}
-                {setStats['Final Damage'] && (
-                  <div className="flex w-full justify-between">
-                    <h5>Final Damage:</h5>
-                    <h6>+{setStats['Final Damage']}</h6>
-                  </div>
-                )}
+
+                {Object.entries(setStats)
+                  .filter(
+                    ([key, value]) =>
+                      !['Set', 'Set Count'].includes(key) && value
+                  )
+                  .map(([key, value]) => (
+                    <div key={key} className="flex justify-between w-full">
+                      <h5>
+                        {key === 'Boss Damage' ? 'Boss' : key.replace('&', '/')}
+                        :
+                      </h5>
+                      <h6>+{value}</h6>
+                    </div>
+                  ))}
               </div>
             ) : (
               <div className="flex flex-col w-full gap-[4px]">
-                <div className="flex gap-[4px]">
-                  <h5 className="opacity-60">Set</h5>
-                </div>
-                <div className="flex gap-[4px]">
-                  <h5 className="opacity-80">{`Input a valid value for "Set Number" to see the respective set bonuses.`}</h5>
-                </div>
+                <h5 className="opacity-60">Set</h5>
+                <h5 className="opacity-80">
+                  {`Input a valid value for "Set Number" to see the respective set bonuses.`}
+                </h5>
               </div>
             )}
           </div>
@@ -302,94 +284,48 @@ export default function GearRes({
       </div>
 
       <div className="flex flex-col justify-start items-start w-full p-[12px] gap-[8px]">
-        <h3 className="flex w-full justify-start leading-[24px]">
-          {selectedGear['Item Name'].replace(/_/g, ' ')}
-        </h3>
-        <div className="flex flex-col h-full w-full gap-[6px] justify-between">
-          <div className="flex justify-between gap-[4px]">
-            <h4>Type:</h4>
-            <p>{selectedGear['Sub-Type']}</p>
-          </div>
-          <div className="flex justify-between gap-[4px]">
-            <h4>Lvl:</h4>
-            <p>{selectedGear.Level}</p>
-          </div>
-          <div className="flex justify-between gap-[4px]">
-            <h4>Set:</h4>
-            <p>{selectedGear.Set || 'none'}</p>
-          </div>
-          <div className="flex justify-between w-full">
-            <h4>Main Stat:</h4>
-            <p>
-              {sfResults
-                ? renderStatWithBonus(
-                    selectedGear['Main Stat'],
-                    sfResults.difference.stat
-                  )
-                : `${selectedGear['Main Stat'] || 0}`}
-            </p>
-          </div>
+        <h3 className="flex w-full justify-start leading-[24px]">{itemName}</h3>
 
-          <div className="flex justify-between w-full">
-            <h4>Sub Stat:</h4>
-            <p>
-              {sfResults
-                ? renderStatWithBonus(
-                    selectedGear['Sub Stat'],
-                    sfResults.difference.stat
-                  )
-                : `${selectedGear['Sub Stat'] || 0}`}
-            </p>
-          </div>
-
-          <div className="flex justify-between w-full">
-            <h4>HP:</h4>
-            <p>{selectedGear.HP || 0}</p>
-          </div>
-
-          <div className="flex justify-between w-full">
-            <h4>MP:</h4>
-            <p>{selectedGear.MP || 0}</p>
-          </div>
-
-          <div className="flex justify-between w-full">
-            <h4>Atk:</h4>
-            <p>
-              {sfResults
-                ? renderStatWithBonus(
-                    selectedGear.ATK,
-                    sfResults.difference.att
-                  )
-                : `${toNumber(selectedGear.ATK)}`}
-            </p>
-          </div>
-
-          <div className="flex justify-between w-full">
-            <h4>M.Atk:</h4>
-            <p>
-              {sfResults
-                ? renderStatWithBonus(
-                    selectedGear.ATK,
-                    sfResults.difference.att
-                  )
-                : `${toNumber(selectedGear.ATK)}`}
-            </p>
-          </div>
-
-          <div className="flex justify-between w-full">
-            <h4>IED:</h4>
-            <p>{selectedGear.IED || 0}</p>
-          </div>
-
-          <div className="flex justify-between w-full">
-            <h4>Boss Damage:</h4>
-            <p>{selectedGear['Boss Damage'] || 0}</p>
-          </div>
-
-          <div className="flex justify-between w-full">
-            <h4>Damage:</h4>
-            <p>{selectedGear.DAMAGE || 0}</p>
-          </div>
+        <div className="flex flex-col w-full gap-[6px]">
+          {[
+            { label: 'Type:', value: selectedGear['Sub-Type'] },
+            { label: 'Lvl:', value: selectedGear.Level },
+            { label: 'Set:', value: selectedGear.Set || 'none' },
+            {
+              label: 'Main Stat:',
+              value: sfResults
+                ? renderStatWithBonus(mainStatValue, sfResults.difference.stat)
+                : `${mainStatValue || 0}`,
+            },
+            {
+              label: 'Sub Stat:',
+              value: sfResults
+                ? renderStatWithBonus(subStatValue, sfResults.difference.stat)
+                : `${subStatValue || 0}`,
+            },
+            { label: 'HP:', value: selectedGear.HP || 0 },
+            { label: 'MP:', value: selectedGear.MP || 0 },
+            {
+              label: 'Atk:',
+              value: sfResults
+                ? renderStatWithBonus(atkValue, sfResults.difference.att)
+                : `${toNumber(atkValue)}`,
+            },
+            {
+              label: 'M.Atk:',
+              value: sfResults
+                ? renderStatWithBonus(atkValue, sfResults.difference.att)
+                : `${toNumber(atkValue)}`,
+            },
+            { label: 'IED:', value: selectedGear.IED || 0 },
+            { label: 'Boss Damage:', value: selectedGear['Boss Damage'] || 0 },
+            { label: 'Damage:', value: selectedGear.Damage || 0 },
+          ].map((item, index) => (
+            <div key={index} className="flex justify-between w-full">
+              <h4>{item.label}</h4>
+              <p>{item.value}</p>
+            </div>
+          ))}
         </div>
       </div>
     </>

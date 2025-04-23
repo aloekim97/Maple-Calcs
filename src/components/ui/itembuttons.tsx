@@ -6,6 +6,7 @@ import { useInView } from 'react-intersection-observer';
 interface ItemButtonProps {
   item: Item;
   onClick?: () => void;
+  priority?: boolean;
 }
 
 const getJobColor = (job: string | null): string => {
@@ -25,7 +26,7 @@ const getJobColor = (job: string | null): string => {
   }
 };
 
-const ItemButton = ({ item, onClick }: ItemButtonProps) => {
+const ItemButton = ({ item, onClick, priority = false }: ItemButtonProps) => {
   const [imageSrc, setImageSrc] = useState(
     `/image/items/${item['Item Name']}.png`
   );
@@ -33,39 +34,41 @@ const ItemButton = ({ item, onClick }: ItemButtonProps) => {
   const borderColor = getJobColor(item.Job);
   const [ref, inView] = useInView({
     triggerOnce: true,
-    rootMargin: '200px 0px', // Load when 200px away from viewport
+    rootMargin: '200px',
+    threshold: 0.01,
   });
 
   useEffect(() => {
-    if (!inView) return;
+    if (!inView && !priority) return;
 
-    const loadImage = async () => {
-      // 1. Check cache first
-      if ('caches' in window) {
-        const cached = await caches.match(
-          `/image/items/${item['Item Name']}.png`
-        );
-        if (cached) {
-          setIsLoaded(true);
-          return;
-        }
-      }
+    // Create image element without 'new' keyword
+    const img = document.createElement('img');
+    img.src = `/image/items/${item['Item Name']}.png`;
 
-      // 2. Fallback to network with timeout
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 3000);
-
-      const res = await fetch(`/image/items/${item['Item Name']}.png`, {
-        signal: controller.signal,
-      });
-      clearTimeout(timeout);
-
-      if (!res.ok) throw new Error('Failed to load');
+    const handleLoad = () => {
       setIsLoaded(true);
+      // Clean up event listeners
+      img.removeEventListener('load', handleLoad);
+      img.removeEventListener('error', handleError);
     };
 
-    loadImage();
-  }, [inView, item]);
+    const handleError = () => {
+      setImageSrc('/image/items/fallback.png');
+      setIsLoaded(true);
+      // Clean up event listeners
+      img.removeEventListener('load', handleLoad);
+      img.removeEventListener('error', handleError);
+    };
+
+    img.addEventListener('load', handleLoad);
+    img.addEventListener('error', handleError);
+
+    // Cleanup function
+    return () => {
+      img.removeEventListener('load', handleLoad);
+      img.removeEventListener('error', handleError);
+    };
+  }, [inView, item, priority]);
 
   return (
     <button
@@ -83,8 +86,10 @@ const ItemButton = ({ item, onClick }: ItemButtonProps) => {
           <Image
             src={imageSrc}
             alt={item['Item Name'].replace(/_/g, ' ')}
-            width={100}
-            height={100}
+            width={40}
+            height={40}
+            loading={priority ? 'eager' : 'lazy'}
+            priority={priority}
             onError={() => {
               setImageSrc('/image/items/fallback.png');
             }}

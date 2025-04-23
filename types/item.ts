@@ -13,6 +13,6 @@ export interface Item {
   "M.ATK": string;
   IED: number | string;
   "Boss Damage": string;
-  DAMAGE: string;
+  Damage?: string;
   "ADJ Std": number;
 }

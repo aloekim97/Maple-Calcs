@@ -11,7 +11,8 @@ type PotentialStat =
   | 'boss'
   | 'ied'
   | 'att'
-  | 'dropmeso'
+  | 'drop'
+  | 'meso'
   | 'any';
 
 type Tier = 'low' | 'high';
@@ -36,10 +37,11 @@ const SPECIAL_LINE: Record<
   cd: { L: [8], U: [] },
   boss: { L: [35, 40], U: [30] },
   ied: { L: [35, 40], U: [30] },
-  dropmeso: { L: [20], U: [] },
-  att: { 
-    low: { L: [12], U: [9] }, 
-    high: { L: [13], U: [10] } 
+  drop: { L: [20], U: [] },
+  meso: { L: [20], U: [] },
+  att: {
+    low: { L: [12], U: [9] },
+    high: { L: [13], U: [10] },
   },
   any: { L: [1], U: [1] },
 };
@@ -56,7 +58,8 @@ interface StatSums {
   boss: number;
   ied: number;
   att: number;
-  dropmeso: number;
+  drop: number;
+  meso: number;
   any: number;
 }
 
@@ -68,7 +71,8 @@ function normalizeStatSums(partialSums: Partial<StatSums>): StatSums {
     boss: 0,
     ied: 0,
     att: 0,
-    dropmeso: 0,
+    drop: 0,
+    meso: 0,
     any: 0,
     ...partialSums,
   };
@@ -106,7 +110,10 @@ function getLineValue(line: string): {
   return { stat, value, formatted };
 }
 
-function getSpecialLineValues(stat: PotentialStat, tier: Tier): SpecialLineValues {
+function getSpecialLineValues(
+  stat: PotentialStat,
+  tier: Tier
+): SpecialLineValues {
   if (stat === 'att') {
     const attValues = SPECIAL_LINE[stat] as AttSpecialLineValues;
     return attValues[tier];
@@ -117,6 +124,7 @@ function getSpecialLineValues(stat: PotentialStat, tier: Tier): SpecialLineValue
 function findSumPermutations(targetSums: StatSums, tier: Tier): Combination[] {
   const combinations: Combination[] = [];
   const requestedStats = Object.entries(targetSums)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .filter(([_, sum]) => sum > 0)
     .map(([stat]) => stat as PotentialStat);
 
@@ -198,17 +206,13 @@ function findSumPermutations(targetSums: StatSums, tier: Tier): Combination[] {
 
   generateOrderedCombinations();
 
-  if (combinations.length === 0) {
-    throw new Error('No valid combinations found. Check your input lines.');
-  }
-
   return combinations;
 }
 
 export default function potentialPermutations(
   lines: { first: string; second: string; third: string },
   tier: Tier
-): Combination[] | { error: string } {
+): Combination[] {
   const lineComp = aggregateLines(lines);
   const normalizedSums = normalizeStatSums(lineComp);
   return findSumPermutations(normalizedSums, tier);

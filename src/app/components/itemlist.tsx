@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import items from '../../../public/data.json';
 import ItemButton from '@/components/ui/itembuttons';
 import { Item } from '../../../types/item';
@@ -15,13 +15,36 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/filter';
-import { Label } from '@radix-ui/react-label';
 
 interface ItemsPageProps {
   setSelectedGear: Dispatch<SetStateAction<Item | null>>;
-  setNumber: string; // Add this
-  setSetNumber: Dispatch<SetStateAction<string>>; // Add this
+  setNumber: string;
+  setSetNumber: Dispatch<SetStateAction<string>>;
 }
+
+// Constants for better maintainability
+const ITEM_TYPES = [
+  'Weapon',
+  'Emblem',
+  'Hat',
+  'Top',
+  'Bottom',
+  'Shoes',
+  'Gloves',
+  'Cape/Belt/Shoulder',
+  'Accessory',
+  'Pocket',
+  'Badge',
+  'Heart'
+];
+
+const JOB_TYPES = [
+  'Warrior',
+  'Mage',
+  'Bowman',
+  'Thief',
+  'Pirate'
+];
 
 const itemList = items as Item[];
 
@@ -35,41 +58,54 @@ const ItemsPage = ({
   const [itemSet, setItemSet] = useState<string | null>(null);
   const [jobFilter, setJobFilter] = useState<string | null>(null);
 
-  const changeNum = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const filteredItems = useMemo(() => {
+    return itemList.filter((item) => {
+      const matchesSearch = item['Item Name'].toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesType = itemType ? item.Type === itemType : true;
+      const matchesSet = itemSet ? item.Set === itemSet : true;
+      const matchesJob = jobFilter ? item.Job === jobFilter : true;
+
+      return matchesSearch && matchesType && matchesSet && matchesJob;
+    });
+  }, [searchTerm, itemType, itemSet, jobFilter]);
+
+  const handleSetNumberChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    // Update parent state directly
-    setSetNumber(value || '1'); // Default to '2' if empty
-  };
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value.toLowerCase());
-  };
+    setSetNumber(value || '1'); 
+  }, [setSetNumber]);
 
-  const filteredItems = itemList.filter((item) => {
-    const matchesSearch = item['Item Name'].toLowerCase().includes(searchTerm);
-    const matchesType = itemType ? item.Type === itemType : true;
-    const matchesSet = itemSet ? item.Set === itemSet : true;
-    const matchesJob = jobFilter ? item.Job === jobFilter : true;
+  const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  }, []);
 
-    return matchesSearch && matchesType && matchesSet && matchesJob;
-  });
+  const handleTypeFilter = useCallback((val: string) => {
+    setItemType(val === 'all' ? null : val);
+  }, []);
+
+  const handleJobFilter = useCallback((val: string) => {
+    setJobFilter(val === 'all' ? null : val);
+  }, []);
+
+  const handleItemSelect = useCallback((item: Item) => {
+    setSelectedGear(item);
+  }, [setSelectedGear]);
 
   return (
-    <div className="p-4 flex flex-col gap-[8px]">
-      <div className="flex gap-[8px]">
-        <div className="flex-1 flex-col gap-[4px]">
-          <p className="p3 opacity-60">Search Items</p>
+    <div className="p-4 flex flex-col gap-2">
+      <div className="flex gap-2">
+        <FilterSection label="Search Items">
           <Input2
             type="text"
             placeholder="Search..."
             value={searchTerm}
             onChange={handleSearch}
           />
-        </div>
-        <div className="flex-1 flex-col gap-[4px]">
-          <p className="p3 opacity-60">Filter by Type</p>
+        </FilterSection>
+
+        <FilterSection label="Filter by Type">
           <Select
             value={itemType || 'all'}
-            onValueChange={(val) => setItemType(val === 'all' ? null : val)}
+            onValueChange={handleTypeFilter}
           >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Filter by Type" />
@@ -78,20 +114,7 @@ const ItemsPage = ({
               <SelectGroup>
                 <SelectLabel>Type</SelectLabel>
                 <SelectItem value="all">All</SelectItem>
-                {[
-                  'Weapon',
-                  'Emblem',
-                  'Hat',
-                  'Top',
-                  'Bottom',
-                  'Shoes',
-                  'Gloves',
-                  'Cape/Belt/Shoulder',
-                  'Accessory',
-                  'Pocket',
-                  'Badge',
-                  'Heart',
-                ].map((type) => (
+                {ITEM_TYPES.map((type) => (
                   <SelectItem key={type} value={type}>
                     {type}
                   </SelectItem>
@@ -99,13 +122,13 @@ const ItemsPage = ({
               </SelectGroup>
             </SelectContent>
           </Select>
-        </div>
+        </FilterSection>
 
-        <div className="flex-1 flex-col gap-[4px]">
-          <p className="p3 opacity-60">Filter by Job</p>
+        {/* Job Filter */}
+        <FilterSection label="Filter by Job">
           <Select
             value={jobFilter || 'all'}
-            onValueChange={(val) => setJobFilter(val === 'all' ? null : val)}
+            onValueChange={handleJobFilter}
           >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Filter by Job" />
@@ -114,7 +137,7 @@ const ItemsPage = ({
               <SelectGroup>
                 <SelectLabel>Job</SelectLabel>
                 <SelectItem value="all">All</SelectItem>
-                {['Warrior', 'Mage', 'Bowman', 'Thief', 'Pirate'].map((job) => (
+                {JOB_TYPES.map((job) => (
                   <SelectItem key={job} value={job}>
                     {job}
                   </SelectItem>
@@ -122,31 +145,49 @@ const ItemsPage = ({
               </SelectGroup>
             </SelectContent>
           </Select>
-        </div>
-        <div className="flex w-[1px] rounded-full h-full bg-black opacity-20" />
-        <div className="flex-1 flex-col gap-[4px]">
-          <p className="p3 opacity-60">Set Number</p>
+        </FilterSection>
+
+        {/* Divider */}
+        <div className="flex w-px rounded-full h-full bg-black opacity-20" />
+
+        {/* Set Number Input */}
+        <FilterSection label="Set Number">
           <Input
             type="number"
             placeholder="Set#"
-            value={setNumber} 
-            onChange={changeNum}
+            value={setNumber}
+            onChange={handleSetNumberChange}
             min={1}
           />
-        </div>
+        </FilterSection>
       </div>
 
-      <div className="grid grid-cols-14 overflow-y-auto w-full justify-start items-start overflow-x-hidden pr-[4px] pt-0">
+      {/* Items Grid */}
+      <div className="grid grid-cols-14 overflow-y-auto w-full justify-start items-start overflow-x-hidden pr-1 pt-0">
         {filteredItems.map((item) => (
           <ItemButton
-            key={item['Item Name']}
+            key={`${item['Item Name']}-${item.Type}`}
             item={item}
-            onClick={() => setSelectedGear(item)}
+            onClick={() => handleItemSelect(item)}
           />
         ))}
       </div>
     </div>
   );
 };
+
+// Helper component for filter sections
+const FilterSection = ({ 
+  label, 
+  children 
+}: { 
+  label: string; 
+  children: React.ReactNode 
+}) => (
+  <div className="flex-1 flex-col gap-1">
+    <p className="p3 opacity-60">{label}</p>
+    {children}
+  </div>
+);
 
 export default ItemsPage;

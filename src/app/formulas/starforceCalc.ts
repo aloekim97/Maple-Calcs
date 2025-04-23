@@ -78,19 +78,22 @@ export function calculateKMS(
   // Apply cost modifiers
   const modifiedCost = applyCostModifiers(totalCost, discount30, mvpDiscount);
 
+  const getPercentileCost = (percentile: number): number => {
+    if (modifiedCost <= 0) return 0;
+    return Math.ceil(
+      Math.log(1 - percentile) / Math.log(1 - 1 / modifiedCost)
+    );
+  };
+
   // Calculate boom statistics
   const totalBooms = currentStats 
     ? targetStats.totalBooms - currentStats.totalBooms 
     : targetStats.totalBooms;
 
-  // Calculate standard deviation (simplified model)
-  const costPerAttempt = modifiedCost / targetStats.totalAttempts;
-  const stdDev = Math.sqrt(targetStats.totalAttempts) * costPerAttempt * 0.5;
-
   // Calculate result metrics
-  const luckyCost = Math.max(0, modifiedCost - stdDev);
-  const unluckyCost = modifiedCost + stdDev;
-  const medianCost = modifiedCost;
+  const luckyCost = getPercentileCost(0.75);
+  const unluckyCost = getPercentileCost(0.25);
+  const medianCost = getPercentileCost(0.50);
 
   return {
     averageCost: Math.round(modifiedCost).toLocaleString(),

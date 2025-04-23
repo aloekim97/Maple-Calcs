@@ -1,9 +1,19 @@
 // app/page.tsx
 import GearCalculator from './components/gearcalc';
 import ServiceWorker from './components/ServiceWorker';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Gear Diff',
+  description: 'Calculate gear differences and optimizations',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon-16x16.png',
+    apple: '/apple-touch-icon.png',
+  },
+};
 
 export default function Home() {
-  
   return (
     <div className="flex flex-col">
       <ServiceWorker />

@@ -13,7 +13,8 @@ export interface ItemProbabilities {
   stat: ProbabilityTiers;
   cdr?: SpecialStatProbability;
   cd?: SpecialStatProbability;
-  dropmeso?: SpecialStatProbability;
+  drop?: SpecialStatProbability;
+  meso?: SpecialStatProbability;
   att?: ProbabilityTiers;
   boss?: SpecialStatProbability;
   ied?: SpecialStatProbability;
@@ -49,15 +50,14 @@ export interface CubeTypeProbabilities {
   att?: CubeProbabilities;
   any?: CubeProbabilities;
 }
-
 export const CUBE_PROBABILITIES: { [key: string]: CubeTypeProbabilities } = {
   black: {
-    'L': { line1: 1, line2: 0.2, line3: 0.05 },
-    'U': { line1: 1, line2: 0.8, line3: 0.95 },
+    L: { line1: 1, line2: 0.2, line3: 0.05 },
+    U: { line1: 1, line2: 0.8, line3: 0.95 },
   },
   red: {
-    'L': { line1: 1, line2: 0.1, line3: 0.01 },
-    'U': { line1: 1, line2: 0.9, line3: 0.99 },
+    L: { line1: 1, line2: 0.1, line3: 0.01 },
+    U: { line1: 1, line2: 0.9, line3: 0.99 },
   },
 };
 
@@ -66,7 +66,9 @@ export const CUBE_COST: { [key: string]: number } = {
   red: 12000000,
 };
 
-export const PRIME_STAT_VALUES: { [key: string]: { L: number[]; U: number[] } } = {
+export const PRIME_STAT_VALUES: {
+  [key: string]: { L: number[]; U: number[] };
+} = {
   low: {
     L: [12, 9],
     U: [9, 6],
@@ -77,7 +79,22 @@ export const PRIME_STAT_VALUES: { [key: string]: { L: number[]; U: number[] } } 
   },
 };
 
-export const WSE_PROBABILITIES: { [key: string]: WSEProbabilities } = {
+export type WSEItemType = 'Weapon' | 'Emblem' | 'Secondary';
+export type RegularItemType =
+  | 'Hat'
+  | 'Top'
+  | 'Bottom'
+  | 'Shoes'
+  | 'Gloves'
+  | 'Cape'
+  | 'Belt'
+  | 'Shoulder'
+  | 'Accessory'
+  | 'Badge'
+  | 'Heart';
+export type ItemType = WSEItemType | RegularItemType;
+
+export const WSE_PROBABILITIES: Record<WSEItemType, WSEProbabilities> = {
   Weapon: {
     boss30: 6.66,
     boss35: 9.756,
@@ -113,7 +130,7 @@ export const WSE_PROBABILITIES: { [key: string]: WSEProbabilities } = {
   },
 };
 
-export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
+export const ITEM_PROBABILITIES: Record<RegularItemType, ItemProbabilities> = {
   Hat: {
     stat: {
       statPrime: 9.76,
@@ -192,7 +209,10 @@ export const ITEM_PROBABILITIES: { [key: string]: ItemProbabilities } = {
       statNonPrime: 12.48,
       allNonPrime: 10,
     },
-    dropmeso: {
+    drop: {
+      20: 7.69,
+    },
+    meso: {
       20: 7.69,
     },
   },

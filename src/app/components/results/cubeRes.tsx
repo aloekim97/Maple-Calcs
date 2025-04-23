@@ -39,7 +39,6 @@ export default function CubeCost({ cubeRes }: CubeRes) {
 
     return transformed.toFixed(1).replace(/\.?0+$/, '') + suffix;
   };
-
   const averageCostDisplay = transformAndFormat(cubeRes?.averageCost);
   const unlucky = transformAndFormat(cubeRes?.unluckyCost);
   const lucky = transformAndFormat(cubeRes?.luckyCost);
@@ -66,7 +65,7 @@ export default function CubeCost({ cubeRes }: CubeRes) {
             Average:
           </h4>
           <p className="font-normal flex justify-end h-full w-full items-center">
-            {median === '0' ? '0' : averageCostDisplay}
+            {averageCostDisplay}
           </p>
           <h4 className="flex justify-start h-full w-full items-center">
             Lower:

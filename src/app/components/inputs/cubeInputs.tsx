@@ -15,18 +15,15 @@ import {
 import { Switch } from '@/components/ui/switch';
 import Image from 'next/image';
 import { Item } from '../../../../types/item';
-import { Lines } from '../gearcalc';
+import { PotLines } from '../gearcalc';
 
+type PotentialTier = 'rare' | 'epic' | 'unique' | 'legendary';
 export type CubeType = 'black' | 'red';
 
 interface CubeProps {
   selectedGear: Item | null;
   setCubeResults: React.Dispatch<React.SetStateAction<PotCalcResult | null>>;
-  setPotLines: React.Dispatch<React.SetStateAction<Lines | null>>;
-}
-
-export interface CubeHandle {
-  calculate: () => { error?: string; success?: boolean };
+  setPotLines: React.Dispatch<React.SetStateAction<PotLines | null>>;
 }
 
 export default function Cube({
@@ -36,11 +33,119 @@ export default function Cube({
 }: CubeProps) {
   const [inputs, setInputs] = useState({
     itemType: selectedGear?.Type || '',
-    startingTier: 'rare',
-    desiredTier: 'legendary',
-    cubeType: 'black',
+    startingTier: 'rare' as PotentialTier,
+    desiredTier: 'legendary' as PotentialTier,
+    cubeType: 'black' as CubeType,
     itemLevel: selectedGear?.Level || 0,
   });
+    const [events, setEvents] = useState({
+    canCube: true,
+  });
+
+  const [lines, setLines] = useState({
+    line1: '{"any": 1}',
+    line2: '{"any": 1}',
+    line3: '{"any": 1}',
+  });
+
+  const NON_CUBE_TYPES = useMemo(
+    () =>
+      new Set([
+        'Black_Heart',
+        'Genesis_Badge',
+        'Crystal_Ventus_Badge',
+        'Cursed_Spellbook',
+        'Stone_Of_Eternal_Life',
+        'Pinky_Holy_Cup',
+      ]),
+    []
+  );
+    const disabledState = useMemo(() => {
+      if (!selectedGear) return { isDisabled: false, reason: 'none' };
+  
+      // Hard disabled check
+      if (NON_CUBE_TYPES.has(selectedGear['Item Name'])) {
+        return { isDisabled: true, reason: 'hard' };
+      }
+  
+      // User toggled disabled
+      if (!events.canCube) {
+        return { isDisabled: true, reason: 'soft' };
+      }
+      return { isDisabled: false, reason: 'none' };
+    }, [selectedGear, NON_CUBE_TYPES, events.canCube]);
+
+  useEffect(() => {
+    if (!selectedGear) return;
+
+    // Early return if gear is invalid
+    if (!selectedGear['Item Name']) {
+      console.error('Selected gear has no Item Name');
+      return;
+    }
+
+    const cannotCube = NON_CUBE_TYPES.has(selectedGear['Item Name']);
+
+    // Reset lines if cannot cube
+    if (disabledState.reason === 'hard') {
+      setLines({
+        line1: '{"any": 1}',
+        line2: '{"any": 1}',
+        line3: '{"any": 1}',
+      });
+      localStorage.setItem(`potLine1`, '{"any": 1}');
+      localStorage.setItem(`potLine2`, '{"any": 1}');
+      localStorage.setItem(`potLine3`, '{"any": 1}');
+      updateParentPotLines({
+        line1: '{"any": 1}',
+        line2: '{"any": 1}',
+        line3: '{"any": 1}',
+      })};
+    if (disabledState.reason === 'soft') {
+      setLines({
+        line1: '{"any": 1}',
+        line2: '{"any": 1}',
+        line3: '{"any": 1}',
+      });
+      updateParentPotLines({
+        line1: '{"any": 1}',
+        line2: '{"any": 1}',
+        line3: '{"any": 1}',
+      })};
+    if (disabledState.reason === 'none') {
+      setLines({
+        line1: localStorage.getItem('potline1'),
+        line2: localStorage.getItem('potline2'),
+        line3: localStorage.getItem('potline3'),
+      });
+      updateParentPotLines({
+        line1: localStorage.getItem('potline1'),
+        line2: localStorage.getItem('potline2'),
+        line3: localStorage.getItem('potline3'),
+      });
+      
+    }
+
+    setEvents((prev) => ({
+      ...prev,
+      canCube: !cannotCube,
+    }));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedGear, NON_CUBE_TYPES]);
+
+  useEffect(() => {
+    if (disabledState.reason === 'soft') {
+      setInputs((prev) => ({ ...prev, line1: '' }));
+    }
+    if (disabledState.reason === 'none') {
+      setInputs((prev) => ({
+        ...prev,
+        line1: localStorage.getItem('potline'),
+        line2: localStorage.getItem('potline2'),
+        line3: localStorage.getItem('potline3'),
+      }));
+    }
+  }, [disabledState.reason]);
 
   // Load saved potlines from localStorage
   const lineOptions = useMemo(() => {
@@ -54,24 +159,46 @@ export default function Cube({
     };
   }, [inputs.itemType, inputs.itemLevel]);
 
-  const [lines, setLines] = useState({
-    line1: '',
-    line2: '',
-    line3: '',
-  });
+  // Load initial lines from localStorage
+  useEffect(() => {
+    const loadLines = () => {
+      const newLines = {
+        line1: localStorage.getItem('potLine1') || '{"any": 1}',
+        line2: localStorage.getItem('potLine2') || '{"any": 1}',
+        line3: localStorage.getItem('potLine3') || '{"any": 1}',
+      };
+      setLines(newLines);
+      updateParentPotLines(newLines);
+    };
+    loadLines();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const handleLineChange = (line: keyof typeof lines, value: string) => {
-    setLines((prev) => ({ ...prev, [line]: value }));
-    setPotLines((prev) => ({ ...prev, [line]: value }))
+  const updateParentPotLines = (currentLines: typeof lines) => {
+    try {
+      const parsedLines = {
+        line1: currentLines.line1 ? JSON.parse(currentLines.line1) : undefined,
+        line2: currentLines.line2 ? JSON.parse(currentLines.line2) : undefined,
+        line3: currentLines.line3 ? JSON.parse(currentLines.line3) : undefined,
+      };
+      setPotLines(parsedLines);
+    } catch (error) {
+      console.error('Error parsing pot lines:', error);
+      setPotLines(null);
+    }
   };
 
-  // Save potlines to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem('potLine1', lines.line1);
-    localStorage.setItem('potLine2', lines.line2);
-    localStorage.setItem('potLine3', lines.line3);
-  }, [lines.line1, lines.line2, lines.line3]);
+  const handleLineChange = (line: keyof typeof lines, value: string) => {
+    const newLines = {
+      ...lines,
+      [line]: value,
+    };
+    setLines(newLines);
+    localStorage.setItem(`potLine${line.slice(-1)}`, value);
+    updateParentPotLines(newLines);
+  };
 
+  // Update inputs when selectedGear changes
   useEffect(() => {
     if (selectedGear) {
       setInputs((prev) => ({
@@ -81,10 +208,6 @@ export default function Cube({
       }));
     }
   }, [selectedGear]);
-
-  const [events, setEvents] = useState({
-    canCube: true,
-  });
 
   const handleEventToggle = (eventName: keyof typeof events) => {
     setEvents((prev) => ({
@@ -96,14 +219,21 @@ export default function Cube({
   // Main calculation effect
   useEffect(() => {
     try {
-      if (!inputs.itemType || !inputs.itemLevel) {
-        setCubeResults(null);
+      if (!inputs.itemType || !inputs.itemLevel || !events.canCube) {
+        setCubeResults({
+          averageCost: '0',
+          totalProbability: 0,
+          averageTries: 0,
+          luckyCost: '0',
+          unluckyCost: '0',
+          medianCost: '0',
+        });
         return;
       }
 
       const potentialResult = potCalc(
         inputs.itemLevel,
-        inputs.cubeType as 'black' | 'red',
+        inputs.cubeType,
         inputs.startingTier,
         inputs.desiredTier,
         {
@@ -119,13 +249,12 @@ export default function Cube({
       console.error('Calculation error:', error);
       setCubeResults(null);
     }
-  }, [inputs, lines, setCubeResults]);
+  }, [events.canCube, inputs, lines, setCubeResults]);
 
-  const isDisabled = !events.canCube;
   return (
     <div
       className={`flex flex-col grow bg-white p-[16px] rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] h-full w-full justify-between ${
-        isDisabled ? 'opacity-50' : ''
+        disabledState.isDisabled ? 'opacity-50' : ''
       }`}
     >
       {/* Header */}
@@ -139,32 +268,34 @@ export default function Cube({
           />
           <h4>Potential Calculator</h4>
         </div>
+        {disabledState.reason !== 'hard' && (
         <Switch
           id="Can-Starforce"
           checked={events.canCube}
           onCheckedChange={() => handleEventToggle('canCube')}
+          disabled={disabledState.reason === 'hard'}
         />
+        )}
       </div>
 
       {/* Input fields */}
       <div className="flex flex-col gap-[16px]">
-        {/* Tier and cube type selects... */}
         <div className="flex w-full gap-[16px]">
           <div className="w-full">
             <p className="p3">Starting Tier</p>
             <Select
-              value={inputs.cubeType}
-              onValueChange={(value) =>
-                setInputs((prev) => ({ ...prev, cubeType: value }))
+              value={inputs.startingTier}
+              onValueChange={(value: PotentialTier) =>
+                setInputs((prev) => ({ ...prev, startingTier: value }))
               }
-              disabled={isDisabled}
+              disabled={disabledState.isDisabled}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Starting Tier" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Cube Type</SelectLabel>
+                  <SelectLabel>Starting Tier</SelectLabel>
                   <SelectItem value="rare">Rare</SelectItem>
                   <SelectItem value="epic">Epic</SelectItem>
                   <SelectItem value="unique">Unique</SelectItem>
@@ -176,18 +307,18 @@ export default function Cube({
           <div className="w-full">
             <p className="p3">Desired Tier</p>
             <Select
-              value={inputs.cubeType}
-              onValueChange={(value) =>
-                setInputs((prev) => ({ ...prev, cubeType: value }))
+              value={inputs.desiredTier}
+              onValueChange={(value: PotentialTier) =>
+                setInputs((prev) => ({ ...prev, desiredTier: value }))
               }
-              disabled={isDisabled}
+              disabled={disabledState.isDisabled}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Desired Tier" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Cube Type</SelectLabel>
+                  <SelectLabel>Desired Tier</SelectLabel>
                   <SelectItem value="rare">Rare</SelectItem>
                   <SelectItem value="epic">Epic</SelectItem>
                   <SelectItem value="unique">Unique</SelectItem>
@@ -197,12 +328,13 @@ export default function Cube({
             </Select>
           </div>
         </div>
+
         <div>
           <p className="p3">Cube Type</p>
           <Select
             value={inputs.cubeType}
-            disabled={isDisabled}
-            onValueChange={(value) =>
+            disabled={disabledState.isDisabled}
+            onValueChange={(value: CubeType) =>
               setInputs((prev) => ({ ...prev, cubeType: value }))
             }
           >
@@ -218,78 +350,41 @@ export default function Cube({
             </SelectContent>
           </Select>
         </div>
-        <div>
-          <p className="p3">Line 1 (Primary)</p>
-          <Select
-            value={lines.line1}
-            onValueChange={(value) => handleLineChange('line1', value)}
-            disabled={isDisabled}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select Line 1..." />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Primary Line Options</SelectLabel>
-                <SelectItem value={'{"any": 1}'}>Any</SelectItem>
-                {Object.entries(lineOptions.line1).map(([label, value]) => (
-                  <SelectItem key={label} value={JSON.stringify(value)}>
-                    {label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
 
-        <div>
-          <p className="p3">Line 2 (Secondary)</p>
-          <Select
-            value={lines.line2}
-            onValueChange={(value) => handleLineChange('line2', value)}
-            disabled={isDisabled}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select Line 2..." />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Secondary Line Options</SelectLabel>
+        {/* Potential Lines */}
+        {[1, 2, 3].map((lineNum) => (
+          <div key={`line-${lineNum}`}>
+            <p className="p3">
+              Line {lineNum} {lineNum === 1 ? '(Primary)' : '(Secondary)'}
+            </p>
+            <Select
+              value={lines[`line${lineNum}` as keyof typeof lines]}
+              onValueChange={(value) =>
+                handleLineChange(`line${lineNum}` as keyof typeof lines, value)
+              }
+              disabled={disabledState.isDisabled}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder={`Select Line ${lineNum}...`} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>
+                    {lineNum === 1 ? 'Primary' : 'Secondary'} Line Options
+                  </SelectLabel>
+                  {Object.entries(
+                    lineOptions[`line${lineNum}` as keyof typeof lineOptions]
+                  ).map(([label, value]) => (
+                    <SelectItem key={label} value={JSON.stringify(value)}>
+                      {label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
                 <SelectItem value={'{"any": 1}'}>Any</SelectItem>
-                {Object.entries(lineOptions.line2).map(([label, value]) => (
-                  <SelectItem key={label} value={JSON.stringify(value)}>
-                    {label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* Line 3 (Secondary) */}
-        <div>
-          <p className="p3">Line 3 (Secondary)</p>
-          <Select
-            value={lines.line3}
-            onValueChange={(value) => handleLineChange('line3', value)}
-            disabled={isDisabled}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select Line 3..." />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Secondary Line Options</SelectLabel>
-                <SelectItem value={'{"any": 1}'}>Any</SelectItem>
-                {Object.entries(lineOptions.line3).map(([label, value]) => (
-                  <SelectItem key={label} value={JSON.stringify(value)}>
-                    {label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+              </SelectContent>
+            </Select>
+          </div>
+        ))}
       </div>
     </div>
   );

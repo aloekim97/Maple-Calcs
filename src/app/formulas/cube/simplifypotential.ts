@@ -6,6 +6,8 @@ export interface PotentialStats {
   boss?: number;
   ied?: number;
   any?: number;
+  drop?: number;
+  meso?: number;
 }
 
 export default function aggregateLines(lines: {

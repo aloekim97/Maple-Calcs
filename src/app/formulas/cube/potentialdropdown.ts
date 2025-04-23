@@ -281,6 +281,23 @@ export const getGoalOptions = (
       };
     }
 
+    case 'Accessory': {
+      const accessoryStatOptions =
+        lineNumber === 1
+          ? firstLine.map((stat) => [`${stat}% Stat`, { stat }])
+          : otherLines.map((stat) => [`${stat}% Stat`, { stat }]);
+
+      // Create "fake" separate options that both map to dropmeso
+      const dropOption = [['20% Drop Rate', { drop: 20 }]];
+      const mesoOption = [['20% Meso Rate', { meso: 20 }]];
+
+      return {
+        ...Object.fromEntries(accessoryStatOptions),
+        ...Object.fromEntries(dropOption),
+        ...Object.fromEntries(mesoOption),
+      };
+    }
+
     default: {
       const statValues = lineNumber === 1 ? firstLine : otherLines;
       return Object.fromEntries(
