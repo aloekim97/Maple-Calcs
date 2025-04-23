@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { potCalc } from '../../formulas/potentialcalc';
 import { PotCalcResult } from '../../formulas/cube/potentialprobability';
 import { getGoalOptions } from '../../formulas/cube/potentialdropdown';
@@ -19,12 +19,28 @@ import { PotLines } from '../gearcalc';
 
 type PotentialTier = 'rare' | 'epic' | 'unique' | 'legendary';
 export type CubeType = 'black' | 'red';
+type DisabledReason = 'none' | 'soft' | 'hard';
 
 interface CubeProps {
   selectedGear: Item | null;
   setCubeResults: React.Dispatch<React.SetStateAction<PotCalcResult | null>>;
   setPotLines: React.Dispatch<React.SetStateAction<PotLines | null>>;
 }
+
+const DEFAULT_LINES = {
+  line1: '{"any": 1}',
+  line2: '{"any": 1}',
+  line3: '{"any": 1}',
+};
+
+const NON_CUBE_TYPES = new Set([
+  'Black_Heart',
+  'Genesis_Badge',
+  'Crystal_Ventus_Badge',
+  'Cursed_Spellbook',
+  'Stone_Of_Eternal_Life',
+  'Pinky_Holy_Cup',
+]);
 
 export default function Cube({
   selectedGear,
@@ -38,166 +54,62 @@ export default function Cube({
     cubeType: 'black' as CubeType,
     itemLevel: selectedGear?.Level || 0,
   });
-  const [events, setEvents] = useState({
-    canCube: true,
-  });
 
-  const [lines, setLines] = useState({
-    line1: '{"any": 1}',
-    line2: '{"any": 1}',
-    line3: '{"any": 1}',
-  });
+  const [disabledState, setDisabledState] = useState<{
+    isDisabled: boolean;
+    reason: DisabledReason;
+  }>({ isDisabled: false, reason: 'none' });
 
-  const NON_CUBE_TYPES = useMemo(
-    () =>
-      new Set([
-        'Black_Heart',
-        'Genesis_Badge',
-        'Crystal_Ventus_Badge',
-        'Cursed_Spellbook',
-        'Stone_Of_Eternal_Life',
-        'Pinky_Holy_Cup',
-      ]),
-    []
-  );
-  const disabledState = useMemo(() => {
-    if (!selectedGear) return { isDisabled: false, reason: 'none' };
+  const [lines, setLines] = useState(DEFAULT_LINES);
 
-    // Hard disabled check
-    if (NON_CUBE_TYPES.has(selectedGear['Item Name'])) {
-      return { isDisabled: true, reason: 'hard' };
-    }
-
-    // User toggled disabled
-    if (!events.canCube) {
-      return { isDisabled: true, reason: 'soft' };
-    }
-    return { isDisabled: false, reason: 'none' };
-  }, [selectedGear, NON_CUBE_TYPES, events.canCube]);
-
+  // Update disabled state when gear changes
   useEffect(() => {
-    if (!selectedGear) return;
-
-    // Early return if gear is invalid
-    if (!selectedGear['Item Name']) {
-      console.error('Selected gear has no Item Name');
+    if (!selectedGear) {
+      setDisabledState({ isDisabled: false, reason: 'none' });
       return;
     }
 
     const cannotCube = NON_CUBE_TYPES.has(selectedGear['Item Name']);
-
-    // Reset lines if cannot cube
-    if (disabledState.reason === 'hard') {
-      setLines({
-        line1: '{"any": 1}',
-        line2: '{"any": 1}',
-        line3: '{"any": 1}',
-      });
-      localStorage.setItem(`potLine1`, '{"any": 1}');
-      localStorage.setItem(`potLine2`, '{"any": 1}');
-      localStorage.setItem(`potLine3`, '{"any": 1}');
-      updateParentPotLines({
-        line1: '{"any": 1}',
-        line2: '{"any": 1}',
-        line3: '{"any": 1}',
+    if (cannotCube) {
+      setDisabledState({ isDisabled: true, reason: 'hard' });
+    } else {
+      // Check localStorage for user preference
+      const savedState = localStorage.getItem('cubeDisabled');
+      const defaultState =
+        savedState && ['none', 'soft'].includes(savedState)
+          ? (savedState as DisabledReason)
+          : 'none';
+      setDisabledState({
+        isDisabled: defaultState !== 'none',
+        reason: defaultState,
       });
     }
-    if (disabledState.reason === 'soft') {
-      setLines({
-        line1: '{"any": 1}',
-        line2: '{"any": 1}',
-        line3: '{"any": 1}',
-      });
-      updateParentPotLines({
-        line1: '{"any": 1}',
-        line2: '{"any": 1}',
-        line3: '{"any": 1}',
-      });
-    }
-    if (disabledState.reason === 'none') {
-      setLines({
-        line1: localStorage.getItem('potline1'),
-        line2: localStorage.getItem('potline2'),
-        line3: localStorage.getItem('potline3'),
-      });
-      updateParentPotLines({
-        line1: localStorage.getItem('potline1'),
-        line2: localStorage.getItem('potline2'),
-        line3: localStorage.getItem('potline3'),
-      });
-    }
+  }, [selectedGear]);
 
-    setEvents((prev) => ({
-      ...prev,
-      canCube: !cannotCube,
-    }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedGear, NON_CUBE_TYPES]);
-
+  // Reset lines when disabled state changes
   useEffect(() => {
-    if (disabledState.reason === 'soft') {
-      setInputs((prev) => ({ ...prev, line1: '' }));
-    }
-    if (disabledState.reason === 'none') {
-      setInputs((prev) => ({
-        ...prev,
-        line1: localStorage.getItem('potline'),
-        line2: localStorage.getItem('potline2'),
-        line3: localStorage.getItem('potline3'),
-      }));
-    }
-  }, [disabledState.reason]);
-
-  // Load saved potlines from localStorage
-  const lineOptions = useMemo(() => {
-    if (!inputs.itemType || !inputs.itemLevel)
-      return { line1: {}, line2: {}, line3: {} };
-
-    return {
-      line1: getGoalOptions(inputs.itemType, inputs.itemLevel, 1),
-      line2: getGoalOptions(inputs.itemType, inputs.itemLevel, 2),
-      line3: getGoalOptions(inputs.itemType, inputs.itemLevel, 3),
-    };
-  }, [inputs.itemType, inputs.itemLevel]);
-
-  // Load initial lines from localStorage
-  useEffect(() => {
-    const loadLines = () => {
-      const newLines = {
-        line1: localStorage.getItem('potLine1') || '{"any": 1}',
-        line2: localStorage.getItem('potLine2') || '{"any": 1}',
-        line3: localStorage.getItem('potLine3') || '{"any": 1}',
-      };
+    const resetLines = () => {
+      const newLines = DEFAULT_LINES;
       setLines(newLines);
+      ['potLine1', 'potLine2', 'potLine3'].forEach((key, i) => {
+        localStorage.setItem(key, Object.values(newLines)[i]);
+      });
       updateParentPotLines(newLines);
     };
-    loadLines();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  const updateParentPotLines = (currentLines: typeof lines) => {
-    try {
-      const parsedLines = {
-        line1: currentLines.line1 ? JSON.parse(currentLines.line1) : undefined,
-        line2: currentLines.line2 ? JSON.parse(currentLines.line2) : undefined,
-        line3: currentLines.line3 ? JSON.parse(currentLines.line3) : undefined,
+    if (disabledState.reason === 'hard' || disabledState.reason === 'soft') {
+      resetLines();
+    } else {
+      // Load saved lines when enabled
+      const savedLines = {
+        line1: localStorage.getItem('potLine1') || DEFAULT_LINES.line1,
+        line2: localStorage.getItem('potLine2') || DEFAULT_LINES.line2,
+        line3: localStorage.getItem('potLine3') || DEFAULT_LINES.line3,
       };
-      setPotLines(parsedLines);
-    } catch (error) {
-      console.error('Error parsing pot lines:', error);
-      setPotLines(null);
+      setLines(savedLines);
+      updateParentPotLines(savedLines);
     }
-  };
-
-  const handleLineChange = (line: keyof typeof lines, value: string) => {
-    const newLines = {
-      ...lines,
-      [line]: value,
-    };
-    setLines(newLines);
-    localStorage.setItem(`potLine${line.slice(-1)}`, value);
-    updateParentPotLines(newLines);
-  };
+  }, [disabledState.reason]);
 
   // Update inputs when selectedGear changes
   useEffect(() => {
@@ -210,17 +122,54 @@ export default function Cube({
     }
   }, [selectedGear]);
 
-  const handleEventToggle = (eventName: keyof typeof events) => {
-    setEvents((prev) => ({
-      ...prev,
-      [eventName]: !prev[eventName],
-    }));
-  };
+  // Handle line changes
+  const handleLineChange = useCallback(
+    (line: keyof typeof lines, value: string) => {
+      if (disabledState.isDisabled) return;
+
+      const newLines = {
+        ...lines,
+        [line]: value,
+      };
+      setLines(newLines);
+      localStorage.setItem(`potLine${line.slice(-1)}`, value);
+      updateParentPotLines(newLines);
+    },
+    [disabledState.isDisabled, lines]
+  );
+
+  // Update parent pot lines
+  const updateParentPotLines = useCallback(
+    (currentLines: typeof lines) => {
+      try {
+        const parsedLines = {
+          line1: JSON.parse(currentLines.line1),
+          line2: JSON.parse(currentLines.line2),
+          line3: JSON.parse(currentLines.line3),
+        };
+        setPotLines(parsedLines);
+      } catch (error) {
+        console.error('Error parsing pot lines:', error);
+        setPotLines(null);
+      }
+    },
+    [setPotLines]
+  );
+
+  // Toggle disabled state
+  const toggleDisabled = useCallback(() => {
+    const newReason = disabledState.reason === 'none' ? 'soft' : 'none';
+    setDisabledState({
+      isDisabled: newReason !== 'none',
+      reason: newReason,
+    });
+    localStorage.setItem('cubeDisabled', newReason);
+  }, [disabledState.reason]);
 
   // Main calculation effect
   useEffect(() => {
     try {
-      if (!inputs.itemType || !inputs.itemLevel || !events.canCube) {
+      if (!inputs.itemType || !inputs.itemLevel || disabledState.isDisabled) {
         setCubeResults({
           averageCost: '0',
           totalProbability: 0,
@@ -230,27 +179,40 @@ export default function Cube({
           medianCost: '0',
         });
         return;
+      } else {
+        const potentialResult = potCalc(
+          inputs.itemLevel,
+          inputs.cubeType,
+          inputs.startingTier,
+          inputs.desiredTier,
+          {
+            first: lines.line1,
+            second: lines.line2,
+            third: lines.line3,
+          },
+          inputs.itemType
+        );
+        console.log(potentialResult);
+        setCubeResults(potentialResult);
       }
-
-      const potentialResult = potCalc(
-        inputs.itemLevel,
-        inputs.cubeType,
-        inputs.startingTier,
-        inputs.desiredTier,
-        {
-          first: lines.line1,
-          second: lines.line2,
-          third: lines.line3,
-        },
-        inputs.itemType
-      );
-
-      setCubeResults(potentialResult);
     } catch (error) {
       console.error('Calculation error:', error);
       setCubeResults(null);
     }
-  }, [events.canCube, inputs, lines, setCubeResults]);
+  }, [disabledState.isDisabled, inputs, lines, setCubeResults]);
+
+  // Get line options based on item type and level
+  const lineOptions = useMemo(() => {
+    if (!inputs.itemType || !inputs.itemLevel || disabledState.isDisabled) {
+      return { line1: {}, line2: {}, line3: {} };
+    }
+
+    return {
+      line1: getGoalOptions(inputs.itemType, inputs.itemLevel, 1),
+      line2: getGoalOptions(inputs.itemType, inputs.itemLevel, 2),
+      line3: getGoalOptions(inputs.itemType, inputs.itemLevel, 3),
+    };
+  }, [inputs.itemType, inputs.itemLevel, disabledState.isDisabled]);
 
   return (
     <div
@@ -271,10 +233,8 @@ export default function Cube({
         </div>
         {disabledState.reason !== 'hard' && (
           <Switch
-            id="Can-Starforce"
-            checked={events.canCube}
-            onCheckedChange={() => handleEventToggle('canCube')}
-            disabled={disabledState.reason === 'hard'}
+            checked={!disabledState.isDisabled}
+            onCheckedChange={toggleDisabled}
           />
         )}
       </div>

@@ -7,9 +7,9 @@ export const metadata: Metadata = {
   title: 'Gear Diff',
   description: 'Calculate gear differences and optimizations',
   icons: {
-    icon: '/favicon.ico',
+    icon: '/favicon.svg',
     shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
+    apple: '/favicon.svg',
   },
 };
 
