@@ -300,7 +300,7 @@ const Header = ({ multipliers, setMultipliers }: HeaderProps) => (
 const NavLink = ({ href, label }: { href: string; label: string }) => (
   <Link
     href={href}
-    className="flex h-10 w-24 items-center justify-center opacity-60 hover:opacity-80 hover:cursor-pointer hover:bg-[#00000010] px-6 rounded-full"
+    className="flex h-[32px] w-24 items-center justify-center opacity-60 hover:opacity-80 hover:cursor-pointer hover:bg-[#00000010] px-6 rounded-full"
   >
     <p className="leading-4 text-base font-semibold">{label}</p>
   </Link>
@@ -345,7 +345,7 @@ const ResultsPanel = ({
   weeklyIncome,  
   multipliers,
 }: ResultsPanelProps) => (
-  <div className="flex flex-col w-full bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] p-4 gap-4">
+  <div className="flex flex-col w-full bg-white rounded-[16px] shadow-[0px_4px_8px_4px_rgba(0,0,0,0.1)] p-[16px] gap-4">
     <GearResultsContainer selectedGear={selectedGear}>
       {selectedGear ? (
         <GearRes

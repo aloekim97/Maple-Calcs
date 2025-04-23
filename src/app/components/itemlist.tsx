@@ -106,7 +106,7 @@ const ItemsPage = ({
   );
 
   return (
-    <div className="p-4 flex flex-col gap-2 grow">
+    <div className="p-[16px] flex flex-col gap-2 grow">
       <div className="flex gap-2">
         <FilterSection label="Search Items">
           <Input2

@@ -22,7 +22,7 @@ export function MultiplierSettings({ multipliers, onMultipliersChange }: Multipl
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="link" className="max-w-[160px]">
+        <Button variant="link" className="max-w-[160px] h-[32px]">
           <Image
             src='image/Equal_Icon.svg'
             height={16}
