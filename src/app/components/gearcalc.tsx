@@ -100,6 +100,8 @@ export default function GearCalculator() {
           setEndStar(savedEndStar);
         }
 
+        const savedWeeklyNumber = localStorage.getItem('weeklyIncome');
+        if (savedWeeklyNumber) setWeeklyIncome(savedWeeklyNumber);
         const savedSetNumber = localStorage.getItem('setNumber');
         if (savedSetNumber) setSetNumber(savedSetNumber);
       } catch (error) {
