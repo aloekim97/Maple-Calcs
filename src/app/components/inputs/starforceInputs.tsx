@@ -209,7 +209,8 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
     if (
       !selectedGear ||
       !debouncedInputs.itemLevel ||
-      !debouncedInputs.endStar
+      !debouncedInputs.endStar ||
+      selectedGear.Set === "Genesis"
     ) {
       setResults(null);
       setSfRes(null);
