@@ -266,10 +266,6 @@ export default function GearRes({
             sizes="184px" // Optimizes for this specific size
             alt={itemName}
             className="object-contain p-[4px]" // Contain ensures proper aspect ratio
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = '/image/items/fallback.png';
-            }}
             priority={true} // If this is above-the-fold content
           />
         </div>

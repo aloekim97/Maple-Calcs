@@ -23,15 +23,5 @@ self.addEventListener('fetch', (event) => {
     );
     return;
   }
-
-  // Network-first for images (with fallback)
-  if (isImageRequest(event.request)) {
-    event.respondWith(
-      fetch(event.request).catch(() => caches.match(FALLBACK_IMAGE))
-    );
-  }
 });
 
-function isImageRequest(request) {
-  return /\.(png|jpe?g|webp|svg|gif)(\?.*)?$/i.test(request.url);
-}

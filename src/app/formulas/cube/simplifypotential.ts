@@ -30,7 +30,6 @@ export default function aggregateLines(lines: {
       // Attempt to parse JSON string input
       parsed = JSON.parse(line);
     } catch {
-      // Fallback for text input like "13% stat"
       const match = line.match(/(\d+)%?\s*(stat|cd|cdr|att|boss|ied)/i);
       if (match) {
         const value = parseInt(match[1]);
