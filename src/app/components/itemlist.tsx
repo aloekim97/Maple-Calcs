@@ -74,7 +74,7 @@ const ItemsPage = ({
   const handleSetNumberChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      setSetNumber(value || '1');
+      setSetNumber(value || '');
     },
     [setSetNumber]
   );

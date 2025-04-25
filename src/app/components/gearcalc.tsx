@@ -7,15 +7,16 @@ import Cube from './inputs/cubeInputs';
 import ItemsPage from './itemlist';
 import { Item } from '../../../types/item';
 import { PotCalcResult } from '../formulas/cube/potentialprobability';
-import CubeCost from './results/cubeRes';
-import SfCost from './starForceRes';
-import GearRes from './results/gearRes';
-import TotalCost from './totalCost';
-import FdRes from './fdRes';
+const CubeCost = dynamic(() => import('./results/cubeRes'));
+const SfCost = dynamic(() => import('./starForceRes'));
+const GearRes = dynamic(() => import('./results/gearRes'));
+const TotalCost = dynamic(() => import('./totalCost'));
+const FdRes = dynamic(() => import('./fdRes'));
 import { SetData } from '../../../types/set';
 import sets from '../../../public/sets.json';
 import itemStats from '../formulas/sf/itemstats';
 import { MultiplierSettings } from './multiplierSettings';
+import dynamic from 'next/dynamic';
 
 // Type definitions
 export interface SFStats {
@@ -43,7 +44,7 @@ export default function GearCalculator() {
   const [endStar, setEndStar] = useState<string>('');
   const [cubeResults, setCubeResults] = useState<PotCalcResult | null>(null);
   const [sfResults, setSfResults] = useState<StarForceResults | null>(null);
-  const [setNumber, setSetNumber] = useState<string>('');
+  const [setNumber, setSetNumber] = useState<string>('1');
   const [weeklyIncome, setWeeklyIncome] = useState<string>('');
   const [setStats, setSetStats] = useState<SetData | null>(null);
 

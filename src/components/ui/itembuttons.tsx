@@ -1,7 +1,13 @@
-import Image from 'next/image';
-import { Item } from '../../../types/item';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { useInView } from 'react-intersection-observer';
+import type { Item } from '../../../types/item';
+
+// Dynamically load the Image component only when needed
+const NextImage = dynamic(() => import('next/image'), {
+  loading: () => <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-[4px]" />,
+  ssr: false
+});
 
 interface ItemButtonProps {
   item: Item;
@@ -12,20 +18,21 @@ interface ItemButtonProps {
 const FALLBACK_IMAGE = 'https://5pd8q9yvpv.ufs.sh/f/8nGwjuDDSJXHACoDMprTLW4BhN1zuUS7DEpgGnjdv6aKerOM';
 
 const getJobColor = (job: string | null): string => {
-  switch (job) {
-    case 'Warrior': return '#DD242399';
-    case 'Mage': return '#0085F199';
-    case 'Bowman': return '#05980099';
-    case 'Thief': return '#DD911999';
-    case 'Pirate': return '#591AD499';
-    default: return '#00000099';
-  }
+  const colorMap: Record<string, string> = {
+    'Warrior': '#DD242399',
+    'Mage': '#0085F199',
+    'Bowman': '#05980099',
+    'Thief': '#DD911999',
+    'Pirate': '#591AD499'
+  };
+  return colorMap[job || ''] || '#00000099';
 };
 
 const ItemButton = ({ item, onClick, priority = false }: ItemButtonProps) => {
   const [imageSrc, setImageSrc] = useState(item.url);
   const [isLoaded, setIsLoaded] = useState(false);
   const borderColor = getJobColor(item.Job);
+  
   const [ref, inView] = useInView({
     triggerOnce: true,
     rootMargin: '200px',
@@ -35,19 +42,24 @@ const ItemButton = ({ item, onClick, priority = false }: ItemButtonProps) => {
   useEffect(() => {
     if (!inView && !priority) return;
 
-    const img = document.createElement('img');
+    const img = new Image();
     img.src = imageSrc;
 
     const handleLoad = () => {
       setIsLoaded(true);
-      // Clean up event listeners
-      img.onload = null;
-      img.onerror = null;
+      cleanup();
     };
 
     const handleError = () => {
-      setImageSrc(FALLBACK_IMAGE);
-      // Don't set isLoaded yet - let it try the fallback
+      if (imageSrc !== FALLBACK_IMAGE) {
+        setImageSrc(FALLBACK_IMAGE);
+      } else {
+        setIsLoaded(true); 
+      }
+      cleanup();
+    };
+
+    const cleanup = () => {
       img.onload = null;
       img.onerror = null;
     };
@@ -55,35 +67,33 @@ const ItemButton = ({ item, onClick, priority = false }: ItemButtonProps) => {
     img.onload = handleLoad;
     img.onerror = handleError;
 
-    return () => {
-      img.onload = null;
-      img.onerror = null;
-    };
+    return cleanup;
   }, [inView, priority, imageSrc]);
+
+  const itemName = item['Item Name'].replace(/_/g, ' ');
+  const buttonClass = "pr-[4px] pl-[4px] pb-[4px] hover:cursor-pointer";
+  const imageContainerClass = "relative size-[40px] p-[4px] border-[1px] rounded-[8px] border-opacity-20 hover:border-[2px] transition-all duration-50 hover:cursor-pointer";
 
   return (
     <button
       ref={ref}
       onClick={onClick}
-      className="pr-[4px] pl-[4px] pb-[4px] hover:cursor-pointer"
-      title={item['Item Name'].replace(/_/g, ' ')}
-      aria-label={`${item['Item Name'].replace(/_/g, ' ')} item button`}
+      className={buttonClass}
+      title={itemName}
+      aria-label={`${itemName} item button`}
     >
-      <div
-        className="relative size-[40px] p-[4px] border-[1px] rounded-[8px] border-opacity-20 hover:border-[2px] transition-all duration-50 hover:cursor-pointer"
-        style={{ borderColor }}
-      >
+      <div className={imageContainerClass} style={{ borderColor }}>
         {isLoaded ? (
-          <Image
+          <NextImage
             src={imageSrc}
-            alt={item['Item Name'].replace(/_/g, ' ')}
+            alt={itemName}
             width={40}
             height={40}
             loading={priority ? 'eager' : 'lazy'}
             priority={priority}
             onError={() => {
               setImageSrc(FALLBACK_IMAGE);
-              setIsLoaded(false); // Retry with fallback
+              setIsLoaded(false);
             }}
           />
         ) : (
