@@ -18,7 +18,7 @@ function Input2({ className, type, ...props }: React.ComponentProps<"input">) {
         {...props}
       />
     <Image
-    src={"/image/Search_Icon.svg"}
+    src='https://5pd8q9yvpv.ufs.sh/f/8nGwjuDDSJXH4ofIuTFNT61P8WyRpAvOBk5fwVbXzmjMJqoD'
     height={16}
     width={16}
     alt="Search_Icon"

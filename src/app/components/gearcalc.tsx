@@ -280,12 +280,12 @@ const Header = ({ multipliers, setMultipliers }: HeaderProps) => (
     </div>
     <div className="flex w-full items-center justify-center">
       <Image
-        src="image/geardiff.svg"
+        src="https://5pd8q9yvpv.ufs.sh/f/8nGwjuDDSJXHACoDMprTLW4BhN1zuUS7DEpgGnjdv6aKerOM"
         width={172}
         height={32}
         alt="geardiff"
         role="img"
-        style={{ width: 'auto', height: 'auto' }}
+        style={{ width: '172px', height: '32px' }}
       />
     </div>
     <div className="flex w-full gap-1 justify-end">

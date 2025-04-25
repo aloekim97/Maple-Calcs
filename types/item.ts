@@ -15,4 +15,6 @@ export interface Item {
   "Boss Damage": string;
   Damage?: string;
   "ADJ Std": number;
+  key: string;
+  url: string
 }

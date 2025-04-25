@@ -136,8 +136,8 @@ export default function GearRes({
             key={starIndex}
             src={
               starIndex < totalStars
-                ? '/image/Star_Icon.svg'
-                : '/image/No_Star_Icon.svg'
+                ? 'https://5pd8q9yvpv.ufs.sh/f/8nGwjuDDSJXHFfx84xZEOVRa453eNj2hcwmvSiBgztn9fCox'
+                : 'https://5pd8q9yvpv.ufs.sh/f/8nGwjuDDSJXHD0jFE8cbMl9DrsY0GCXk2pecWgKnBqHA1oFO'
             }
             width={16}
             height={16}
@@ -211,7 +211,7 @@ export default function GearRes({
 
         {/* Item Image */}
         <Image
-          src={`/image/items/${selectedGear['Item Name']}.png`}
+          src={selectedGear.url}
           width={184}
           height={184}
           alt={itemName}

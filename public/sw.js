@@ -1,105 +1,36 @@
 // public/sw.js
-const CACHE_NAME = 'gear-cache-v1'; // Updated cache version
-const PRECACHE_ASSETS = [
-  '/data.json', // Precached files
-];
-const IMAGE_CACHE_NAME = 'image-cache-v1'; // Separate cache for images
+const CACHE_NAME = 'app-cache-v1';
+const JSON_DATA_URL = '/data.json';
+const FALLBACK_IMAGE = '/favicon.svg';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    (async () => {
-      const cache = await caches.open(CACHE_NAME);
-
-      // Cache each asset with individual error handling
-      await Promise.all(
-        PRECACHE_ASSETS.map((asset) =>
-          cache
-            .add(asset)
-            .catch((err) => console.error('Failed to cache', asset, err))
-        )
-      );
-
-      await self.skipWaiting();
-    })()
-  );
-});
-
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    (async () => {
-      // Clean up old caches
-      const cacheNames = await caches.keys();
-      await Promise.all(
-        cacheNames.map((cacheName) => {
-          if (![CACHE_NAME, IMAGE_CACHE_NAME].includes(cacheName)) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-      await self.clients.claim();
-    })()
+    caches
+      .open(CACHE_NAME)
+      .then((cache) => cache.addAll([JSON_DATA_URL, FALLBACK_IMAGE]))
+      .then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
-
-  // Skip non-GET requests
-  if (event.request.method !== 'GET') return;
-
-  // Handle image requests
-  if (url.pathname.startsWith('/image/')) {
+  // Cache-first strategy for JSON data
+  if (event.request.url.includes(JSON_DATA_URL)) {
     event.respondWith(
-      (async () => {
-        try {
-          // Try cache first
-          const cached = await caches.match(event.request, {
-            cacheName: IMAGE_CACHE_NAME,
-          });
-          if (cached) {
-            return cached;
-          }
-
-          // Fallback to network
-          const response = await fetch(event.request);
-
-          // Cache successful responses
-          if (response.ok) {
-            const cache = await caches.open(IMAGE_CACHE_NAME);
-            await cache.put(event.request, response.clone());
-          }
-
-          return response;
-        } catch (error) {
-          console.error('Image fetch failed:', error);
-          // Return fallback image
-          return caches.match('/image/items/fallback.png');
-        }
-      })()
+      caches
+        .match(event.request)
+        .then((cached) => cached || fetch(event.request))
     );
     return;
   }
 
-  // Handle data.json specifically
-  if (url.pathname === '/data.json') {
+  // Network-first for images (with fallback)
+  if (isImageRequest(event.request)) {
     event.respondWith(
-      (async () => {
-        // Try cache first
-        const cached = await caches.match(event.request);
-        if (cached) return cached;
-
-        // Fallback to network
-        const response = await fetch(event.request);
-        if (response.ok) {
-          const cache = await caches.open(CACHE_NAME);
-          await cache.put(event.request, response.clone());
-        }
-        return response;
-      })()
+      fetch(event.request).catch(() => caches.match(FALLBACK_IMAGE))
     );
-    return;
   }
-
-  // For all other requests, use network first
-  event.respondWith(fetch(event.request));
 });
+
+function isImageRequest(request) {
+  return /\.(png|jpe?g|webp|svg|gif)(\?.*)?$/i.test(request.url);
+}

@@ -9,27 +9,21 @@ interface ItemButtonProps {
   priority?: boolean;
 }
 
+const FALLBACK_IMAGE = 'https://5pd8q9yvpv.ufs.sh/f/8nGwjuDDSJXHACoDMprTLW4BhN1zuUS7DEpgGnjdv6aKerOM';
+
 const getJobColor = (job: string | null): string => {
   switch (job) {
-    case 'Warrior':
-      return '#DD242399';
-    case 'Mage':
-      return '#0085F199';
-    case 'Bowman':
-      return '#05980099';
-    case 'Thief':
-      return '#DD911999';
-    case 'Pirate':
-      return '#591AD499';
-    default:
-      return '#00000099';
+    case 'Warrior': return '#DD242399';
+    case 'Mage': return '#0085F199';
+    case 'Bowman': return '#05980099';
+    case 'Thief': return '#DD911999';
+    case 'Pirate': return '#591AD499';
+    default: return '#00000099';
   }
 };
 
 const ItemButton = ({ item, onClick, priority = false }: ItemButtonProps) => {
-  const [imageSrc, setImageSrc] = useState(
-    `/image/items/${item['Item Name']}.png`
-  );
+  const [imageSrc, setImageSrc] = useState(item.url);
   const [isLoaded, setIsLoaded] = useState(false);
   const borderColor = getJobColor(item.Job);
   const [ref, inView] = useInView({
@@ -41,34 +35,31 @@ const ItemButton = ({ item, onClick, priority = false }: ItemButtonProps) => {
   useEffect(() => {
     if (!inView && !priority) return;
 
-    // Create image element without 'new' keyword
     const img = document.createElement('img');
-    img.src = `/image/items/${item['Item Name']}.png`;
+    img.src = imageSrc;
 
     const handleLoad = () => {
       setIsLoaded(true);
       // Clean up event listeners
-      img.removeEventListener('load', handleLoad);
-      img.removeEventListener('error', handleError);
+      img.onload = null;
+      img.onerror = null;
     };
 
     const handleError = () => {
-      setImageSrc('/image/items/fallback.png');
-      setIsLoaded(true);
-      // Clean up event listeners
-      img.removeEventListener('load', handleLoad);
-      img.removeEventListener('error', handleError);
+      setImageSrc(FALLBACK_IMAGE);
+      // Don't set isLoaded yet - let it try the fallback
+      img.onload = null;
+      img.onerror = null;
     };
 
-    img.addEventListener('load', handleLoad);
-    img.addEventListener('error', handleError);
+    img.onload = handleLoad;
+    img.onerror = handleError;
 
-    // Cleanup function
     return () => {
-      img.removeEventListener('load', handleLoad);
-      img.removeEventListener('error', handleError);
+      img.onload = null;
+      img.onerror = null;
     };
-  }, [inView, item, priority]);
+  }, [inView, priority, imageSrc]);
 
   return (
     <button
@@ -91,11 +82,12 @@ const ItemButton = ({ item, onClick, priority = false }: ItemButtonProps) => {
             loading={priority ? 'eager' : 'lazy'}
             priority={priority}
             onError={() => {
-              setImageSrc('/image/items/fallback.png');
+              setImageSrc(FALLBACK_IMAGE);
+              setIsLoaded(false); // Retry with fallback
             }}
           />
         ) : (
-          <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-[4px] hover:cursor-pointer"></div>
+          <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-[4px]" />
         )}
       </div>
     </button>

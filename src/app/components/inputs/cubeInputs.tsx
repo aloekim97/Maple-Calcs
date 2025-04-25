@@ -262,7 +262,7 @@ export default function Cube({
       <div className="flex w-full justify-between">
         <div className="flex gap-[8px]">
           <Image
-            src="/image/Cube_Icon.svg"
+            src="https://5pd8q9yvpv.ufs.sh/f/8nGwjuDDSJXHKUcED2y7NQm9yiLk5clIoUnM8zAXKJ20eSub"
             width={14}
             height={16}
             alt="Cube icon"

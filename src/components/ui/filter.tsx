@@ -46,7 +46,7 @@ function SelectTrigger({
       <SelectPrimitive.Icon asChild>
         <div className="opacity-40 hover:opacity-80 size-[20px]">
           <Image 
-          src="/image/Filter_Icon.svg"
+          src='https://5pd8q9yvpv.ufs.sh/f/8nGwjuDDSJXHqAF2px7teAk7fb9EPKHUowLQrVTmYJu4hDFy'
           height={20}
           width={20}
           alt="filter"

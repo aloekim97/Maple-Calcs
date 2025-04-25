@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 export default function ServiceWorker() {
   useEffect(() => {
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-      const registerSW = async () => {
+      const registerServiceWorker = async () => {
         try {
           const registration = await navigator.serviceWorker.register(
             '/sw.js',
@@ -16,75 +16,121 @@ export default function ServiceWorker() {
             }
           );
 
-          // Immediate update check
+          // Check for updates immediately
           registration.update();
 
-          // Handle controller change (when new SW takes over)
-          navigator.serviceWorker.addEventListener('controllerchange', () => {
+          // Handle controller change
+          const handleControllerChange = () => {
             window.location.reload();
-          });
+          };
 
           // Handle updates
-          registration.addEventListener('updatefound', () => {
+          const handleUpdateFound = () => {
             const newWorker = registration.installing;
             if (!newWorker) return;
 
-            newWorker.addEventListener('statechange', () => {
-
-              if (newWorker.state === 'installed') {
-                // Only show update if there's an existing controller (not first install)
-                if (navigator.serviceWorker.controller) {
-                  // Here you could show a UI prompt to refresh
-                  showUpdateNotification();
-                }
+            const handleStateChange = () => {
+              switch (newWorker.state) {
+                case 'installed':
+                  if (navigator.serviceWorker.controller) {
+                    showUpdateNotification();
+                  }
+                  break;
+                case 'redundant':
+                  console.log('Service worker became redundant');
+                  break;
               }
-            });
-          });
+            };
 
-          // Periodic update checks (every 24 hours)
+            newWorker.addEventListener('statechange', handleStateChange);
+          };
+
+          // Set up event listeners
+          navigator.serviceWorker.addEventListener(
+            'controllerchange',
+            handleControllerChange
+          );
+          registration.addEventListener('updatefound', handleUpdateFound);
+
+          // Periodic update checks (every 6 hours)
           const updateInterval = setInterval(() => {
-            registration.update();
-          }, 24 * 60 * 60 * 1000);
+            registration.update().catch((err) => {
+              console.warn('Failed to check for service worker updates:', err);
+            });
+          }, 6 * 60 * 60 * 1000);
 
-          return () => clearInterval(updateInterval);
+          // Cleanup function
+          return () => {
+            clearInterval(updateInterval);
+            navigator.serviceWorker.removeEventListener(
+              'controllerchange',
+              handleControllerChange
+            );
+            registration.removeEventListener('updatefound', handleUpdateFound);
+          };
         } catch (error) {
           console.error('Service Worker registration failed:', error);
         }
       };
 
-      // Delay registration slightly to avoid impacting initial load
-      const timer = setTimeout(registerSW, 1000);
+      // Delay registration to avoid impacting initial load
+      const registrationTimer = setTimeout(registerServiceWorker, 1500);
 
-      return () => clearTimeout(timer);
+      return () => clearTimeout(registrationTimer);
     }
   }, []);
 
   return null;
 }
 
-// Optional: Show update notification to user
 function showUpdateNotification() {
-  // Implement your UI notification logic here
-  // For example:
+  if (document.getElementById('sw-update-notification')) return;
+
   const notification = document.createElement('div');
+  notification.id = 'sw-update-notification';
   notification.style.position = 'fixed';
   notification.style.bottom = '20px';
   notification.style.right = '20px';
-  notification.style.padding = '10px';
-  notification.style.background = '#333';
+  notification.style.padding = '16px';
+  notification.style.background = '#1a1a1a';
   notification.style.color = 'white';
-  notification.style.borderRadius = '5px';
-  notification.style.zIndex = '1000';
+  notification.style.borderRadius = '8px';
+  notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+  notification.style.zIndex = '9999';
+  notification.style.display = 'flex';
+  notification.style.flexDirection = 'column';
+  notification.style.gap = '8px';
+  notification.style.maxWidth = '300px';
   notification.innerHTML = `
-    <p>New version available!</p>
-    <button style="margin-top: 5px; padding: 5px 10px; background: #555; color: white; border: none; border-radius: 3px;">
-      Refresh
-    </button>
+    <p style="margin: 0; font-size: 14px;">A new version is available!</p>
+    <div style="display: flex; gap: 8px;">
+      <button style="flex: 1; padding: 8px; background: #333; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        Update Now
+      </button>
+      <button style="flex: 1; padding: 8px; background: transparent; color: #aaa; border: 1px solid #444; border-radius: 4px; cursor: pointer;">
+        Later
+      </button>
+    </div>
   `;
 
-  const button = notification.querySelector('button');
-  button?.addEventListener('click', () => {
+  const [updateBtn, laterBtn] = notification.querySelectorAll('button');
+
+  updateBtn.addEventListener('click', () => {
     window.location.reload();
+  });
+
+  laterBtn.addEventListener('click', () => {
+    notification.remove();
+  });
+
+  // Auto-dismiss after 30 seconds
+  const autoDismissTimer = setTimeout(() => {
+    notification.remove();
+  }, 30000);
+
+  // Cleanup timer if manually dismissed
+  laterBtn.addEventListener('click', () => {
+    clearTimeout(autoDismissTimer);
   });
 
   document.body.appendChild(notification);

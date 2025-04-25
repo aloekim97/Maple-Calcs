@@ -113,7 +113,7 @@ const ItemsPage = ({
           <Input2
             type="text"
             placeholder="Search..."
-            value={searchTerm ?? ""}
+            value={searchTerm ?? ''}
             onChange={handleSearch}
           />
         </FilterSection>
@@ -162,7 +162,7 @@ const ItemsPage = ({
           <Input
             type="number"
             placeholder="B/Week"
-            value={weeklyIncome ?? ""}
+            value={weeklyIncome ?? ''}
             onChange={handleWeeklyIncomeChange}
             min={1}
           />
@@ -175,7 +175,7 @@ const ItemsPage = ({
           <Input
             type="number"
             placeholder="Set#"
-            value={setNumber ?? ""}
+            value={setNumber ?? ''}
             onChange={handleSetNumberChange}
             min={1}
           />

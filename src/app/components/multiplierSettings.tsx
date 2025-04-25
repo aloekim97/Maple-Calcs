@@ -37,7 +37,7 @@ export function MultiplierSettings({
           aria-label="Customize multipliers"
         >
           <Image
-            src="image/Equal_Icon.svg"
+            src="https://5pd8q9yvpv.ufs.sh/f/8nGwjuDDSJXHtI3gQzbwlSk1WsxeRJ4TbLjv8E2OGyB0ughP"
             height={16}
             width={16}
             alt=""

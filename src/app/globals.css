@@ -220,7 +220,7 @@ ol {
   }
   .scale-on-medium-about {
     transform: scale(0.85);
-    transform-origin: 50% 0;
+    transform-origin: 50% 0%;
     width: 117.65%;
     height: 117.65vh;
     overflow: hidden;

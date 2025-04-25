@@ -340,7 +340,7 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
         <div className="flex w-full justify-between items-center">
           <div className="flex gap-2 items-center">
             <Image
-              src="image/Star_Icon.svg"
+              src='https://5pd8q9yvpv.ufs.sh/f/8nGwjuDDSJXHFfx84xZEOVRa453eNj2hcwmvSiBgztn9fCox'
               width={16}
               height={16}
               alt="star"
