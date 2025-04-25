@@ -104,7 +104,7 @@ export default function GearRes({
       try {
         const parsed =
           typeof lineValue === 'string' ? JSON.parse(lineValue) : lineValue;
-          const numericEntry = Object.entries(parsed).find(
+        const numericEntry = Object.entries(parsed).find(
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           ([_, value]) => typeof value === 'number'
         );
@@ -253,8 +253,9 @@ export default function GearRes({
           <div className="grid grid-cols-3 w-full gap-[8px]">
             {renderStars()}
           </div>
-        ):  <div className="grid grid-cols-3 w-full gap-[8px]">
-      </div>}
+        ) : (
+          <div className="grid grid-cols-3 w-full gap-[8px]"></div>
+        )}
 
         <div className="relative min-w-[184px] h-[184px]">
           {' '}
