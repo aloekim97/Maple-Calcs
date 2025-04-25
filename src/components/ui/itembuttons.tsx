@@ -3,9 +3,25 @@ import dynamic from 'next/dynamic';
 import { useInView } from 'react-intersection-observer';
 import type { Item } from '../../../types/item';
 
-// Dynamically load the Image component only when needed
+// Configuration constants
+const FALLBACK_IMAGE = '/optimized-fallback.webp';
+const ITEM_SIZE = 40; // Fixed size for all item buttons
+const JOB_COLORS: Record<string, string> = {
+  'Warrior': '#DD242399',
+  'Mage': '#0085F199',
+  'Bowman': '#05980099',
+  'Thief': '#DD911999',
+  'Pirate': '#591AD499'
+};
+
+// Dynamically load Next.js Image with skeleton fallback
 const NextImage = dynamic(() => import('next/image'), {
-  loading: () => <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-[4px]" />,
+  loading: () => (
+    <div 
+      className="absolute inset-0 bg-gray-200 animate-pulse rounded-[4px]" 
+      style={{ width: ITEM_SIZE, height: ITEM_SIZE }}
+    />
+  ),
   ssr: false
 });
 
@@ -15,24 +31,13 @@ interface ItemButtonProps {
   priority?: boolean;
 }
 
-const FALLBACK_IMAGE = 'https://5pd8q9yvpv.ufs.sh/f/8nGwjuDDSJXHACoDMprTLW4BhN1zuUS7DEpgGnjdv6aKerOM';
-
-const getJobColor = (job: string | null): string => {
-  const colorMap: Record<string, string> = {
-    'Warrior': '#DD242399',
-    'Mage': '#0085F199',
-    'Bowman': '#05980099',
-    'Thief': '#DD911999',
-    'Pirate': '#591AD499'
-  };
-  return colorMap[job || ''] || '#00000099';
-};
-
 const ItemButton = ({ item, onClick, priority = false }: ItemButtonProps) => {
-  const [imageSrc, setImageSrc] = useState(item.url);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const borderColor = getJobColor(item.Job);
-  
+  const [imageState, setImageState] = useState({
+    src: item.url,
+    loaded: false,
+    error: false
+  });
+
   const [ref, inView] = useInView({
     triggerOnce: true,
     rootMargin: '200px',
@@ -43,18 +48,22 @@ const ItemButton = ({ item, onClick, priority = false }: ItemButtonProps) => {
     if (!inView && !priority) return;
 
     const img = new Image();
-    img.src = imageSrc;
+    img.src = imageState.src;
 
     const handleLoad = () => {
-      setIsLoaded(true);
+      setImageState(prev => ({ ...prev, loaded: true }));
       cleanup();
     };
 
     const handleError = () => {
-      if (imageSrc !== FALLBACK_IMAGE) {
-        setImageSrc(FALLBACK_IMAGE);
+      if (!imageState.error) {
+        setImageState({
+          src: FALLBACK_IMAGE,
+          loaded: false,
+          error: true
+        });
       } else {
-        setIsLoaded(true); 
+        setImageState(prev => ({ ...prev, loaded: true }));
       }
       cleanup();
     };
@@ -68,36 +77,54 @@ const ItemButton = ({ item, onClick, priority = false }: ItemButtonProps) => {
     img.onerror = handleError;
 
     return cleanup;
-  }, [inView, priority, imageSrc]);
+  }, [inView, priority, imageState.src, imageState.error]);
 
   const itemName = item['Item Name'].replace(/_/g, ' ');
-  const buttonClass = "pr-[4px] pl-[4px] pb-[4px] hover:cursor-pointer";
-  const imageContainerClass = "relative size-[40px] p-[4px] border-[1px] rounded-[8px] border-opacity-20 hover:border-[2px] transition-all duration-50 hover:cursor-pointer";
+  const borderColor = JOB_COLORS[item.Job || ''] || '#00000099';
 
   return (
     <button
       ref={ref}
       onClick={onClick}
-      className={buttonClass}
+      className="pr-[4px] pl-[4px] pb-[4px] hover:cursor-pointer"
       title={itemName}
       aria-label={`${itemName} item button`}
+      style={{
+        width: ITEM_SIZE,
+        height: ITEM_SIZE
+      }}
     >
-      <div className={imageContainerClass} style={{ borderColor }}>
-        {isLoaded ? (
+      <div 
+        className="relative p-[4px] border-[1px] rounded-[8px] border-opacity-20 hover:border-[2px] transition-all duration-50"
+        style={{ 
+          borderColor,
+          width: ITEM_SIZE,
+          height: ITEM_SIZE
+        }}
+      >
+        {imageState.loaded ? (
           <NextImage
-            src={imageSrc}
+            src={imageState.src}
             alt={itemName}
-            width={40}
-            height={40}
+            width={ITEM_SIZE}
+            height={ITEM_SIZE}
             loading={priority ? 'eager' : 'lazy'}
+            quality={75} // Optimized quality setting
             priority={priority}
             onError={() => {
-              setImageSrc(FALLBACK_IMAGE);
-              setIsLoaded(false);
+              setImageState({
+                src: FALLBACK_IMAGE,
+                loaded: false,
+                error: true
+              });
             }}
+            className="object-contain" // Ensures proper image fitting
           />
         ) : (
-          <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-[4px]" />
+          <div 
+            className="absolute inset-0 bg-gray-200 animate-pulse rounded-[4px]"
+            style={{ width: ITEM_SIZE, height: ITEM_SIZE }}
+          />
         )}
       </div>
     </button>

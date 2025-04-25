@@ -265,6 +265,7 @@ export default function GearRes({
             fill // This makes the image fill the container
             sizes="184px" // Optimizes for this specific size
             alt={itemName}
+            quality={75} 
             className="object-contain p-[4px]" // Contain ensures proper aspect ratio
             priority={true} // If this is above-the-fold content
           />
