@@ -1,5 +1,5 @@
 'use client';
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useRef } from 'react';
 import items from '../../../public/data.json';
 import ItemButton from '@/components/ui/itembuttons';
 import { Item } from '../../../types/item';
@@ -24,7 +24,6 @@ interface ItemsPageProps {
   weeklyIncome: string;
 }
 
-// Constants for better maintainability
 const ITEM_TYPES = [
   'Weapon',
   'Secondary',
@@ -57,24 +56,37 @@ const ItemsPage = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [itemSet, setItemSet] = useState<string | null>(null);
   const [jobFilter, setJobFilter] = useState<string | null>(null);
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Custom debounce function
+  const debounceSearch = useCallback((value: string) => {
+    clearTimeout(searchTimeoutRef.current);
+    searchTimeoutRef.current = setTimeout(() => {
+      setSearchTerm(value);
+    }, 300);
+  }, []);
+
+  // Optimized filtered items calculation
   const filteredItems = useMemo(() => {
+    const term = searchTerm.toLowerCase();
     return itemList.filter((item) => {
-      const matchesSearch = item['Item Name']
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
-      const matchesType = itemType ? item.Type === itemType : true;
-      const matchesSet = itemSet ? item.Set === itemSet : true;
-      const matchesJob = jobFilter ? item.Job === jobFilter : true;
+      const matchesSearch =
+        term === '' || item['Item Name']?.toLowerCase().includes(term);
+      const matchesType = !itemType || item.Type === itemType;
+      const matchesSet = !itemSet || item.Set === itemSet;
+      const matchesJob = !jobFilter || item.Job === jobFilter;
 
       return matchesSearch && matchesType && matchesSet && matchesJob;
     });
   }, [searchTerm, itemType, itemSet, jobFilter]);
 
+  // Optimized handlers
   const handleSetNumberChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      setSetNumber(value || '');
+      if (value === '' || !isNaN(Number(value))) {
+        setSetNumber(value);
+      }
     },
     [setSetNumber]
   );
@@ -82,14 +94,19 @@ const ItemsPage = ({
   const handleWeeklyIncomeChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      setWeeklyIncome(value);
+      if (value === '' || /^[0-9]*\.?[0-9]*$/.test(value)) {
+        setWeeklyIncome(value);
+      }
     },
     [setWeeklyIncome]
   );
 
-  const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  }, []);
+  const handleSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      debounceSearch(e.target.value);
+    },
+    [debounceSearch]
+  );
 
   const handleTypeFilter = useCallback((val: string) => {
     setItemType(val === 'all' ? null : val);
@@ -137,7 +154,6 @@ const ItemsPage = ({
           </Select>
         </FilterSection>
 
-        {/* Job Filter */}
         <FilterSection label="Filter by Job">
           <Select value={jobFilter || 'all'} onValueChange={handleJobFilter}>
             <SelectTrigger className="w-full">
@@ -157,7 +173,7 @@ const ItemsPage = ({
           </Select>
         </FilterSection>
         <div className="flex w-px rounded-full h-full bg-black opacity-20" />
-        {/* Set Number Input */}
+
         <FilterSection label="Weekly Income">
           <Input
             type="number"
@@ -165,12 +181,15 @@ const ItemsPage = ({
             value={weeklyIncome ?? ''}
             onChange={handleWeeklyIncomeChange}
             min={1}
+            onBlur={(e) => {
+              const value = e.target.value;
+              setWeeklyIncome(value === '' ? '0' : value);
+            }}
           />
         </FilterSection>
-        {/* Divider */}
+
         <div className="flex w-px rounded-full h-full bg-black opacity-20" />
 
-        {/* Set Number Input */}
         <FilterSection label="Set Number">
           <Input
             type="number"
@@ -178,11 +197,14 @@ const ItemsPage = ({
             value={setNumber ?? ''}
             onChange={handleSetNumberChange}
             min={1}
+            onBlur={(e) => {
+              const value = e.target.value;
+              setSetNumber(value === '' ? '0' : value);
+            }}
           />
         </FilterSection>
       </div>
 
-      {/* Items Grid */}
       <div className="grid grid-cols-14 overflow-y-auto w-full justify-start items-start overflow-x-hidden pr-1 pt-0">
         {filteredItems.map((item) => (
           <ItemButton
@@ -196,7 +218,6 @@ const ItemsPage = ({
   );
 };
 
-// Helper component for filter sections
 const FilterSection = ({
   label,
   children,

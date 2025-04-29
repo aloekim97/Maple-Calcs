@@ -108,9 +108,8 @@ const ItemButton = ({ item, onClick, priority = false }: ItemButtonProps) => {
             alt={itemName}
             width={ITEM_SIZE}
             height={ITEM_SIZE}
-            loading={priority ? 'eager' : 'lazy'}
-            quality={75} // Optimized quality setting
-            priority={priority}
+            loading={'lazy'}
+            quality={75}
             onError={() => {
               setImageState({
                 src: FALLBACK_IMAGE,

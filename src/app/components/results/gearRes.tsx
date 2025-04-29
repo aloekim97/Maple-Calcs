@@ -172,28 +172,54 @@ export default function GearRes({
 
   // Star rendering with memoization
   const renderStars = useCallback(() => {
-    const totalStars =
-      selectedGear.Set === 'Genesis' ? 22 : Number(localEndStar || endStar);
-    return Array.from({ length: 6 }).map((_, row) => (
-      <div key={row} className="grid grid-cols-5 justify-between">
+    const getMaxStars = (level) => {
+      if (!level) return 0;
+      if (level < 95) return 5;
+      if (level < 108) return 8;
+      if (level < 118) return 10;
+      if (level < 128) return 15;
+      if (level < 138) return 20;
+      return 30;
+    };
+  
+    // Genesis set has special rules (22 stars)
+    const maxAllowedStars = selectedGear.Set === 'Genesis' 
+      ? 22 
+      : getMaxStars(selectedGear.Level);
+      
+    const displayedStars = Math.min(
+      Number(localEndStar || endStar),
+      maxAllowedStars
+    );
+  
+    // Calculate how many rows we need (5 stars per row)
+    const totalPossibleStars = maxAllowedStars;
+    const rowsNeeded = Math.ceil(totalPossibleStars / 5);
+  
+    return Array.from({ length: rowsNeeded }).map((_, row) => (
+      <div key={row} className="grid grid-cols-5 justify-between gap-1">
         {Array.from({ length: 5 }).map((_, col) => {
           const starIndex = row * 5 + col;
+          
+          // Don't render if beyond max allowed stars
+          if (starIndex >= maxAllowedStars) return null;
+          
+          const isFilled = starIndex < displayedStars;
+          
           return (
             <Image
               key={starIndex}
-              src={
-                starIndex < totalStars ? STAR_IMAGES.filled : STAR_IMAGES.empty
-              }
+              src={isFilled ? STAR_IMAGES.filled : STAR_IMAGES.empty}
               width={16}
               height={16}
-              alt="star"
-              role="img"
+              alt={isFilled ? 'filled star' : 'empty star'}
+              aria-hidden="true"
             />
           );
         })}
       </div>
     ));
-  }, [localEndStar, endStar, selectedGear.Set]);
+  }, [localEndStar, endStar, selectedGear.Set, selectedGear.Level]);
 
   const renderStatWithBonus = useCallback(
     (baseValue: number | string | undefined, bonus: number): string => {
@@ -258,17 +284,21 @@ export default function GearRes({
         )}
 
         <div className="relative min-w-[184px] h-[184px]">
-          {' '}
-          {/* Fixed size container */}
-          <Image
-            src={selectedGear.url}
-            fill // This makes the image fill the container
-            sizes="184px" // Optimizes for this specific size
-            alt={itemName}
-            quality={75} 
-            className="object-contain p-[4px]" // Contain ensures proper aspect ratio
-            priority={true} // If this is above-the-fold content
-          />
+          {selectedGear?.url ? (
+            <Image
+              src={selectedGear.url}
+              fill
+              sizes="184px"
+              alt={itemName || 'Gear image'}
+              quality={75}
+              className="object-contain p-[4px]"
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+              {/* Optional placeholder content */}
+              <span className="text-gray-400">No image available</span>
+            </div>
+          )}
         </div>
 
         <div className="flex w-full mt-[12px]">

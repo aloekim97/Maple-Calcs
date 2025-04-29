@@ -223,14 +223,29 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
       : 0;
     let endStarNum = Math.max(0, Number(debouncedInputs.endStar));
 
+    // Determine max stars based on gear level
+    const getMaxStars = (level) => {
+      if (!level) return 0;
+      if (level < 95) return 5;
+      if (level < 108) return 8;
+      if (level < 118) return 10;
+      if (level < 128) return 15;
+      if (level < 138) return 20;
+      return 30;
+    };
+
     // Apply star limits
-    endStarNum = Math.min(endStarNum, selectedGear.Set === 'Genesis' ? 22 : 30);
+    const maxAllowedStars =
+      selectedGear.Set === 'Genesis' ? 22 : getMaxStars(itemLevelNum);
+
+    endStarNum = Math.min(endStarNum, maxAllowedStars);
 
     // Validate inputs
     if (
       endStarNum <= startStarNum ||
       isNaN(endStarNum) ||
-      isNaN(startStarNum)
+      isNaN(startStarNum) ||
+      startStarNum > maxAllowedStars
     ) {
       setResults(null);
       setSfRes(null);
@@ -239,7 +254,15 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
 
     // Update endStar if clamped
     if (endStarNum.toString() !== debouncedInputs.endStar) {
-      setInputs((prev) => ({ ...prev, endStar: endStarNum.toString() }));
+      setInputs((prev) => ({
+        ...prev,
+        endStar: endStarNum.toString(),
+        // Also ensure startStar doesn't exceed new max
+        startStar: Math.min(
+          Number(prev.startStar || 0),
+          maxAllowedStars
+        ).toString(),
+      }));
       return;
     }
 
@@ -269,6 +292,7 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
         const resultData = {
           ...starForceResult,
           stats: statsResult,
+          maxAllowedStars, // Include in results for display
         };
 
         setResults(resultData);
@@ -340,7 +364,7 @@ export default function StarForce({ selectedGear, setSfRes }: StarForceProps) {
         <div className="flex w-full justify-between items-center">
           <div className="flex gap-2 items-center">
             <Image
-              src='https://5pd8q9yvpv.ufs.sh/f/8nGwjuDDSJXHFfx84xZEOVRa453eNj2hcwmvSiBgztn9fCox'
+              src="https://5pd8q9yvpv.ufs.sh/f/8nGwjuDDSJXHFfx84xZEOVRa453eNj2hcwmvSiBgztn9fCox"
               width={16}
               height={16}
               alt="star"
