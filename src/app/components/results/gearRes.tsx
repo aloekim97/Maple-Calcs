@@ -181,31 +181,30 @@ export default function GearRes({
       if (level < 138) return 20;
       return 30;
     };
-  
+
     // Genesis set has special rules (22 stars)
-    const maxAllowedStars = selectedGear.Set === 'Genesis' 
-      ? 22 
-      : getMaxStars(selectedGear.Level);
-      
+    const maxAllowedStars =
+      selectedGear.Set === 'Genesis' ? 22 : getMaxStars(selectedGear.Level);
+
     const displayedStars = Math.min(
       Number(localEndStar || endStar),
       maxAllowedStars
     );
-  
+
     // Calculate how many rows we need (5 stars per row)
     const totalPossibleStars = maxAllowedStars;
     const rowsNeeded = Math.ceil(totalPossibleStars / 5);
-  
+
     return Array.from({ length: rowsNeeded }).map((_, row) => (
       <div key={row} className="grid grid-cols-5 justify-between gap-1">
         {Array.from({ length: 5 }).map((_, col) => {
           const starIndex = row * 5 + col;
-          
+
           // Don't render if beyond max allowed stars
           if (starIndex >= maxAllowedStars) return null;
-          
+
           const isFilled = starIndex < displayedStars;
-          
+
           return (
             <Image
               key={starIndex}
@@ -272,6 +271,8 @@ export default function GearRes({
     [selectedGear, sfResults, renderStatWithBonus]
   );
 
+  const skipOptimization = selectedGear.optimize === 'webp';
+
   return (
     <div className="flex w-full">
       <div className="flex flex-col items-center justify-between w-full p-[12px]">
@@ -290,8 +291,9 @@ export default function GearRes({
               fill
               sizes="184px"
               alt={itemName || 'Gear image'}
-              quality={75}
               className="object-contain p-[4px]"
+              quality={skipOptimization ? undefined : 75} // Skip quality setting for WebP
+              unoptimized={skipOptimization}
             />
           ) : (
             <div className="w-full h-full bg-gray-100 flex items-center justify-center">

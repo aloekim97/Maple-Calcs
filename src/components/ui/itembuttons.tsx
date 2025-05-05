@@ -44,6 +44,9 @@ const ItemButton = ({ item, onClick, priority = false }: ItemButtonProps) => {
     threshold: 0.01,
   });
 
+  // Determine if we should skip Next.js optimization
+  const skipOptimization = item.optimize === "webp";
+
   useEffect(() => {
     if (!inView && !priority) return;
 
@@ -108,8 +111,9 @@ const ItemButton = ({ item, onClick, priority = false }: ItemButtonProps) => {
             alt={itemName}
             width={ITEM_SIZE}
             height={ITEM_SIZE}
-            loading={'lazy'}
-            quality={75}
+            loading={priority ? 'eager' : 'lazy'}
+            quality={skipOptimization ? undefined : 75} // Skip quality setting for WebP
+            unoptimized={skipOptimization} // Skip optimization for WebP
             onError={() => {
               setImageState({
                 src: FALLBACK_IMAGE,
@@ -117,7 +121,7 @@ const ItemButton = ({ item, onClick, priority = false }: ItemButtonProps) => {
                 error: true
               });
             }}
-            className="object-contain" // Ensures proper image fitting
+            className="object-contain"
           />
         ) : (
           <div 
